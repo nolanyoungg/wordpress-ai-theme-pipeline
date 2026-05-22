@@ -1,0 +1,25 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Composer
+vendor/
+
+# WordPress local/dev files
+wp-config.php
+wp-content/uploads/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/backup*/
+
+# AI temporary artifacts
+.ai/
+
+# Environment files
+.env
+.env.*
+!.env.example

@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "wp-content/themes/nolan-showcase-theme/**"
 
 permissions:
   contents: read

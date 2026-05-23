@@ -1,0 +1,165 @@
+name: Validate, Package, and Publish Previews
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-package-preview-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-package:
+    name: Validate themes and build zips
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.2"
+
+      - name: Detect themes
+        id: detect
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+
+          themes=(wp-content/themes/nolan-showcase-theme-x*)
+          if [ "${#themes[@]}" -eq 0 ]; then
+            echo "::error::No theme folders found matching wp-content/themes/nolan-showcase-theme-x*"
+            exit 1
+          fi
+
+          printf '%s\n' "${themes[@]}" | sort > .themes.txt
+          echo "count=$(wc -l < .themes.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
+
+      - name: Validate theme files and PHP syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          required_files=(
+            "style.css"
+            "functions.php"
+            "index.php"
+            "header.php"
+            "footer.php"
+            "front-page.php"
+            "page.php"
+            "single.php"
+            "archive.php"
+            "search.php"
+            "404.php"
+            "comments.php"
+            "template-parts/content.php"
+            "template-parts/content-page.php"
+            "template-parts/content-none.php"
+            "assets/css/theme.css"
+            "assets/js/theme.js"
+            "README.md"
+          )
+
+          while IFS= read -r theme_dir; do
+            [ -d "$theme_dir" ] || continue
+            theme_slug="$(basename "$theme_dir")"
+            echo "==> Validating $theme_slug"
+
+            for rel in "${required_files[@]}"; do
+              if [ ! -f "$theme_dir/$rel" ]; then
+                echo "::error::Missing required file for $theme_slug: $theme_dir/$rel"
+                exit 1
+              fi
+            done
+
+            if ! grep -q "^Theme Name:" "$theme_dir/style.css"; then
+              echo "::error::Missing 'Theme Name:' header in $theme_dir/style.css"
+              exit 1
+            fi
+
+            find "$theme_dir" -name "*.php" -type f -print0 | xargs -0 -n 1 php -l
+          done < .themes.txt
+
+      - name: Validate docs preview folders
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          [ -f "docs/index.html" ] || { echo "::error::Missing docs/index.html"; exit 1; }
+
+          while IFS= read -r theme_dir; do
+            [ -d "$theme_dir" ] || continue
+            theme_slug="$(basename "$theme_dir")"
+            preview_dir="docs/themes/$theme_slug"
+
+            for f in \
+              "$preview_dir/index.html" \
+              "$preview_dir/assets/css/preview.css" \
+              "$preview_dir/assets/js/preview.js"
+            do
+              [ -f "$f" ] || { echo "::error::Missing preview file for $theme_slug: $f"; exit 1; }
+            done
+          done < .themes.txt
+
+      - name: Build theme zip files
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+
+          while IFS= read -r theme_dir; do
+            [ -d "$theme_dir" ] || continue
+            theme_slug="$(basename "$theme_dir")"
+            echo "==> Packaging $theme_slug.zip"
+            (
+              cd wp-content/themes
+              zip -qr "../../dist/${theme_slug}.zip" "$theme_slug"
+            )
+          done < .themes.txt
+
+      - name: Upload zip artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: theme-zips
+          path: dist/*.zip
+          if-no-files-found: error
+
+  pages:
+    name: Publish GitHub Pages
+    runs-on: ubuntu-latest
+    needs: validate-package
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+
+    permissions:
+      pages: write
+      id-token: write
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v5
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+

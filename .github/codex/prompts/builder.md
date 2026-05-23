@@ -9,7 +9,7 @@ Repository instructions:
 - Read AGENTS.md.
 - Build the theme in {{THEME_DIR}}.
 - Set the WordPress theme display name to {{THEME_DISPLAY_NAME}}.
-- Build the static preview in preview/.
+- Build the static preview in `docs/themes/{{THEME_SLUG}}/` and update `docs/index.html`.
 - Create a zip archive at {{THEME_ZIP}}.
 - Avoid unrelated files.
 - Use WordPress escaping and enqueueing conventions.
@@ -21,7 +21,7 @@ Create a production-quality WordPress classic theme and a static Pages preview t
 Theme structure:
 - Classic PHP WordPress theme.
 - Theme files under {{THEME_DIR}}.
-- Static preview files under preview/.
+- Static preview files under `docs/themes/{{THEME_SLUG}}/`.
 
 Create or update these files at minimum:
 - {{THEME_DIR}}/style.css
@@ -33,13 +33,19 @@ Create or update these files at minimum:
 - {{THEME_DIR}}/page.php
 - {{THEME_DIR}}/single.php
 - {{THEME_DIR}}/archive.php
+- {{THEME_DIR}}/search.php
 - {{THEME_DIR}}/404.php
+- {{THEME_DIR}}/comments.php
+- {{THEME_DIR}}/template-parts/content.php
+- {{THEME_DIR}}/template-parts/content-page.php
+- {{THEME_DIR}}/template-parts/content-none.php
 - {{THEME_DIR}}/assets/css/theme.css
 - {{THEME_DIR}}/assets/js/theme.js
 - {{THEME_DIR}}/README.md
-- preview/index.html
-- preview/assets/css/preview.css
-- preview/assets/js/preview.js
+- docs/index.html
+- docs/themes/{{THEME_SLUG}}/index.html
+- docs/themes/{{THEME_SLUG}}/assets/css/preview.css
+- docs/themes/{{THEME_SLUG}}/assets/js/preview.js
 
 Design requirements:
 - Modern dark/navy and blue visual style.
@@ -80,6 +86,8 @@ Security requirements:
 - No hardcoded secrets, tokens, API keys, or private URLs.
 - No remote CDNs.
 - Fail gracefully if JavaScript is unavailable.
+- Content that depends on reveal animations must remain visible without JavaScript.
+- Theme counters should display a meaningful static value before JavaScript enhances them.
 
 Zip archive requirement:
 - Create a zip archive of the theme folder at {{THEME_ZIP}}.
@@ -94,7 +102,7 @@ Static GitHub Pages preview requirements:
 Verification commands:
 - `php -l {{THEME_DIR}}/*.php`
 - `find {{THEME_DIR}} -name "*.php" -type f -print0 | xargs -0 -n 1 php -l`
-- Confirm `preview/index.html` exists.
+- Confirm `docs/index.html` exists and links to `docs/themes/{{THEME_SLUG}}/index.html`.
 
 Definition of done:
 - The theme files exist and are complete.

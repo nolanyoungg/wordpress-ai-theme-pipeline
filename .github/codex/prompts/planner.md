@@ -10,7 +10,7 @@ Repository instructions:
 - The target theme directory is {{THEME_DIR}}.
 - The theme should also be zipped to {{THEME_ZIP}}.
 - The display name for this build is {{THEME_DISPLAY_NAME}}.
-- Also create a static GitHub Pages preview in preview/.
+- Also create a matching static GitHub Pages preview in `docs/themes/{{THEME_SLUG}}/` and update `docs/index.html`.
 - The result should be suitable for a WordPress theme pull request.
 - Do not edit unrelated files.
 - Do not add API keys, SSH, SFTP, production secrets, or deployment credentials.

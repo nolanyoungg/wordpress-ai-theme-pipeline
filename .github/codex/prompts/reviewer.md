@@ -18,6 +18,7 @@ Focus on:
 7. Unrelated changes
 8. Static GitHub Pages preview quality
 9. Whether this is safe to review as a PR
+10. Whether the theme still shows content when JavaScript is disabled
 
 Assume the AI work was done locally with Codex signed in through a ChatGPT plan. Do not assume an API key or GitHub Action AI step exists.
 

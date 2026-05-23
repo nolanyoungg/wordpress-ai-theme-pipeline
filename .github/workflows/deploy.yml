@@ -1,10 +1,6 @@
-name: Deploy Theme Preview to GitHub Pages
+name: Deploy Theme Preview to GitHub Pages (Deprecated)
 
 on:
-  push:
-    paths:
-      - "preview/**"
-      - "wp-content/themes/**"
   workflow_dispatch:
 
 permissions:
@@ -17,43 +13,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy-preview:
-    name: Deploy static theme preview
+  deprecated:
+    name: Deprecated (use validate-package-preview.yml)
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v5
-
-      - name: Validate preview files
-        shell: bash
+      - name: Notice
         run: |
-          set -e
-
-          for FILE in \
-            preview/index.html \
-            preview/assets/css/preview.css \
-            preview/assets/js/preview.js
-          do
-            if [ ! -f "$FILE" ]; then
-              echo "::error::Missing preview file: $FILE"
-              exit 1
-            fi
-          done
-
-          touch preview/.nojekyll
-
-      - name: Configure GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload preview artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: preview
-
-      - name: Deploy preview to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          echo "This workflow is deprecated."
+          echo "Use .github/workflows/validate-package-preview.yml instead."

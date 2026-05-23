@@ -1,94 +1,88 @@
 # WordPress AI Theme Pipeline
 
-This repository now uses a local Codex workflow with ChatGPT Pro or another eligible ChatGPT plan. There is no OpenAI API key in this setup.
+This repository is a reusable pipeline for generating **versioned classic WordPress themes** with **static GitHub Pages previews** and **downloadable ZIP artifacts**.
 
-The flow is:
+Codex is used **manually/local** (via a normal ChatGPT Pro subscription) to generate code. This repo intentionally does **not** use the OpenAI API.
 
-1. You sign into Codex with your ChatGPT account.
-2. Codex runs locally against this repo.
-3. Codex writes the WordPress theme into `wp-content/themes/nolan-showcase-theme/`.
-4. Codex writes a static sneak peek into `preview/`.
-5. GitHub Actions validate PHP and required files.
-6. GitHub Pages publishes the static preview.
-7. You review the PR and merge it.
+## Hard constraints (by design)
 
-## What you need
+- No OpenAI API usage.
+- No `OPENAI_API_KEY` requirements.
+- No `openai/codex-action`.
+- GitHub Actions are used only for validation, packaging ZIP files, and publishing GitHub Pages previews.
+- GitHub Pages does not run PHP/WordPress; previews are static HTML under `docs/`.
 
-Only these are required:
+## Repo structure
 
-- ChatGPT Pro plan
-- Codex
-- GitHub
+- WordPress themes: `wp-content/themes/nolan-showcase-theme-x1/`, `...-x2/`, `...-x3/`, etc.
+- GitHub Pages gallery and previews: `docs/`
+  - Gallery: `docs/index.html`
+  - Per-theme previews: `docs/themes/<theme-slug>/index.html`
+- Workflows: `.github/workflows/validate-package-preview.yml`
+- Local helpers:
+  - `scripts/list-theme-versions.sh`
+  - `scripts/validate-themes.sh`
 
-No OpenAI API key is required.
-No SSH, SFTP, or deployment credentials are required.
+## Theme versioning
 
-## Repo Layout
+Themes must always be created as a new folder:
 
-- `wp-content/themes/nolan-showcase-theme/` holds the full classic WordPress theme.
-- `preview/` holds the static GitHub Pages sneak peek.
-- `.github/codex/prompts/` holds the local planner, builder, and reviewer prompts.
+- `wp-content/themes/nolan-showcase-theme-x1`
+- `wp-content/themes/nolan-showcase-theme-x2`
+- `wp-content/themes/nolan-showcase-theme-x3`
 
-## GitHub Setup
+Never overwrite older versions.
 
-1. In the repository settings, turn on GitHub Pages with `Source: GitHub Actions`.
-2. Do not add any repository secrets for this workflow.
-3. Use the Actions tab only for validation and preview publishing.
+## Create the next theme version (manual Codex)
 
-After the first successful merge to `main`, the preview should be available at:
+1. Create a feature branch (never work directly on `main`).
+2. Run Codex locally to generate the next theme folder and matching static preview:
+   - The new theme must be created under `wp-content/themes/nolan-showcase-theme-xN/`.
+   - The matching preview must be created under `docs/themes/nolan-showcase-theme-xN/`.
+   - Update `docs/index.html` to include the new version.
+3. Run local validation:
+
+```bash
+bash scripts/validate-themes.sh
+```
+
+4. Commit changes and open a PR. Review before merging.
+
+## GitHub Actions: validation + ZIP artifacts
+
+The workflow `.github/workflows/validate-package-preview.yml`:
+
+- Detects all `wp-content/themes/nolan-showcase-theme-x*` folders
+- Validates required theme files and `style.css` theme header
+- Runs `php -l` over all PHP files in each theme
+- Builds `dist/nolan-showcase-theme-xN.zip` (folder included in zip)
+- Uploads zip files as workflow artifacts
+
+### Downloading a ZIP artifact
+
+1. Open the GitHub Actions run for your PR or `main`.
+2. Download the `theme-zips` artifact.
+3. Upload the `nolan-showcase-theme-xN.zip` to WordPress (Appearance → Themes → Add New → Upload Theme).
+
+## GitHub Pages: static previews
+
+This repo deploys `docs/` to GitHub Pages through GitHub Actions.
+
+To enable Pages:
+
+1. Repo Settings → Pages
+2. Source: **GitHub Actions**
+
+After a successful run on `main`, the gallery is available at:
 
 ```text
 https://nolanyoungg.github.io/wordpress-ai-theme-pipeline/
 ```
 
-## Local Codex Workflow
+## PR review checklist
 
-Run Codex from your terminal in this order:
-
-### 1. Planner
-
-Run the local workflow script with your task. It will call Planner, Builder, and Reviewer in sequence.
-
-```text
-bash scripts/run-local-workflow.sh "Build a new production-quality WordPress theme named Nolan Showcase Theme..."
-```
-
-### 2. Verification
-
-Run the checks locally before pushing.
-
-```text
-find wp-content/themes/nolan-showcase-theme -name "*.php" -type f -print0 | xargs -0 -n 1 php -l
-```
-
-### 3. Commit and push
-
-Create a branch, commit the generated files, and push to GitHub. Open a PR and review it there.
-
-## First Task
-
-The first build task should create a premium WordPress portfolio theme named `Nolan Showcase Theme` and a matching static preview. The theme should emphasize software development, WordPress work, AI automation, analytics, and technical leadership.
-
-The required output is listed in `.github/codex/prompts/builder.md`.
-
-## Manual Review Checklist
-
-Before merging, check:
-
-1. The AI only changed the theme and preview files.
-2. The WordPress theme header in `style.css` is valid.
-3. The PHP files pass syntax checks.
-4. The preview files exist and look coherent.
-5. The mobile navigation and skip link are present.
-6. Asset paths are local and correct.
-7. The reviewer report does not flag blocking issues.
-
-## After Merge
-
-When the PR is merged into `main`:
-
-1. `theme-checks.yml` runs validation on the theme and preview.
-2. `deploy.yml` publishes the static preview to GitHub Pages.
-3. You review the preview in the browser.
-
-No production WordPress deployment is part of this version.
+- New theme folder created under `wp-content/themes/nolan-showcase-theme-xN/` (no edits to older versions unless required for tooling)
+- `docs/themes/nolan-showcase-theme-xN/` preview exists and matches the theme design
+- `docs/index.html` updated with the new theme link
+- `scripts/validate-themes.sh` passes locally
+- Workflow artifacts contain the expected `nolan-showcase-theme-xN.zip`

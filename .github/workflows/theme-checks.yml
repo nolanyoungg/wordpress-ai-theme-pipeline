@@ -1,81 +1,17 @@
-name: Theme Checks
+name: Theme Checks (Deprecated)
 
 on:
-  pull_request:
-    paths:
-      - "preview/**"
-      - "wp-content/themes/nolan-showcase-theme/**"
-      - ".github/workflows/theme-checks.yml"
-  push:
-    branches:
-      - main
-    paths:
-      - "preview/**"
-      - "wp-content/themes/nolan-showcase-theme/**"
-      - ".github/workflows/theme-checks.yml"
+  workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  validate-theme:
-    name: Validate theme and preview files
+  deprecated:
+    name: Deprecated (use validate-package-preview.yml)
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v5
-
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: "8.2"
-
-      - name: Validate WordPress theme files
-        shell: bash
+      - name: Notice
         run: |
-          set -e
-
-          THEME_DIR="wp-content/themes/nolan-showcase-theme"
-          PREVIEW_DIR="preview"
-
-          REQUIRED_THEME_FILES=(
-            "$THEME_DIR/style.css"
-            "$THEME_DIR/functions.php"
-            "$THEME_DIR/index.php"
-            "$THEME_DIR/header.php"
-            "$THEME_DIR/footer.php"
-            "$THEME_DIR/front-page.php"
-            "$THEME_DIR/page.php"
-            "$THEME_DIR/single.php"
-            "$THEME_DIR/archive.php"
-            "$THEME_DIR/404.php"
-            "$THEME_DIR/assets/css/theme.css"
-            "$THEME_DIR/assets/js/theme.js"
-            "$THEME_DIR/README.md"
-          )
-
-          REQUIRED_PREVIEW_FILES=(
-            "$PREVIEW_DIR/index.html"
-            "$PREVIEW_DIR/assets/css/preview.css"
-            "$PREVIEW_DIR/assets/js/preview.js"
-          )
-
-          for REQUIRED_FILE in "${REQUIRED_THEME_FILES[@]}"; do
-            [ -f "$REQUIRED_FILE" ] || { echo "::error::Missing required theme file: $REQUIRED_FILE"; exit 1; }
-          done
-
-          for REQUIRED_FILE in "${REQUIRED_PREVIEW_FILES[@]}"; do
-            [ -f "$REQUIRED_FILE" ] || { echo "::error::Missing required preview file: $REQUIRED_FILE"; exit 1; }
-          done
-
-      - name: Check theme header
-        shell: bash
-        run: |
-          grep -q "Theme Name:" wp-content/themes/nolan-showcase-theme/style.css
-
-      - name: Lint PHP files
-        shell: bash
-        run: |
-          find wp-content/themes/nolan-showcase-theme -name "*.php" -type f -print0 \
-            | xargs -0 -n 1 php -l
+          echo "This workflow is deprecated."
+          echo "Use .github/workflows/validate-package-preview.yml instead."

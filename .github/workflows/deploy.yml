@@ -21,24 +21,58 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
+      - name: Validate staging deployment configuration
+        env:
+          STAGING_SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+          STAGING_SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+          STAGING_SSH_PRIVATE_KEY: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
+          STAGING_THEME_PATH: ${{ secrets.STAGING_THEME_PATH }}
+        run: |
+          set -e
+
+          MISSING=0
+
+          for SECRET_NAME in STAGING_SSH_HOST STAGING_SSH_USER STAGING_SSH_PRIVATE_KEY STAGING_THEME_PATH; do
+            if [ -z "${!SECRET_NAME}" ]; then
+              echo "::error::Missing required secret: $SECRET_NAME"
+              MISSING=1
+            fi
+          done
+
+          if [ ! -d wp-content/themes/nolan-showcase-theme ]; then
+            echo "::error::Theme directory not found: wp-content/themes/nolan-showcase-theme"
+            MISSING=1
+          fi
+
+          if [ "$MISSING" -ne 0 ]; then
+            exit 1
+          fi
+
       - name: Install rsync and SSH client
         run: |
           sudo apt-get update
           sudo apt-get install -y rsync openssh-client
 
       - name: Configure SSH key
+        env:
+          STAGING_SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+          STAGING_SSH_PRIVATE_KEY: ${{ secrets.STAGING_SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.STAGING_SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          printf "%s\n" "$STAGING_SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "${{ secrets.STAGING_SSH_HOST }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -T 30 -H "$STAGING_SSH_HOST" >> ~/.ssh/known_hosts
 
       - name: Deploy theme to staging
+        env:
+          STAGING_SSH_HOST: ${{ secrets.STAGING_SSH_HOST }}
+          STAGING_SSH_USER: ${{ secrets.STAGING_SSH_USER }}
+          STAGING_THEME_PATH: ${{ secrets.STAGING_THEME_PATH }}
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
             wp-content/themes/nolan-showcase-theme/ \
-            "${{ secrets.STAGING_SSH_USER }}@${{ secrets.STAGING_SSH_HOST }}:${{ secrets.STAGING_THEME_PATH }}/"
+            "$STAGING_SSH_USER@$STAGING_SSH_HOST:$STAGING_THEME_PATH/"
 
   deploy-production:
     name: Deploy theme to production
@@ -50,21 +84,55 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v5
 
+      - name: Validate production deployment configuration
+        env:
+          PRODUCTION_SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
+          PRODUCTION_SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
+          PRODUCTION_SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
+          PRODUCTION_THEME_PATH: ${{ secrets.PRODUCTION_THEME_PATH }}
+        run: |
+          set -e
+
+          MISSING=0
+
+          for SECRET_NAME in PRODUCTION_SSH_HOST PRODUCTION_SSH_USER PRODUCTION_SSH_PRIVATE_KEY PRODUCTION_THEME_PATH; do
+            if [ -z "${!SECRET_NAME}" ]; then
+              echo "::error::Missing required secret: $SECRET_NAME"
+              MISSING=1
+            fi
+          done
+
+          if [ ! -d wp-content/themes/nolan-showcase-theme ]; then
+            echo "::error::Theme directory not found: wp-content/themes/nolan-showcase-theme"
+            MISSING=1
+          fi
+
+          if [ "$MISSING" -ne 0 ]; then
+            exit 1
+          fi
+
       - name: Install rsync and SSH client
         run: |
           sudo apt-get update
           sudo apt-get install -y rsync openssh-client
 
       - name: Configure SSH key
+        env:
+          PRODUCTION_SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
+          PRODUCTION_SSH_PRIVATE_KEY: ${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.PRODUCTION_SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          printf "%s\n" "$PRODUCTION_SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          ssh-keyscan -H "${{ secrets.PRODUCTION_SSH_HOST }}" >> ~/.ssh/known_hosts
+          ssh-keyscan -T 30 -H "$PRODUCTION_SSH_HOST" >> ~/.ssh/known_hosts
 
       - name: Deploy theme to production
+        env:
+          PRODUCTION_SSH_HOST: ${{ secrets.PRODUCTION_SSH_HOST }}
+          PRODUCTION_SSH_USER: ${{ secrets.PRODUCTION_SSH_USER }}
+          PRODUCTION_THEME_PATH: ${{ secrets.PRODUCTION_THEME_PATH }}
         run: |
           rsync -avz --delete \
             -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=yes" \
             wp-content/themes/nolan-showcase-theme/ \
-            "${{ secrets.PRODUCTION_SSH_USER }}@${{ secrets.PRODUCTION_SSH_HOST }}:${{ secrets.PRODUCTION_THEME_PATH }}/"
+            "$PRODUCTION_SSH_USER@$PRODUCTION_SSH_HOST:$PRODUCTION_THEME_PATH/"

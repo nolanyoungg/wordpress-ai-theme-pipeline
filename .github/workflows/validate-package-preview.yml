@@ -101,10 +101,11 @@ jobs:
               exit 1
             fi
 
-            grep -q "assets/css/theme.css" "$theme_dir/functions.php" || { echo "::error::functions.php does not reference assets/css/theme.css for $theme_slug"; exit 1; }
-            grep -q "wp_enqueue_style" "$theme_dir/functions.php" || { echo "::error::functions.php does not call wp_enqueue_style for $theme_slug"; exit 1; }
-            grep -q "assets/js/theme.js" "$theme_dir/functions.php" || { echo "::error::functions.php does not reference assets/js/theme.js for $theme_slug"; exit 1; }
-            grep -q "wp_enqueue_script" "$theme_dir/functions.php" || { echo "::error::functions.php does not call wp_enqueue_script for $theme_slug"; exit 1; }
+            # Themes may enqueue via included files; validate within the theme directory.
+            grep -R -q "assets/css/theme.css" "$theme_dir" || { echo "::error::Theme does not reference assets/css/theme.css for $theme_slug"; exit 1; }
+            grep -R -q "wp_enqueue_style" "$theme_dir" || { echo "::error::Theme does not call wp_enqueue_style for $theme_slug"; exit 1; }
+            grep -R -q "assets/js/theme.js" "$theme_dir" || { echo "::error::Theme does not reference assets/js/theme.js for $theme_slug"; exit 1; }
+            grep -R -q "wp_enqueue_script" "$theme_dir" || { echo "::error::Theme does not call wp_enqueue_script for $theme_slug"; exit 1; }
 
             find "$theme_dir" -name "*.php" -type f -print0 | xargs -0 -n 1 php -l
           done < .themes.txt

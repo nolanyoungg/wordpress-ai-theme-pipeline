@@ -15,8 +15,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return void
  */
 function nolan_showcase_x6_enqueue_assets() {
-	$css_rel_path = 'assets/dist/css/theme.min.css';
-	$js_rel_path  = 'assets/dist/js/theme.min.js';
+	// Standardized paths used across the pipeline (required by CI checks).
+	$css_rel_path = 'assets/css/theme.css';
+	$js_rel_path  = 'assets/js/theme.js';
 
 	$css_path = get_template_directory() . '/' . $css_rel_path;
 	$js_path  = get_template_directory() . '/' . $js_rel_path;
@@ -36,9 +37,7 @@ function nolan_showcase_x6_enqueue_assets() {
 		get_template_directory_uri() . '/' . $js_rel_path,
 		array(),
 		$js_ver,
-		array(
-			'in_footer' => true,
-		)
+		true
 	);
 
 	wp_localize_script(
@@ -50,4 +49,3 @@ function nolan_showcase_x6_enqueue_assets() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'nolan_showcase_x6_enqueue_assets' );
-

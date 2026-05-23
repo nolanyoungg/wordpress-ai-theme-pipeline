@@ -11,7 +11,8 @@ Focus on:
 5. Performance
 6. Broken paths or missing assets
 7. Unrelated changes
-8. Whether this is safe to review as a PR
+8. Static GitHub Pages preview quality
+9. Whether this is safe to review as a PR
 
 Output:
 

@@ -40,26 +40,20 @@ jobs:
       - name: Prepare AI artifact directory
         run: mkdir -p .ai
 
+      - name: Validate required AI secret
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::Missing required repository secret: OPENAI_API_KEY"
+            exit 1
+          fi
+
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
           tools: composer
-
-      - name: Set up Node if package.json exists
-        if: ${{ hashFiles('package.json') != '' }}
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install Node dependencies if present
-        if: ${{ hashFiles('package.json') != '' }}
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
 
       - name: Planner Agent
         uses: openai/codex-action@v1
@@ -80,8 +74,10 @@ jobs:
             Repository instructions:
             - Read AGENTS.md.
             - The target theme directory is wp-content/themes/nolan-showcase-theme/.
+            - Also create a static GitHub Pages preview in preview/.
             - The result should be suitable for a WordPress theme pull request.
             - Do not edit unrelated files.
+            - Do not add SSH, SFTP, deployment, environment, or production secrets.
 
             Output only the Builder Agent prompt.
 
@@ -93,9 +89,10 @@ jobs:
             5. WordPress requirements
             6. Accessibility requirements
             7. Security requirements
-            8. Verification commands
-            9. Definition of done
-            10. Explicit instruction to summarize every changed file
+            8. Static GitHub Pages preview requirements
+            9. Verification commands
+            10. Definition of done
+            11. Explicit instruction to summarize every changed file
 
       - name: Builder Agent
         uses: openai/codex-action@v1
@@ -116,6 +113,7 @@ jobs:
           echo "" >> .ai/verification-report.md
 
           THEME_DIR="wp-content/themes/nolan-showcase-theme"
+          PREVIEW_DIR="preview"
 
           echo "## Theme directory check" >> .ai/verification-report.md
 
@@ -132,6 +130,17 @@ jobs:
           REQUIRED_FILES=(
             "$THEME_DIR/style.css"
             "$THEME_DIR/functions.php"
+            "$THEME_DIR/index.php"
+            "$THEME_DIR/header.php"
+            "$THEME_DIR/footer.php"
+            "$THEME_DIR/front-page.php"
+            "$THEME_DIR/page.php"
+            "$THEME_DIR/single.php"
+            "$THEME_DIR/archive.php"
+            "$THEME_DIR/404.php"
+            "$THEME_DIR/assets/css/theme.css"
+            "$THEME_DIR/assets/js/theme.js"
+            "$THEME_DIR/README.md"
           )
 
           for REQUIRED_FILE in "${REQUIRED_FILES[@]}"; do
@@ -152,6 +161,24 @@ jobs:
             echo "ERROR: Missing Theme Name header in style.css." >> .ai/verification-report.md
             exit 1
           fi
+
+          echo "" >> .ai/verification-report.md
+          echo "## GitHub Pages preview check" >> .ai/verification-report.md
+
+          REQUIRED_PREVIEW_FILES=(
+            "$PREVIEW_DIR/index.html"
+            "$PREVIEW_DIR/assets/css/preview.css"
+            "$PREVIEW_DIR/assets/js/preview.js"
+          )
+
+          for REQUIRED_PREVIEW_FILE in "${REQUIRED_PREVIEW_FILES[@]}"; do
+            if [ -f "$REQUIRED_PREVIEW_FILE" ]; then
+              echo "Found: $REQUIRED_PREVIEW_FILE" >> .ai/verification-report.md
+            else
+              echo "ERROR: Missing static preview file: $REQUIRED_PREVIEW_FILE" >> .ai/verification-report.md
+              exit 1
+            fi
+          done
 
           echo "" >> .ai/verification-report.md
           echo "## PHP syntax check" >> .ai/verification-report.md
@@ -226,7 +253,8 @@ jobs:
             5. Performance
             6. Broken paths or missing assets
             7. Unrelated changes
-            8. Whether this is safe to review as a PR
+            8. Static GitHub Pages preview quality
+            9. Whether this is safe to review as a PR
 
             Output:
             1. Recommendation: APPROVE, APPROVE WITH NOTES, or BLOCK

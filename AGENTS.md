@@ -9,6 +9,8 @@ This repository is used to build, review, and deploy WordPress theme work throug
 - WordPress themes belong in `wp-content/themes/`.
 - The first generated theme should be created at:
   `wp-content/themes/nolan-showcase-theme/`
+- A static GitHub Pages preview should be created at:
+  `preview/`
 - Do not modify WordPress core files.
 - Do not commit uploads, cache files, backups, or environment files.
 
@@ -26,6 +28,15 @@ This repository is used to build, review, and deploy WordPress theme work throug
 - Prefer local assets inside the theme.
 - Keep templates readable and maintainable.
 
+## GitHub Pages preview rules
+
+- GitHub Pages cannot execute WordPress PHP templates.
+- Build the full WordPress theme in `wp-content/themes/nolan-showcase-theme/`.
+- Also build a static visual preview in `preview/` so GitHub Pages can show a sneak peek of the theme.
+- The preview should mirror the homepage design and interactions as closely as possible using static HTML, CSS, and vanilla JavaScript.
+- The preview must not require build tools, remote CDNs, API keys, SSH, SFTP, or external services.
+- Required preview entry file: `preview/index.html`.
+
 ## AI workflow rules
 
 - Make the smallest safe change that satisfies the task.
@@ -35,6 +46,7 @@ This repository is used to build, review, and deploy WordPress theme work throug
 - Explain changed files clearly.
 - Include verification steps performed.
 - Flag any work that could not be completed.
+- The only required repository secret for the AI pipeline is `OPENAI_API_KEY`.
 
 ## Review priorities
 
@@ -54,6 +66,7 @@ A task is done only when:
 
 - The requested files are created or updated.
 - The theme has a valid WordPress theme header.
+- A static GitHub Pages preview exists at `preview/index.html`.
 - PHP files pass syntax checks.
 - Obvious broken links, missing assets, and invalid paths are avoided.
 - The PR summary explains what changed.

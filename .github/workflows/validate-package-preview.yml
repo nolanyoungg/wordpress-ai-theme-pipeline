@@ -150,7 +150,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p dist
+          mkdir -p zippedTheme
+          rm -f zippedTheme/*.zip
 
           while IFS= read -r theme_dir; do
             [ -d "$theme_dir" ] || continue
@@ -158,7 +159,7 @@ jobs:
             echo "==> Packaging $theme_slug.zip"
             (
               cd wp-content/themes
-              zip -qr "../../dist/${theme_slug}.zip" "$theme_slug"
+              zip -qr "../../zippedTheme/${theme_slug}.zip" "$theme_slug"
             )
           done < .themes.txt
 
@@ -170,11 +171,13 @@ jobs:
           while IFS= read -r theme_dir; do
             [ -d "$theme_dir" ] || continue
             theme_slug="$(basename "$theme_dir")"
-            zip_path="dist/${theme_slug}.zip"
+            zip_path="zippedTheme/${theme_slug}.zip"
 
             [ -f "$zip_path" ] || { echo "::error::Missing zip: $zip_path"; exit 1; }
 
+            unzip -l "$zip_path" | grep -q "${theme_slug}/style.css" || { echo "::error::Zip missing style.css for $theme_slug"; exit 1; }
             unzip -l "$zip_path" | grep -q "${theme_slug}/assets/css/theme.css" || { echo "::error::Zip missing theme.css for $theme_slug"; exit 1; }
+            unzip -l "$zip_path" | grep -q "${theme_slug}/assets/js/theme.js" || { echo "::error::Zip missing theme.js for $theme_slug"; exit 1; }
             unzip -l "$zip_path" | grep -q "${theme_slug}/functions.php" || { echo "::error::Zip missing functions.php for $theme_slug"; exit 1; }
             unzip -l "$zip_path" | grep -q "${theme_slug}/front-page.php" || { echo "::error::Zip missing front-page.php for $theme_slug"; exit 1; }
             unzip -l "$zip_path" | grep -q "${theme_slug}/template-parts/content.php" || { echo "::error::Zip missing template-parts/content.php for $theme_slug"; exit 1; }
@@ -184,7 +187,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: theme-zips
-          path: dist/*.zip
+          path: zippedTheme/*.zip
           if-no-files-found: error
 
   pages:

@@ -2,7 +2,7 @@
 
 ## Project purpose
 
-This repository is used to build, review, and deploy WordPress theme work through a controlled AI-assisted GitHub workflow.
+This repository is used to build, review, and publish WordPress theme work through a controlled AI-assisted workflow that runs locally with Codex and publishes a static preview through GitHub Pages.
 
 ## Repository layout
 
@@ -13,6 +13,7 @@ This repository is used to build, review, and deploy WordPress theme work throug
   `preview/`
 - Do not modify WordPress core files.
 - Do not commit uploads, cache files, backups, or environment files.
+- Local Codex prompts live in `.github/codex/prompts/`.
 
 ## WordPress theme rules
 
@@ -37,6 +38,13 @@ This repository is used to build, review, and deploy WordPress theme work throug
 - The preview must not require build tools, remote CDNs, API keys, SSH, SFTP, or external services.
 - Required preview entry file: `preview/index.html`.
 
+## Local Codex workflow rules
+
+- Use Codex signed into the ChatGPT account to run the planner, builder, and reviewer steps locally.
+- Do not assume or require an OpenAI API key.
+- GitHub Actions are for validation and Pages deployment only.
+- Keep AI-generated artifacts in `.ai/` until you are ready to commit them.
+
 ## AI workflow rules
 
 - Make the smallest safe change that satisfies the task.
@@ -46,7 +54,7 @@ This repository is used to build, review, and deploy WordPress theme work throug
 - Explain changed files clearly.
 - Include verification steps performed.
 - Flag any work that could not be completed.
-- The only required repository secret for the AI pipeline is `OPENAI_API_KEY`.
+- No repository secret is required for the AI workflow in this repository.
 
 ## Review priorities
 

@@ -1,195 +1,94 @@
 # WordPress AI Theme Pipeline
 
-This repository scaffolds a controlled AI-assisted WordPress theme workflow:
+This repository now uses a local Codex workflow with ChatGPT Pro or another eligible ChatGPT plan. There is no OpenAI API key in this setup.
 
-1. Manually run the AI Development Pipeline workflow.
-2. Planner Agent writes `.ai/builder-prompt.md`.
-3. Builder Agent creates or updates the WordPress theme.
-4. Builder Agent also creates a static GitHub Pages preview.
-5. Verification checks theme structure, PHP syntax, and preview files.
-6. Reviewer Agent writes `.ai/reviewer-report.md`.
-7. GitHub opens a pull request.
-8. You review and merge the pull request into `main`.
-9. GitHub Pages publishes a static sneak peek of the theme.
+The flow is:
 
-The static preview is only a visual preview. GitHub Pages cannot run WordPress PHP templates. The full WordPress theme is still built in `wp-content/themes/nolan-showcase-theme/`.
+1. You sign into Codex with your ChatGPT account.
+2. Codex runs locally against this repo.
+3. Codex writes the WordPress theme into `wp-content/themes/nolan-showcase-theme/`.
+4. Codex writes a static sneak peek into `preview/`.
+5. GitHub Actions validate PHP and required files.
+6. GitHub Pages publishes the static preview.
+7. You review the PR and merge it.
 
-## Initial Theme Target
+## What you need
 
-The first generated theme should be created at:
+Only these are required:
 
-```text
-wp-content/themes/nolan-showcase-theme/
-```
+- ChatGPT Pro plan
+- Codex
+- GitHub
 
-The GitHub Pages preview should be created at:
+No OpenAI API key is required.
+No SSH, SFTP, or deployment credentials are required.
 
-```text
-preview/
-```
+## Repo Layout
 
-The repository intentionally commits only `wp-content/themes/.gitkeep` at first. The AI pipeline creates the real theme files and preview files in a pull request.
+- `wp-content/themes/nolan-showcase-theme/` holds the full classic WordPress theme.
+- `preview/` holds the static GitHub Pages sneak peek.
+- `.github/codex/prompts/` holds the local planner, builder, and reviewer prompts.
 
-## Required GitHub Secret
+## GitHub Setup
 
-Only one repository secret is required:
+1. In the repository settings, turn on GitHub Pages with `Source: GitHub Actions`.
+2. Do not add any repository secrets for this workflow.
+3. Use the Actions tab only for validation and preview publishing.
 
-```text
-OPENAI_API_KEY
-```
-
-No SSH, SFTP, staging, or production secrets are required for this version.
-
-## GitHub Pages Setup
-
-GitHub Pages uses the built-in `GITHUB_TOKEN` through the workflow. You do not need to create a secret for it.
-
-In GitHub, go to:
-
-```text
-Settings -> Pages
-```
-
-Set:
-
-```text
-Source: GitHub Actions
-```
-
-After the first successful merge to `main`, the preview should be published at:
+After the first successful merge to `main`, the preview should be available at:
 
 ```text
 https://nolanyoungg.github.io/wordpress-ai-theme-pipeline/
 ```
 
-## First Workflow Task
+## Local Codex Workflow
 
-Run:
+Run Codex from your terminal in this order:
 
-```text
-Actions -> AI Development Pipeline -> Run workflow
-```
+### 1. Planner
 
-Use `main` as `base_branch`, then paste this task:
+Run the local workflow script with your task. It will call Planner, Builder, and Reviewer in sequence.
 
 ```text
-Build a new production-quality WordPress theme named "Nolan Showcase Theme" inside:
-
-wp-content/themes/nolan-showcase-theme/
-
-Also build a static GitHub Pages sneak peek inside:
-
-preview/
-
-The theme should be a polished web/software developer portfolio theme with a strong blue visual style, premium interactions, and sections that show software development, WordPress development, automation, AI integration, analytics/tracking, and technical leadership.
-
-Build this as a complete standalone WordPress theme, plus a static preview that visually mirrors the homepage for GitHub Pages.
-
-Requirements:
-
-1. Theme identity
-- Theme Name: Nolan Showcase Theme
-- Theme URI: blank or local placeholder
-- Author: Nolan Young
-- Description: A high-impact WordPress portfolio theme for a software developer and web developer.
-- Version: 1.0.0
-- Text Domain: nolan-showcase-theme
-
-2. Required WordPress theme files
-Create at minimum:
-- wp-content/themes/nolan-showcase-theme/style.css
-- wp-content/themes/nolan-showcase-theme/functions.php
-- wp-content/themes/nolan-showcase-theme/index.php
-- wp-content/themes/nolan-showcase-theme/header.php
-- wp-content/themes/nolan-showcase-theme/footer.php
-- wp-content/themes/nolan-showcase-theme/front-page.php
-- wp-content/themes/nolan-showcase-theme/page.php
-- wp-content/themes/nolan-showcase-theme/single.php
-- wp-content/themes/nolan-showcase-theme/archive.php
-- wp-content/themes/nolan-showcase-theme/404.php
-- wp-content/themes/nolan-showcase-theme/assets/css/theme.css
-- wp-content/themes/nolan-showcase-theme/assets/js/theme.js
-- wp-content/themes/nolan-showcase-theme/README.md
-
-3. Required GitHub Pages preview files
-Create at minimum:
-- preview/index.html
-- preview/assets/css/preview.css
-- preview/assets/js/preview.js
-
-The preview must be static HTML, CSS, and vanilla JavaScript. It should not require WordPress, PHP, Node, build tools, remote CDNs, API keys, SSH, SFTP, or external services.
-
-4. Design
-- Use a modern dark/navy and blue visual style.
-- Include a sticky header.
-- Include a clean sample text logo.
-- Include smooth scroll behavior.
-- Include scroll reveal animations using lightweight vanilla JavaScript.
-- Include polished cards, gradients, strong typography, and responsive layout.
-- Avoid external CDN dependencies.
-
-5. Homepage sections
-The front page and static preview should include:
-- Hero section with strong software/web development positioning
-- Skill highlights
-- Featured project cards
-- AI/automation services section
-- WordPress and WooCommerce experience section
-- Analytics/tracking section
-- Process section
-- Contact CTA section
-
-6. WordPress functionality
-- Use proper WordPress functions.
-- Enqueue CSS and JS through functions.php.
-- Add theme support for title-tag, post-thumbnails, custom-logo, html5, automatic-feed-links, responsive-embeds.
-- Register one primary navigation menu.
-- Register at least one footer menu.
-- Avoid hardcoded unsafe output where WordPress escaping is needed.
-- Use esc_html(), esc_attr(), esc_url(), and wp_kses_post() where appropriate.
-
-7. Accessibility
-- Semantic HTML.
-- Keyboard-friendly navigation.
-- Skip link.
-- Clear focus states.
-- Sufficient contrast.
-- Proper aria labels where useful.
-
-8. Performance
-- No heavy frameworks.
-- No remote fonts unless locally declared or system fonts are used.
-- CSS and JS should be lightweight.
-- JavaScript should fail gracefully.
-
-9. Review
-After implementation, summarize every changed file.
-Also include manual testing steps for activating the theme in WordPress and checking the static preview.
+bash scripts/run-local-workflow.sh "Build a new production-quality WordPress theme named Nolan Showcase Theme..."
 ```
 
-## Manual PR Review Checklist
+### 2. Verification
 
-Before merging the AI-generated pull request, check:
+Run the checks locally before pushing.
 
-1. Did the AI only create or update the theme and preview files?
-2. Did it avoid touching unrelated repo files?
-3. Does `style.css` have a valid WordPress theme header?
-4. Does `functions.php` enqueue CSS and JS properly?
-5. Do all PHP files pass syntax checks?
-6. Are links and asset paths correct?
-7. Does the theme have a skip link?
-8. Does the mobile nav work?
-9. Does `preview/index.html` visually match the theme direction?
-10. Does the homepage look like a premium software/web portfolio?
-11. Is the reviewer report clean enough to merge?
+```text
+find wp-content/themes/nolan-showcase-theme -name "*.php" -type f -print0 | xargs -0 -n 1 php -l
+```
+
+### 3. Commit and push
+
+Create a branch, commit the generated files, and push to GitHub. Open a PR and review it there.
+
+## First Task
+
+The first build task should create a premium WordPress portfolio theme named `Nolan Showcase Theme` and a matching static preview. The theme should emphasize software development, WordPress work, AI automation, analytics, and technical leadership.
+
+The required output is listed in `.github/codex/prompts/builder.md`.
+
+## Manual Review Checklist
+
+Before merging, check:
+
+1. The AI only changed the theme and preview files.
+2. The WordPress theme header in `style.css` is valid.
+3. The PHP files pass syntax checks.
+4. The preview files exist and look coherent.
+5. The mobile navigation and skip link are present.
+6. Asset paths are local and correct.
+7. The reviewer report does not flag blocking issues.
 
 ## After Merge
 
-When the pull request is merged into `main`:
+When the PR is merged into `main`:
 
-1. `deploy.yml` starts automatically if `preview/` or the generated theme changed.
-2. The `preview/` directory is uploaded as a GitHub Pages artifact.
-3. GitHub Pages publishes the static preview.
-4. You can inspect the sneak peek in the browser.
+1. `theme-checks.yml` runs validation on the theme and preview.
+2. `deploy.yml` publishes the static preview to GitHub Pages.
+3. You review the preview in the browser.
 
-No production WordPress deployment happens in this version.
+No production WordPress deployment is part of this version.

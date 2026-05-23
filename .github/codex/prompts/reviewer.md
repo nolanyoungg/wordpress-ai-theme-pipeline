@@ -14,6 +14,8 @@ Focus on:
 8. Static GitHub Pages preview quality
 9. Whether this is safe to review as a PR
 
+Assume the AI work was done locally with Codex signed in through a ChatGPT plan. Do not assume an API key or GitHub Action AI step exists.
+
 Output:
 
 1. Recommendation: APPROVE, APPROVE WITH NOTES, or BLOCK

@@ -15,6 +15,7 @@ Codex is used **manually/local** (via a normal ChatGPT Pro subscription) to gene
 ## Repo structure
 
 - WordPress themes: `wp-content/themes/nolan-showcase-theme-x1/`, `...-x2/`, `...-x3/`, etc.
+- Generated theme zip output folder: `zippedTheme/` (build output; zips are not committed)
 - GitHub Pages gallery and previews: `docs/`
   - Gallery: `docs/index.html`
   - Per-theme previews: `docs/themes/<theme-slug>/index.html`
@@ -55,8 +56,8 @@ The workflow `.github/workflows/validate-package-preview.yml`:
 - Detects all `wp-content/themes/nolan-showcase-theme-x*` folders
 - Validates required theme files and `style.css` theme header
 - Runs `php -l` over all PHP files in each theme
-- Builds `dist/nolan-showcase-theme-xN.zip` (folder included in zip)
-- Uploads zip files as workflow artifacts
+- Builds `zippedTheme/nolan-showcase-theme-xN.zip` (folder included in zip)
+- Uploads zip files as the `theme-zips` workflow artifact
 
 ### Downloading a ZIP artifact
 

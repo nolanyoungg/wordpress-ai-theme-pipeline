@@ -14,7 +14,11 @@ This repository builds, reviews, validates, packages, and publishes **versioned 
 - Static GitHub Pages previews belong in `docs/`:
   - Gallery: `docs/index.html`
   - Per-theme preview: `docs/themes/<theme-slug>/index.html`
-- GitHub Actions creates zip artifacts for each theme. Do not rely on pre-zipped files committed to the repo.
+- ZIP outputs belong in `zippedTheme/` (build output):
+  - Never put ZIPs under `wp-content/themes/`.
+  - Never commit generated ZIPs unless explicitly requested.
+  - Always generate fresh ZIPs into `zippedTheme/` and validate their contents.
+- GitHub Actions creates zip artifacts for each theme. Do not rely on committed zip files.
 - Do not modify WordPress core files.
 - Do not commit uploads, cache files, backups, or environment files.
 - Local Codex prompts live in `.github/codex/prompts/`.
@@ -84,5 +88,6 @@ A task is done only when:
 - A static GitHub Pages gallery exists at `docs/index.html`.
 - A static per-theme preview exists at `docs/themes/<theme-slug>/index.html`.
 - PHP files pass syntax checks (`php -l`).
+- Generated zips exist under `zippedTheme/` and contain key files (style.css, functions.php, assets/css/theme.css, assets/js/theme.js).
 - Obvious broken links, missing assets, and invalid paths are avoided.
 - The PR summary explains what changed.

@@ -27,7 +27,7 @@ THEME_SLUG="${BASE_THEME_SLUG}-x${THEME_VERSION}"
 THEME_DISPLAY_NAME="Nolan Showcase Theme X${THEME_VERSION}"
 
 THEME_DIR="wp-content/themes/${THEME_SLUG}"
-THEME_ZIP="wp-content/themes/${THEME_SLUG}.zip"
+THEME_ZIP="zippedTheme/${THEME_SLUG}.zip"
 export THEME_SLUG THEME_DISPLAY_NAME THEME_DIR THEME_ZIP THEME_VERSION
 
 CURRENT_BRANCH="$(git -C "$ROOT_DIR" branch --show-current)"
@@ -52,9 +52,10 @@ THEME_FS_DIR="$ROOT_DIR/$THEME_DIR"
 THEME_FS_ZIP="$ROOT_DIR/$THEME_ZIP"
 if [ -d "$THEME_FS_DIR" ]; then
   rm -f "$THEME_FS_ZIP"
+  mkdir -p "$ROOT_DIR/zippedTheme"
   (
     cd "$ROOT_DIR/wp-content/themes"
-    zip -qr "$THEME_SLUG.zip" "$THEME_SLUG"
+    zip -qr "$ROOT_DIR/zippedTheme/$THEME_SLUG.zip" "$THEME_SLUG"
   )
 fi
 

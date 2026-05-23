@@ -48,6 +48,7 @@ Run Codex from your terminal in this order:
 ### 1. Planner
 
 Run the local workflow script with your task. It will call Planner, Builder, and Reviewer in sequence.
+If you are on `main`, it will automatically create a feature branch first.
 
 ```text
 bash scripts/run-local-workflow.sh "Build a new production-quality WordPress theme named Nolan Showcase Theme..."

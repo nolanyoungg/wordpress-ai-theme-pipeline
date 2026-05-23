@@ -1,25 +1,10 @@
-# OS files
-.DS_Store
-Thumbs.db
+dist/
+.themes.txt
 
-# Node
-node_modules/
-npm-debug.log*
+# Zip artifacts are created by GitHub Actions and local validation scripts.
+wp-content/themes/*.zip
 
-# Composer
-vendor/
-
-# WordPress local/dev files
-wp-config.php
-wp-content/uploads/
-wp-content/cache/
-wp-content/upgrade/
-wp-content/backup*/
-
-# AI temporary artifacts
+# Local agent output / OS cruft.
 .ai/
-
-# Environment files
-.env
-.env.*
-!.env.example
+.ssh/
+.DS_Store

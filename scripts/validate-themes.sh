@@ -72,6 +72,22 @@ for theme_slug in "${themes[@]}"; do
     exit 1
   fi
 
+  css_bytes="$(wc -c < "$theme_dir/assets/css/theme.css" | tr -d ' ')"
+  if [ "$css_bytes" -lt 800 ]; then
+    echo "Theme stylesheet too small ($css_bytes bytes): $theme_dir/assets/css/theme.css" >&2
+    exit 1
+  fi
+
+  if ! grep -q "assets/css/theme.css" "$theme_dir/functions.php"; then
+    echo "functions.php does not reference assets/css/theme.css: $theme_dir/functions.php" >&2
+    exit 1
+  fi
+
+  if ! grep -q "wp_enqueue_style" "$theme_dir/functions.php"; then
+    echo "functions.php does not call wp_enqueue_style: $theme_dir/functions.php" >&2
+    exit 1
+  fi
+
   while IFS= read -r -d '' php_file; do
     php -l "$php_file" >/dev/null
   done < <(find "$theme_dir" -name "*.php" -type f -print0)
@@ -86,6 +102,17 @@ for theme_slug in "${themes[@]}"; do
       exit 1
     fi
   done
+
+  if ! grep -q "assets/css/preview.css" "$preview_dir/index.html"; then
+    echo "Preview HTML does not link preview.css: $preview_dir/index.html" >&2
+    exit 1
+  fi
+
+  preview_css_bytes="$(wc -c < "$preview_dir/assets/css/preview.css" | tr -d ' ')"
+  if [ "$preview_css_bytes" -lt 800 ]; then
+    echo "Preview stylesheet too small ($preview_css_bytes bytes): $preview_dir/assets/css/preview.css" >&2
+    exit 1
+  fi
 done
 
 dist="$ROOT_DIR/dist"
@@ -100,5 +127,9 @@ echo "Packaging zips into $dist/"
   done
 )
 
-echo "OK"
+for theme_slug in "${themes[@]}"; do
+  zip_path="$dist/$theme_slug.zip"
+  unzip -l "$zip_path" | grep -q "${theme_slug}/assets/css/theme.css" || { echo "Zip missing theme.css: $zip_path" >&2; exit 1; }
+done
 
+echo "OK"

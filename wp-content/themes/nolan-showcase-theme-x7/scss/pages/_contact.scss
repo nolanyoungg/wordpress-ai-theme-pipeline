@@ -1,0 +1,4 @@
+@use "../abstracts/variables" as v;
+
+.contact-details { display:grid; gap: v.$space-5; }
+

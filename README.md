@@ -103,7 +103,7 @@ git checkout -b feature/theme-xN-short-name
 2. Generate the next theme with Codex (GPT-5.2, effort High):
 
 ```bash
-bash scripts/run-local-workflow.sh "Use model GPT-5.2 with effort High.
+CODEX_RUN_MODEL="gpt-5.2" CODEX_RUN_REASONING_EFFORT="high" bash scripts/run-local-workflow.sh "Use model GPT-5.2 with effort High.
 
 Create a new versioned classic WordPress theme using the NEXT available nolan-showcase-theme-xN folder under wp-content/themes/ (never overwrite or edit older versions unless absolutely required for shared tooling).
 
@@ -119,6 +119,28 @@ Theme requirements:
 - Enqueue assets/css/theme.css and assets/js/theme.js from PHP (theme.css/theme.js must exist and be non-trivial).
 - Keep the WordPress theme and the static preview separate (wp-content/ vs docs/).
 - Follow WordPress escaping and accessibility best practices."
+```
+
+To use a different model/effort for Step 2, you only need one of these command styles:
+
+```bash
+CODEX_RUN_MODEL="gpt-5.5" CODEX_RUN_REASONING_EFFORT="high" bash scripts/run-local-workflow.sh "..."
+```
+
+```bash
+CODEX_RUN_MODEL="gpt-5.5" CODEX_RUN_REASONING_EFFORT="medium" bash scripts/run-local-workflow.sh "..."
+```
+
+```bash
+CODEX_RUN_MODEL="gpt-5.2" CODEX_RUN_REASONING_EFFORT="high" bash scripts/run-local-workflow.sh "..."
+```
+
+```bash
+CODEX_RUN_MODEL="gpt-5.2" CODEX_RUN_REASONING_EFFORT="medium" bash scripts/run-local-workflow.sh "..."
+```
+
+```bash
+CODEX_RUN_MODEL="codex-mini-latest" CODEX_RUN_REASONING_EFFORT="medium" bash scripts/run-local-workflow.sh "..."
 ```
 
 3. Validate locally (also builds fresh zips into `zippedTheme/`):

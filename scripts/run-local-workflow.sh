@@ -12,6 +12,14 @@ export TASK
 
 mkdir -p "$ROOT_DIR/.ai"
 
+CODEX_ARGS=()
+if [ -n "${CODEX_RUN_MODEL:-}" ]; then
+  CODEX_ARGS+=(-m "$CODEX_RUN_MODEL")
+fi
+if [ -n "${CODEX_RUN_REASONING_EFFORT:-}" ]; then
+  CODEX_ARGS+=(-c "model_reasoning_effort=\"${CODEX_RUN_REASONING_EFFORT}\"")
+fi
+
 BASE_THEME_SLUG="nolan-showcase-theme"
 THEME_VERSION=1
 while IFS= read -r THEME_BASE; do
@@ -44,9 +52,9 @@ perl -0pe '
   s/\{\{THEME_DISPLAY_NAME\}\}/$ENV{THEME_DISPLAY_NAME}/g;
   s/\{\{THEME_SLUG\}\}/$ENV{THEME_SLUG}/g;
 ' "$ROOT_DIR/.github/codex/prompts/planner.md" > "$ROOT_DIR/.ai/planner-run.md"
-codex exec --cd "$ROOT_DIR" --output-last-message .ai/builder-prompt.md < "$ROOT_DIR/.ai/planner-run.md"
+codex exec --cd "$ROOT_DIR" "${CODEX_ARGS[@]}" --output-last-message .ai/builder-prompt.md < "$ROOT_DIR/.ai/planner-run.md"
 
-codex exec --cd "$ROOT_DIR" --sandbox workspace-write --output-last-message .ai/implementation-summary.md < "$ROOT_DIR/.ai/builder-prompt.md"
+codex exec --cd "$ROOT_DIR" "${CODEX_ARGS[@]}" --sandbox workspace-write --output-last-message .ai/implementation-summary.md < "$ROOT_DIR/.ai/builder-prompt.md"
 
 THEME_FS_DIR="$ROOT_DIR/$THEME_DIR"
 THEME_FS_ZIP="$ROOT_DIR/$THEME_ZIP"
@@ -66,7 +74,7 @@ perl -0pe '
   s/\{\{THEME_DISPLAY_NAME\}\}/$ENV{THEME_DISPLAY_NAME}/g;
   s/\{\{THEME_SLUG\}\}/$ENV{THEME_SLUG}/g;
 ' "$ROOT_DIR/.github/codex/prompts/reviewer.md" > "$ROOT_DIR/.ai/reviewer-run.md"
-codex exec --cd "$ROOT_DIR" --sandbox read-only --output-last-message .ai/reviewer-report.md < "$ROOT_DIR/.ai/reviewer-run.md"
+codex exec --cd "$ROOT_DIR" "${CODEX_ARGS[@]}" --sandbox read-only --output-last-message .ai/reviewer-report.md < "$ROOT_DIR/.ai/reviewer-run.md"
 
 printf '%s\n' "Local Codex workflow complete."
 printf '%s\n' "Next: run scripts/validate-themes.sh, then review and commit changes manually."

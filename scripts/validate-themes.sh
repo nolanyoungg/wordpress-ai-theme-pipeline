@@ -23,6 +23,7 @@ if [ "$needs_node_build" -eq 1 ]; then
     exit 1
   fi
   if [ -f "$ROOT_DIR/package.json" ]; then
+    (cd "$ROOT_DIR" && npm run check:npm-allowlist)
     echo "Building React bundles (entrypoints detected)..."
     (cd "$ROOT_DIR" && npm run build:react-bundles)
   fi

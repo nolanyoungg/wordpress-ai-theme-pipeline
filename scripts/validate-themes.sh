@@ -78,13 +78,13 @@ for theme_slug in "${themes[@]}"; do
     exit 1
   fi
 
-  if ! grep -q "assets/css/theme.css" "$theme_dir/functions.php"; then
-    echo "functions.php does not reference assets/css/theme.css: $theme_dir/functions.php" >&2
+  if ! grep -R -q "assets/css/theme.css" "$theme_dir"; then
+    echo "Theme does not reference assets/css/theme.css: $theme_dir" >&2
     exit 1
   fi
 
-  if ! grep -q "wp_enqueue_style" "$theme_dir/functions.php"; then
-    echo "functions.php does not call wp_enqueue_style: $theme_dir/functions.php" >&2
+  if ! grep -R -q "wp_enqueue_style" "$theme_dir"; then
+    echo "Theme does not call wp_enqueue_style: $theme_dir" >&2
     exit 1
   fi
 

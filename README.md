@@ -56,8 +56,11 @@ The workflow `.github/workflows/validate-package-preview.yml`:
 - Detects all `wp-content/themes/nolan-showcase-theme-x*` folders
 - Validates required theme files and `style.css` theme header
 - Runs `php -l` over all PHP files in each theme
-- Builds fresh theme zips and checks they match committed `zippedTheme/nolan-showcase-theme-xN.zip` when a theme version changes
-- Uploads zip files as the `theme-zips` workflow artifact
+- Verifies a committed zip exists for every detected theme: `zippedTheme/nolan-showcase-theme-xN.zip`
+- Builds fresh zips in CI (into `tmpZips/`) and verifies they match the committed zip for any theme versions changed in the run
+- Uploads the freshly-built zips as the `theme-zips` workflow artifact
+
+Important: when you add a new theme version (or edit an existing theme version), you must regenerate and commit the matching zip(s) in `zippedTheme/`.
 
 ### Rebuilding a single theme ZIP (when CI fails)
 
@@ -155,9 +158,15 @@ CODEX_RUN_MODEL="gpt-5.2" CODEX_RUN_REASONING_EFFORT="medium" bash scripts/run-l
 CODEX_RUN_MODEL="codex-mini-latest" CODEX_RUN_REASONING_EFFORT="medium" bash scripts/run-local-workflow.sh "..."
 ```
 
-3. Validate locally (also builds fresh zips into `zippedTheme/`):
+3. Validate locally:
 
-- Run: `bash scripts/validate-themes.sh`
+`scripts/validate-themes.sh` runs theme + preview checks and rebuilds ALL theme zips into `zippedTheme/`.
+
+If you only changed one theme version, it is usually cleaner to rebuild just that zip (see “Rebuilding a single theme ZIP” above), then run:
+
+```bash
+bash scripts/validate-themes.sh
+```
 
 4. Commit, push, and open a PR:
 
@@ -166,5 +175,5 @@ git status
 git add -A
 git commit -m "Add Nolan Showcase Theme XN"
 git push -u origin HEAD
-gh pr create --base main --head "$(git branch --show-current)" --title "Add Nolan Showcase Theme XN" --body "Adds a new versioned theme folder, matching docs preview, and relies on Actions to generate ZIPs into zippedTheme/ (artifact: theme-zips)."
+gh pr create --base main --head "$(git branch --show-current)" --title "Add Nolan Showcase Theme XN" --body "Adds a new versioned theme folder, matching docs preview, and includes a regenerated committed zip in zippedTheme/. CI will verify the committed zip matches the theme source."
 ```

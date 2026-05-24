@@ -15,7 +15,7 @@ Codex is used **manually/local** (via a normal ChatGPT Pro subscription) to gene
 ## Repo structure
 
 - WordPress themes: `wp-content/themes/nolan-showcase-theme-x1/`, `...-x2/`, `...-x3/`, etc.
-- Generated theme zip output folder: `zippedTheme/` (build output; zips are not committed)
+- Generated theme zip output folder: `zippedTheme/` (generated packages; committed so you can download directly from the repo)
 - GitHub Pages gallery and previews: `docs/`
   - Gallery: `docs/index.html`
   - Per-theme previews: `docs/themes/<theme-slug>/index.html`
@@ -56,8 +56,20 @@ The workflow `.github/workflows/validate-package-preview.yml`:
 - Detects all `wp-content/themes/nolan-showcase-theme-x*` folders
 - Validates required theme files and `style.css` theme header
 - Runs `php -l` over all PHP files in each theme
-- Builds `zippedTheme/nolan-showcase-theme-xN.zip` (folder included in zip)
+- Builds fresh theme zips and checks they match committed `zippedTheme/nolan-showcase-theme-xN.zip` when a theme version changes
 - Uploads zip files as the `theme-zips` workflow artifact
+
+### Rebuilding a single theme ZIP (when CI fails)
+
+If you edit `wp-content/themes/nolan-showcase-theme-xN/`, you must rebuild and commit the matching zip:
+
+```bash
+rm -f zippedTheme/nolan-showcase-theme-xN.zip
+( cd wp-content/themes && zip -qr "../../zippedTheme/nolan-showcase-theme-xN.zip" "nolan-showcase-theme-xN" )
+git add zippedTheme/nolan-showcase-theme-xN.zip
+git commit -m "Rebuild zip for nolan-showcase-theme-xN"
+git push
+```
 
 ### Downloading a ZIP artifact
 

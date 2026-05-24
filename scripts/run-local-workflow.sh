@@ -9,6 +9,8 @@ fi
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 TASK="$*"
 export TASK
+WORKFLOW_MODE="${CODEX_WORKFLOW_MODE:-planner}"
+export WORKFLOW_MODE
 
 mkdir -p "$ROOT_DIR/.ai"
 
@@ -45,14 +47,47 @@ if [ "$CURRENT_BRANCH" = "main" ]; then
   echo "Switched to feature branch: $FEATURE_BRANCH"
 fi
 
-perl -0pe '
-  s/\{\{TASK\}\}/$ENV{TASK}/g;
-  s/\{\{THEME_DIR\}\}/$ENV{THEME_DIR}/g;
-  s/\{\{THEME_ZIP\}\}/$ENV{THEME_ZIP}/g;
-  s/\{\{THEME_DISPLAY_NAME\}\}/$ENV{THEME_DISPLAY_NAME}/g;
-  s/\{\{THEME_SLUG\}\}/$ENV{THEME_SLUG}/g;
-' "$ROOT_DIR/.github/codex/prompts/planner.md" > "$ROOT_DIR/.ai/planner-run.md"
-codex exec --cd "$ROOT_DIR" "${CODEX_ARGS[@]}" --output-last-message .ai/builder-prompt.md < "$ROOT_DIR/.ai/planner-run.md"
+case "$WORKFLOW_MODE" in
+  planner)
+    perl -0pe '
+      s/\{\{TASK\}\}/$ENV{TASK}/g;
+      s/\{\{THEME_DIR\}\}/$ENV{THEME_DIR}/g;
+      s/\{\{THEME_ZIP\}\}/$ENV{THEME_ZIP}/g;
+      s/\{\{THEME_DISPLAY_NAME\}\}/$ENV{THEME_DISPLAY_NAME}/g;
+      s/\{\{THEME_SLUG\}\}/$ENV{THEME_SLUG}/g;
+    ' "$ROOT_DIR/.github/codex/prompts/planner.md" > "$ROOT_DIR/.ai/planner-run.md"
+    codex exec --cd "$ROOT_DIR" "${CODEX_ARGS[@]}" --output-last-message .ai/builder-prompt.md < "$ROOT_DIR/.ai/planner-run.md"
+    ;;
+  passthrough)
+    cat > "$ROOT_DIR/.ai/builder-prompt.md" <<EOF
+You are the BUILDER AGENT.
+
+Implement the user's request directly and preserve the original intent as closely as possible. Do not run the planner step.
+
+Repository instructions:
+- Read AGENTS.md.
+- The target theme directory is $THEME_DIR.
+- The theme should also be zipped to $THEME_ZIP.
+- The display name for this build is $THEME_DISPLAY_NAME.
+- Also create a matching static GitHub Pages preview in \`docs/themes/$THEME_SLUG/\` and update \`docs/index.html\`.
+- The result should be suitable for a WordPress theme pull request.
+- Do not edit unrelated files.
+- Do not add API keys, SSH, SFTP, production secrets, or deployment credentials.
+
+Original user task:
+$TASK
+
+Implement the task directly with the smallest necessary amount of interpretation.
+EOF
+    ;;
+  raw)
+    printf '%s\n' "$TASK" > "$ROOT_DIR/.ai/builder-prompt.md"
+    ;;
+  *)
+    echo "Unknown CODEX_WORKFLOW_MODE: $WORKFLOW_MODE (expected planner, passthrough, or raw)" >&2
+    exit 1
+    ;;
+esac
 
 codex exec --cd "$ROOT_DIR" "${CODEX_ARGS[@]}" --sandbox workspace-write --output-last-message .ai/implementation-summary.md < "$ROOT_DIR/.ai/builder-prompt.md"
 

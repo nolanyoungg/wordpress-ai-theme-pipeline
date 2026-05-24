@@ -43,6 +43,20 @@ Never overwrite older versions.
    - The new theme must be created under `wp-content/themes/nolan-showcase-theme-xN/`.
    - The matching preview must be created under `docs/themes/nolan-showcase-theme-xN/`.
    - Update `docs/index.html` to include the new version.
+
+By default, this workflow uses the planner step to rewrite your task into a structured builder prompt. If you want less rewriting, set one of these modes:
+
+```bash
+CODEX_WORKFLOW_MODE="passthrough" ...
+```
+
+This skips the planner and sends a light wrapper prompt to the builder.
+
+```bash
+CODEX_WORKFLOW_MODE="raw" ...
+```
+
+This skips the planner and passes your prompt through to the builder unchanged.
 3. Run local validation:
 
 ```bash

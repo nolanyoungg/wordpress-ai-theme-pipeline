@@ -3,7 +3,6 @@ dist/
 
 # Zip artifacts are created by GitHub Actions and local validation scripts.
 wp-content/themes/*.zip
-zippedTheme/*.zip
 !zippedTheme/.gitkeep
 
 # Local agent output / OS cruft.

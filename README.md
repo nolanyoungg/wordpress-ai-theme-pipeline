@@ -9,6 +9,7 @@ Codex is used **manually/local** (via a normal ChatGPT Pro subscription) to gene
 - No OpenAI API usage.
 - No `OPENAI_API_KEY` requirements.
 - No `openai/codex-action`.
+- No paid AI API keys required; free build tooling (`npm`) is allowed.
 - GitHub Actions are used only for validation, packaging ZIP files, and publishing GitHub Pages previews.
 - GitHub Pages does not run PHP/WordPress; previews are static HTML under `docs/`.
 
@@ -63,6 +64,9 @@ Then run:
 npm install
 npm run build:react-bundles
 ```
+
+Note: this uses free, public npm packages at build time. No paid AI API keys are required.
+The workflow also checks a small npm dependency allowlist and runs `npm audit --audit-level=high`.
 
 CI will fail if bundling produces changes that aren’t committed.
 
@@ -143,7 +147,7 @@ Also create a matching static GitHub Pages preview under docs/themes/nolan-showc
 
 Hard constraints:
 - No OpenAI API usage, no OPENAI_API_KEY, no openai/codex-action.
-- No external services.
+- No paid AI API keys required; free build tooling (`npm`) is allowed.
 - No CDN dependencies required for the WordPress theme (all assets local).
 
 Theme requirements:

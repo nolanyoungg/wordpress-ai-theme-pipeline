@@ -45,6 +45,18 @@ jobs:
             npm install
           fi
 
+      - name: Check npm dependency allowlist
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run check:npm-allowlist
+
+      - name: Audit npm dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm audit --audit-level=high
+
       - name: Build React bundles (optional per-theme)
         shell: bash
         run: |

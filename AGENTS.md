@@ -53,6 +53,9 @@ This repository builds, reviews, validates, packages, and publishes **versioned 
 - Use Codex signed into the ChatGPT account to run the planner, builder, and reviewer steps locally.
 - Do not assume or require an OpenAI API key.
 - Never create a workflow that requires `OPENAI_API_KEY`.
+- Free build tooling such as `npm` is allowed; do not introduce paid AI API requirements.
+- Keep the npm dependency surface tiny; the current allowlist is `esbuild`, `react`, and `react-dom`.
+- CI runs `npm audit --audit-level=high`; fix or remove dependencies that trip it.
 - GitHub Actions are for validation, zip packaging, and Pages deployment only.
 - Keep AI-generated artifacts in `.ai/` until you are ready to commit them.
 - Do not push directly to `main`. Use a PR.

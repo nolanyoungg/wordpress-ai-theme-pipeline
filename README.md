@@ -15,7 +15,7 @@ Codex is used **manually/local** (via a normal ChatGPT Pro subscription) to gene
 ## Repo structure
 
 - WordPress themes: `wp-content/themes/nolan-showcase-theme-x1/`, `...-x2/`, `...-x3/`, etc.
-- Generated theme zip output folder: `zippedTheme/` (build output; zips are not committed)
+- Generated theme zip output folder: `zippedTheme/` (generated packages; committed so you can download directly from the repo)
 - GitHub Pages gallery and previews: `docs/`
   - Gallery: `docs/index.html`
   - Per-theme previews: `docs/themes/<theme-slug>/index.html`
@@ -56,8 +56,23 @@ The workflow `.github/workflows/validate-package-preview.yml`:
 - Detects all `wp-content/themes/nolan-showcase-theme-x*` folders
 - Validates required theme files and `style.css` theme header
 - Runs `php -l` over all PHP files in each theme
-- Builds `zippedTheme/nolan-showcase-theme-xN.zip` (folder included in zip)
-- Uploads zip files as the `theme-zips` workflow artifact
+- Verifies a committed zip exists for every detected theme: `zippedTheme/nolan-showcase-theme-xN.zip`
+- Builds fresh zips in CI (into `tmpZips/`) and verifies they match the committed zip for any theme versions changed in the run
+- Uploads the freshly-built zips as the `theme-zips` workflow artifact
+
+Important: when you add a new theme version (or edit an existing theme version), you must regenerate and commit the matching zip(s) in `zippedTheme/`.
+
+### Rebuilding a single theme ZIP (when CI fails)
+
+If you edit `wp-content/themes/nolan-showcase-theme-xN/`, you must rebuild and commit the matching zip:
+
+```bash
+rm -f zippedTheme/nolan-showcase-theme-xN.zip
+( cd wp-content/themes && zip -qr "../../zippedTheme/nolan-showcase-theme-xN.zip" "nolan-showcase-theme-xN" )
+git add zippedTheme/nolan-showcase-theme-xN.zip
+git commit -m "Rebuild zip for nolan-showcase-theme-xN"
+git push
+```
 
 ### Downloading a ZIP artifact
 
@@ -143,9 +158,15 @@ CODEX_RUN_MODEL="gpt-5.2" CODEX_RUN_REASONING_EFFORT="medium" bash scripts/run-l
 CODEX_RUN_MODEL="codex-mini-latest" CODEX_RUN_REASONING_EFFORT="medium" bash scripts/run-local-workflow.sh "..."
 ```
 
-3. Validate locally (also builds fresh zips into `zippedTheme/`):
+3. Validate locally:
 
-- Run: `bash scripts/validate-themes.sh`
+`scripts/validate-themes.sh` runs theme + preview checks and rebuilds ALL theme zips into `zippedTheme/`.
+
+If you only changed one theme version, it is usually cleaner to rebuild just that zip (see “Rebuilding a single theme ZIP” above), then run:
+
+```bash
+bash scripts/validate-themes.sh
+```
 
 4. Commit, push, and open a PR:
 
@@ -154,5 +175,5 @@ git status
 git add -A
 git commit -m "Add Nolan Showcase Theme XN"
 git push -u origin HEAD
-gh pr create --base main --head "$(git branch --show-current)" --title "Add Nolan Showcase Theme XN" --body "Adds a new versioned theme folder, matching docs preview, and relies on Actions to generate ZIPs into zippedTheme/ (artifact: theme-zips)."
+gh pr create --base main --head "$(git branch --show-current)" --title "Add Nolan Showcase Theme XN" --body "Adds a new versioned theme folder, matching docs preview, and includes a regenerated committed zip in zippedTheme/. CI will verify the committed zip matches the theme source."
 ```

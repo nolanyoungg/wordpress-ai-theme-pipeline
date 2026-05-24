@@ -87,3 +87,50 @@ https://nolanyoungg.github.io/wordpress-ai-theme-pipeline/
 - `docs/index.html` updated with the new theme link
 - `scripts/validate-themes.sh` passes locally
 - Workflow artifacts contain the expected `nolan-showcase-theme-xN.zip`
+
+## Add A New Theme (Steps 1-4)
+
+These steps are the repeatable path for adding a new theme version. Do not hardcode the `xN` number in your prompt; the repo workflow will pick the next available version and create a new folder.
+
+1. Create a branch from `main`:
+
+```bash
+git checkout main
+git pull
+git checkout -b feature/theme-xN-short-name
+```
+
+2. Generate the next theme with Codex (GPT-5.2, effort High):
+
+```bash
+bash scripts/run-local-workflow.sh "Use model GPT-5.2 with effort High.
+
+Create a new versioned classic WordPress theme using the NEXT available nolan-showcase-theme-xN folder under wp-content/themes/ (never overwrite or edit older versions unless absolutely required for shared tooling).
+
+Also create a matching static GitHub Pages preview under docs/themes/nolan-showcase-theme-xN/ and update docs/index.html to link the new version.
+
+Hard constraints:
+- No OpenAI API usage, no OPENAI_API_KEY, no openai/codex-action.
+- No external services.
+- No CDN dependencies required for the WordPress theme (all assets local).
+
+Theme requirements:
+- Include the required templates and template-parts (page/single/archive/search/404/comments + template-parts/*).
+- Enqueue assets/css/theme.css and assets/js/theme.js from PHP (theme.css/theme.js must exist and be non-trivial).
+- Keep the WordPress theme and the static preview separate (wp-content/ vs docs/).
+- Follow WordPress escaping and accessibility best practices."
+```
+
+3. Validate locally (also builds fresh zips into `zippedTheme/`):
+
+- Run: `bash scripts/validate-themes.sh`
+
+4. Commit, push, and open a PR:
+
+```bash
+git status
+git add -A
+git commit -m "Add Nolan Showcase Theme XN"
+git push -u origin HEAD
+gh pr create --base main --head "$(git branch --show-current)" --title "Add Nolan Showcase Theme XN" --body "Adds a new versioned theme folder, matching docs preview, and relies on Actions to generate ZIPs into zippedTheme/ (artifact: theme-zips)."
+```

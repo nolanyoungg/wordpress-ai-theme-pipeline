@@ -16,9 +16,9 @@
  * @package Nolan_Showcase_Theme_X10
  */
 
-$kicker        = isset( $args['kicker'] ) ? (string) $args['kicker'] : __( 'MNY Photo — NYC + travel', 'nolan-showcase-theme-x10' );
-$headline      = isset( $args['headline'] ) ? (string) $args['headline'] : __( 'Cinematic photography for people, brands, and unforgettable moments.', 'nolan-showcase-theme-x10' );
-$subhead       = isset( $args['subhead'] ) ? (string) $args['subhead'] : __( 'Premium, bright editorial images with calm direction and a print‑first finish. We build galleries that feel like a story — not a photoshoot.', 'nolan-showcase-theme-x10' );
+$kicker        = isset( $args['kicker'] ) ? (string) $args['kicker'] : __( 'Noir editorial sessions — NYC + travel', 'nolan-showcase-theme-x10' );
+$headline      = isset( $args['headline'] ) ? (string) $args['headline'] : __( 'Atmospheric photography for people, brands, and unforgettable moments.', 'nolan-showcase-theme-x10' );
+$subhead       = isset( $args['subhead'] ) ? (string) $args['subhead'] : __( 'Contrast-rich images with calm direction and a print-first finish. We build galleries that feel cinematic, intimate, and intentionally composed.', 'nolan-showcase-theme-x10' );
 $primary_url   = isset( $args['primary_url'] ) ? esc_url( (string) $args['primary_url'] ) : esc_url( home_url( '/contact/' ) );
 $secondary_url = isset( $args['secondary_url'] ) ? esc_url( (string) $args['secondary_url'] ) : esc_url( home_url( '/work/' ) );
 ?>
@@ -34,8 +34,8 @@ $secondary_url = isset( $args['secondary_url'] ) ? esc_url( (string) $args['seco
 				<a class="btn btn-secondary" href="<?php echo $secondary_url; ?>"><?php esc_html_e( 'View Work', 'nolan-showcase-theme-x10' ); ?></a>
 			</div>
 			<ul class="hero__trust" aria-label="<?php echo esc_attr_x( 'Proof tags', 'aria label', 'nolan-showcase-theme-x10' ); ?>">
-				<li><?php esc_html_e( 'Editorial direction', 'nolan-showcase-theme-x10' ); ?></li>
-				<li><?php esc_html_e( 'Natural skin tones', 'nolan-showcase-theme-x10' ); ?></li>
+				<li><?php esc_html_e( 'Cinematic direction', 'nolan-showcase-theme-x10' ); ?></li>
+				<li><?php esc_html_e( 'Rich shadows + warm highlights', 'nolan-showcase-theme-x10' ); ?></li>
 				<li><?php esc_html_e( 'Print-ready delivery', 'nolan-showcase-theme-x10' ); ?></li>
 				<li><?php esc_html_e( 'Timeline-friendly coverage', 'nolan-showcase-theme-x10' ); ?></li>
 			</ul>
@@ -50,4 +50,3 @@ $secondary_url = isset( $args['secondary_url'] ) ? esc_url( (string) $args['seco
 		</div>
 	</div>
 </section>
-

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Gift bundle box">
+  <rect width="800" height="600" rx="42" fill="#fffaf3"/>
+  <rect x="190" y="170" width="420" height="280" rx="28" fill="#e8d9bf" stroke="#c5ab84" stroke-width="6"/>
+  <path d="M190 250h420" stroke="#c5ab84" stroke-width="6"/>
+  <path d="M400 170v280" stroke="#c5ab84" stroke-width="6"/>
+  <path d="M400 172c-34-30-68-34-100-12 33 13 64 30 100 58 36-28 67-45 100-58-32-22-66-18-100 12Z" fill="#b66f4f"/>
+  <path d="M400 174c8 16 14 34 18 54-14-1-26-9-35-23-5-8-6-19 17-31Z" fill="#fff"/>
+  <path d="M400 174c-8 16-14 34-18 54 14-1 26-9 35-23 5-8 6-19-17-31Z" fill="#fff"/>
+  <rect x="250" y="300" width="300" height="24" rx="12" fill="#fff"/>
+  <rect x="250" y="350" width="220" height="18" rx="9" fill="#fff"/>
+</svg>

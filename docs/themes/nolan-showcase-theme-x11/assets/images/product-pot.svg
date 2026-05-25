@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Planter with plant">
+  <rect width="800" height="600" rx="42" fill="#fffaf3"/>
+  <ellipse cx="400" cy="150" rx="170" ry="110" fill="#e3ecd8"/>
+  <path d="M400 120c26 18 40 43 44 75-26 4-48-10-58-39-5-14-5-26 14-36Z" fill="#6e8a58"/>
+  <path d="M400 120c-26 18-40 43-44 75 26 4 48-10 58-39 5-14 5-26-14-36Z" fill="#87a86b"/>
+  <path d="M400 150c-42 18-79 52-110 101 52 4 98-16 110-57" fill="#7ea064"/>
+  <path d="M400 150c42 18 79 52 110 101-52 4-98-16-110-57" fill="#5c7548"/>
+  <path d="M400 150v165" stroke="#51664b" stroke-width="10" stroke-linecap="round"/>
+  <rect x="240" y="330" width="320" height="42" rx="21" fill="#e2c79a"/>
+  <path d="M255 372h290l-32 150H287L255 372Z" fill="url(#pot)"/>
+  <defs>
+    <linearGradient id="pot" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#cfaf7c"/>
+      <stop offset="1" stop-color="#a97744"/>
+    </linearGradient>
+  </defs>
+</svg>

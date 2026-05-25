@@ -1,634 +1,284 @@
 /**
- * Nolan Showcase Theme X11 — theme interactions (vanilla JS, no jQuery).
- *
- * Purpose:
- * - Sticky header scrolled state.
- * - Accessible Nolan mega menu:
- *   - Desktop disclosure panels (solid background) with backdrop + scroll lock.
- *   - One panel open at a time; outside click + Escape closes.
- *   - Rail interaction: hover + keyboard focus updates the right content.
- * - Accessible mobile drawer:
- *   - Open/close via button, backdrop click, Escape.
- *   - Accordion sections for What We Do / Who We Are / Resources.
- * - Interactive front page:
- *   1) Featured Work filter chips (keyboard + animation).
- *   2) Spotlight carousel (buttons + ARIA state).
- *   3) Before/After reveal slider (range input).
- *   4) Testimonials rotator (buttons + pause on hover/focus; no autoplay on reduced motion).
- *   5) Scroll reveal (disabled for reduced motion).
- *   6) Optional count-up stats (no layout shift; disabled for reduced motion).
- *
- * Pre:
- * - Markup uses the required class naming and data attributes described in the X11 brief.
- *
- * Post:
- * - Progressive enhancement: the site remains usable with JS disabled.
+ * File purpose: Static preview interactions for Nolan Showcase Theme X11.
+ * References: docs/themes/nolan-showcase-theme-x11/*.html and preview.css.
+ * Behavior: Handles desktop panels, mobile drawer, filters, carousel, testimonials, and reveal states.
+ * Return values: None.
  */
-
-(() => {
+(function () {
 	'use strict';
 
-	/** @param {string} sel @param {ParentNode} [ctx] */
 	const q = (sel, ctx = document) => ctx.querySelector(sel);
-	/** @param {string} sel @param {ParentNode} [ctx] */
 	const qa = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
-	/** @param {unknown} val */
-	const esc = (val) => {
-		const str = String(val ?? '');
-		if (window.CSS && typeof window.CSS.escape === 'function') return window.CSS.escape(str);
-		return str.replace(/[^a-zA-Z0-9_-]/g, '\\$&');
-	};
+	function setHidden(el, hidden) {
+		if (!el) return;
+		el.hidden = hidden;
+	}
 
-	/** @param {Element|null} el @param {Element|null} container */
-	const isWithin = (el, container) => {
-		if (!el || !container) return false;
-		return el === container || container.contains(el);
-	};
-
-	/** @returns {boolean} */
-	const prefersReducedMotion = () => {
-		try {
-			return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-		} catch {
-			return false;
-		}
-	};
-
-	/**
-	 * Toggle scroll locking on the body and compensate for scrollbar width.
-	 *
-	 * @param {boolean} locked
-	 * @returns {void}
-	 */
-	function setScrollLocked(locked) {
-		const body = document.body;
-		if (!body) return;
-
-		const alreadyLocked = body.classList.contains('is-scroll-locked');
-		if (locked === alreadyLocked) return;
-
-		if (locked) {
-			const scrollbar = Math.max(0, window.innerWidth - document.documentElement.clientWidth);
-			body.classList.add('is-scroll-locked');
-			body.style.overflow = 'hidden';
-			if (scrollbar) body.style.paddingRight = `${scrollbar}px`;
+	function initReveal() {
+		const items = qa('[data-reveal]');
+		if (!items.length || !('IntersectionObserver' in window)) {
+			items.forEach((item) => item.classList.add('is-in'));
 			return;
 		}
-
-		body.classList.remove('is-scroll-locked');
-		body.style.overflow = '';
-		body.style.paddingRight = '';
+		const io = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-in');
+					io.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.18 });
+		items.forEach((item) => io.observe(item));
 	}
 
-	/**
-	 * Apply sticky header scrolled styling.
-	 *
-	 * @returns {void}
-	 */
-	function initHeaderScrolledState() {
-		const header = q('.nolan-header');
+	function initDesktopPanels() {
+		const header = q('[data-preview-header]');
 		if (!header) return;
-
-		const onScroll = () => header.classList.toggle('is-scrolled', (window.scrollY || 0) > 10);
-		onScroll();
-		window.addEventListener('scroll', onScroll, { passive: true });
-	}
-
-	/**
-	 * Initialize rail behavior inside mega panels.
-	 *
-	 * @param {HTMLElement} panel
-	 * @returns {void}
-	 */
-	function initRail(panel) {
-		const railButtons = qa('button[data-rail-item]', panel);
-		const contentSections = qa('section[data-rail-content]', panel);
-		if (!railButtons.length || !contentSections.length) return;
-
-		/** @param {string} key */
-		const setActive = (key) => {
-			railButtons.forEach((btn) => {
-				const active = btn.dataset.railItem === key;
-				btn.classList.toggle('is-active', active);
-				btn.setAttribute('aria-selected', active ? 'true' : 'false');
-			});
-			contentSections.forEach((section) => {
-				const active = section.dataset.railContent === key;
-				section.classList.toggle('is-active', active);
-				section.hidden = !active;
-			});
-		};
-
-		const firstKey = railButtons[0]?.dataset.railItem;
-		if (firstKey) setActive(firstKey);
-
-		railButtons.forEach((btn, idx) => {
-			const key = btn.dataset.railItem;
-			if (!key) return;
-
-			const activate = () => setActive(key);
-			btn.addEventListener('mouseenter', activate);
-			btn.addEventListener('focus', activate);
-			btn.addEventListener('click', activate);
-
-			btn.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault();
-					activate();
-					return;
-				}
-				if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-					e.preventDefault();
-					const next = e.key === 'ArrowDown' ? idx + 1 : idx - 1;
-					const target = railButtons[(next + railButtons.length) % railButtons.length];
-					if (target) target.focus();
-				}
-			});
-		});
-	}
-
-	/**
-	 * Initialize desktop mega menu.
-	 *
-	 * @returns {{ closeAll: () => void }}
-	 */
-	function initMegaMenu() {
-		const header = q('.nolan-header');
-		if (!header) return { closeAll: () => {} };
-
-		const triggers = qa('button[data-menu-item]', header);
-		const panelsWrap = q('[data-nolan-menu-panels]', header);
-		const panels = panelsWrap ? qa('div[data-menu-dropdown]', panelsWrap) : [];
-		const backdrop = q('[data-nolan-menu-backdrop]', header);
-
-		if (!triggers.length || !panels.length || !backdrop) return { closeAll: () => {} };
-
+		const triggers = qa('[data-menu-item]', header);
+		const panels = qa('[data-menu-dropdown]', header);
+		const backdrop = q('[data-menu-backdrop]', header);
 		let openKey = null;
 
-		/** @param {string} key */
-		const getTrigger = (key) => q(`button[data-menu-item="${esc(key)}"]`, header);
-		/** @param {string} key */
-		const getPanel = (key) => q(`div[data-menu-dropdown="${esc(key)}"]`, panelsWrap);
-
-		const closeAll = () => {
-			openKey = null;
-			triggers.forEach((t) => {
-				t.classList.remove('is-active');
-				t.setAttribute('aria-expanded', 'false');
-			});
-			panels.forEach((p) => {
-				p.hidden = true;
-				p.classList.remove('is-open');
-			});
-			backdrop.hidden = true;
-			setScrollLocked(false);
-		};
-
-		/** @param {string} key */
-		const open = (key) => {
-			const trigger = getTrigger(key);
-			const panel = getPanel(key);
-			if (!trigger || !panel) return;
-
-			if (openKey && openKey !== key) closeAll();
-			openKey = key;
-
-			triggers.forEach((t) => {
-				const active = t === trigger;
-				t.classList.toggle('is-active', active);
-				t.setAttribute('aria-expanded', active ? 'true' : 'false');
-			});
-
-			panels.forEach((p) => {
-				const active = p === panel;
-				p.hidden = !active;
-				p.classList.toggle('is-open', active);
-			});
-
-			backdrop.hidden = false;
-			setScrollLocked(true);
-
-			initRail(panel);
-		};
-
-		/** @param {string} key */
-		const toggle = (key) => {
-			if (!key) return;
-			if (openKey === key) return closeAll();
-			open(key);
-		};
-
-		triggers.forEach((btn) => {
-			const key = btn.dataset.menuItem;
-			if (!key) return;
-
-			btn.addEventListener('click', () => toggle(key));
-			btn.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault();
-					toggle(key);
-				}
-				if (e.key === 'Escape') {
-					e.preventDefault();
-					closeAll();
-					btn.focus();
-				}
-			});
-		});
-
-		backdrop.addEventListener('click', closeAll);
-
-		document.addEventListener('keydown', (e) => {
-			if (e.key !== 'Escape' || !openKey) return;
-			e.preventDefault();
-			const activeTrigger = openKey ? getTrigger(openKey) : null;
-			closeAll();
-			if (activeTrigger) activeTrigger.focus();
-		});
-
-		document.addEventListener('pointerdown', (e) => {
-			if (!openKey) return;
-			const panel = openKey ? getPanel(openKey) : null;
-			const trigger = openKey ? getTrigger(openKey) : null;
-			if (isWithin(e.target, panel) || isWithin(e.target, trigger) || isWithin(e.target, header)) return;
-			closeAll();
-		});
-
-		return { closeAll };
-	}
-
-	/**
-	 * Initialize mobile drawer + accordions.
-	 *
-	 * @param {() => void} closeDesktop
-	 * @returns {{ close: () => void }}
-	 */
-	function initMobileMenu(closeDesktop) {
-		const header = q('.nolan-header');
-		if (!header) return { close: () => {} };
-
-		const openBtn = q('[data-nolan-mobile-open]', header);
-		const closeBtn = q('[data-nolan-mobile-close]', header);
-		const drawer = q('[data-nolan-mobile-menu]', header);
-		const backdrop = q('[data-nolan-menu-backdrop]', header);
-		if (!openBtn || !drawer || !backdrop) return { close: () => {} };
-
-		let isOpen = false;
-		let lastActive = null;
-
-		const focusFirst = () => {
-			const focusable = q('a,button,input,select,textarea,[tabindex]:not([tabindex="-1"])', drawer);
-			if (focusable) focusable.focus({ preventScroll: true });
-		};
-
-		/** @param {boolean} next */
-		const setOpen = (next) => {
-			isOpen = !!next;
-			drawer.classList.toggle('is-open', isOpen);
-			drawer.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
-			openBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-			backdrop.hidden = !isOpen;
-			setScrollLocked(isOpen);
-
-			if (isOpen) {
-				closeDesktop();
-				lastActive = document.activeElement;
-				focusFirst();
-				return;
-			}
-
-			if (lastActive && lastActive instanceof HTMLElement) {
-				lastActive.focus({ preventScroll: true });
-			} else {
-				openBtn.focus({ preventScroll: true });
-			}
-		};
-
-		const open = () => setOpen(true);
-		const close = () => setOpen(false);
-
-		openBtn.addEventListener('click', () => (isOpen ? close() : open()));
-		if (closeBtn) closeBtn.addEventListener('click', close);
-		backdrop.addEventListener('click', () => {
-			if (!isOpen) return;
-			close();
-		});
-
-		document.addEventListener('keydown', (e) => {
-			if (e.key !== 'Escape' || !isOpen) return;
-			e.preventDefault();
-			close();
-		});
-
-		qa('[data-nolan-mobile-trigger]', drawer).forEach((trigger) => {
-			const key = trigger.dataset.nolanMobileTrigger;
-			const panel = key ? q(`[data-nolan-mobile-panel-content="${esc(key)}"]`, drawer) : null;
-			if (!panel) return;
-
-			const setExpanded = (expanded) => {
-				trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-				panel.hidden = !expanded;
+		function initRail(panel) {
+			const railButtons = qa('[data-rail-item]', panel);
+			const sections = qa('[data-rail-content]', panel);
+			if (!railButtons.length || !sections.length) return;
+			const activate = (key) => {
+				railButtons.forEach((btn) => {
+					const active = btn.dataset.railItem === key;
+					btn.classList.toggle('is-active', active);
+					btn.setAttribute('aria-selected', active ? 'true' : 'false');
+				});
+				sections.forEach((section) => {
+					const active = section.dataset.railContent === key;
+					section.classList.toggle('is-active', active);
+					setHidden(section, !active);
+				});
 			};
-
-			setExpanded(false);
-
-			trigger.addEventListener('click', () => setExpanded(trigger.getAttribute('aria-expanded') !== 'true'));
-			trigger.addEventListener('keydown', (e) => {
-				if (e.key === 'Enter' || e.key === ' ') {
-					e.preventDefault();
-					trigger.click();
-				}
+			activate(railButtons[0].dataset.railItem);
+			railButtons.forEach((btn) => {
+				btn.addEventListener('mouseenter', () => activate(btn.dataset.railItem));
+				btn.addEventListener('focus', () => activate(btn.dataset.railItem));
+				btn.addEventListener('click', () => activate(btn.dataset.railItem));
 			});
-		});
-
-		if (prefersReducedMotion()) {
-			drawer.style.transition = 'none';
 		}
 
-		return { close };
+		function closeAll() {
+			openKey = null;
+			triggers.forEach((btn) => btn.setAttribute('aria-expanded', 'false'));
+			panels.forEach((panel) => setHidden(panel, true));
+			setHidden(backdrop, true);
+			document.body.classList.remove('is-locked');
+		}
+
+		function openPanel(key) {
+			const trigger = q(`[data-menu-item="${key}"]`, header);
+			const panel = q(`[data-menu-dropdown="${key}"]`, header);
+			if (!trigger || !panel) return;
+			openKey = key;
+			triggers.forEach((btn) => btn.setAttribute('aria-expanded', btn === trigger ? 'true' : 'false'));
+			panels.forEach((node) => setHidden(node, node !== panel));
+			setHidden(backdrop, false);
+			document.body.classList.add('is-locked');
+			initRail(panel);
+		}
+
+		triggers.forEach((trigger) => {
+			trigger.addEventListener('click', () => {
+				const key = trigger.dataset.menuItem;
+				if (openKey === key) closeAll(); else openPanel(key);
+			});
+			trigger.addEventListener('keydown', (event) => {
+				if (event.key === 'Enter' || event.key === ' ') {
+					event.preventDefault();
+					trigger.click();
+				}
+				if (event.key === 'Escape') {
+					event.preventDefault();
+					closeAll();
+				}
+			});
+		});
+
+		if (backdrop) backdrop.addEventListener('click', closeAll);
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && openKey) closeAll();
+		});
+		document.addEventListener('pointerdown', (event) => {
+			if (!openKey) return;
+			const panel = q(`[data-menu-dropdown="${openKey}"]`, header);
+			const trigger = q(`[data-menu-item="${openKey}"]`, header);
+			if (panel && (panel.contains(event.target) || trigger.contains(event.target) || header.contains(event.target))) return;
+			closeAll();
+		});
 	}
 
-	/**
-	 * Featured work filter chips.
-	 *
-	 * Markup contract:
-	 * - Container: `[data-work-filters]`
-	 * - Chip buttons: `button[data-filter]` with `aria-pressed`
-	 * - Cards: `[data-work-card]` with `data-cat="portrait|weddings|..."` and `data-hidden="false|true"`
-	 *
-	 * @returns {void}
-	 */
-	function initWorkFilter() {
-		const root = q('[data-work-filters]');
-		if (!root) return;
+	function initMobileMenu() {
+		const toggle = q('[data-mobile-toggle]');
+		const drawer = q('[data-mobile-drawer]');
+		const closeBtn = q('[data-mobile-close]', drawer || document);
+		if (!toggle || !drawer || !closeBtn) return;
 
-		const buttons = qa('button[data-filter]', root);
+		const accordions = qa('[data-mobile-trigger]', drawer);
+		let lastFocus = null;
+
+		function closeDrawer() {
+			setHidden(drawer, true);
+			toggle.setAttribute('aria-expanded', 'false');
+			document.body.classList.remove('is-locked');
+			accordions.forEach((btn) => {
+				btn.setAttribute('aria-expanded', 'false');
+				setHidden(q(`[data-mobile-panel="${btn.dataset.mobileTrigger}"]`, drawer), true);
+			});
+			if (lastFocus) lastFocus.focus({ preventScroll: true });
+		}
+
+		function openDrawer() {
+			lastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+			setHidden(drawer, false);
+			toggle.setAttribute('aria-expanded', 'true');
+			document.body.classList.add('is-locked');
+			closeBtn.focus({ preventScroll: true });
+		}
+
+		toggle.addEventListener('click', () => {
+			if (drawer.hidden) openDrawer(); else closeDrawer();
+		});
+		closeBtn.addEventListener('click', closeDrawer);
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape' && !drawer.hidden) closeDrawer();
+		});
+
+		accordions.forEach((btn) => {
+			const panel = q(`[data-mobile-panel="${btn.dataset.mobileTrigger}"]`, drawer);
+			if (!panel) return;
+			btn.addEventListener('click', () => {
+				const open = btn.getAttribute('aria-expanded') === 'true';
+				accordions.forEach((other) => {
+					other.setAttribute('aria-expanded', 'false');
+					setHidden(q(`[data-mobile-panel="${other.dataset.mobileTrigger}"]`, drawer), true);
+				});
+				if (!open) {
+					btn.setAttribute('aria-expanded', 'true');
+					setHidden(panel, false);
+				}
+			});
+		});
+	}
+
+	function initFilters() {
+		const nav = q('[data-work-filters]');
+		if (!nav) return;
+		const buttons = qa('[data-filter]', nav);
 		const cards = qa('[data-work-card]');
 		if (!buttons.length || !cards.length) return;
 
-		/** @param {string} filter */
-		const setFilter = (filter) => {
+		function applyFilter(value) {
 			buttons.forEach((btn) => {
-				const active = (btn.dataset.filter || 'all') === filter;
+				const active = btn.dataset.filter === value;
 				btn.classList.toggle('is-active', active);
 				btn.setAttribute('aria-pressed', active ? 'true' : 'false');
 			});
-
 			cards.forEach((card) => {
-				const cat = (card.getAttribute('data-cat') || '').toLowerCase();
-				const show = filter === 'all' || cat === filter;
-				card.dataset.hidden = show ? 'false' : 'true';
-				card.style.pointerEvents = show ? '' : 'none';
+				const visible = value === 'all' || card.dataset.cat === value;
+				card.classList.toggle('is-hidden', !visible);
+				card.dataset.hidden = visible ? 'false' : 'true';
 			});
-		};
+		}
 
-		setFilter(buttons.find((b) => b.dataset.filter === 'all') ? 'all' : (buttons[0]?.dataset.filter || 'all'));
-		buttons.forEach((btn) => btn.addEventListener('click', () => setFilter(btn.dataset.filter || 'all')));
-
-		root.addEventListener('keydown', (e) => {
-			if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-			const currentIdx = buttons.findIndex((b) => b.classList.contains('is-active'));
-			if (currentIdx < 0) return;
-			e.preventDefault();
-			const dir = e.key === 'ArrowRight' ? 1 : -1;
-			const next = buttons[(currentIdx + dir + buttons.length) % buttons.length];
-			if (next) next.focus();
-		});
+		buttons.forEach((btn) => btn.addEventListener('click', () => applyFilter(btn.dataset.filter)));
+		applyFilter('all');
 	}
 
-	/**
-	 * Spotlight carousel.
-	 *
-	 * Markup contract:
-	 * - Root: `[data-carousel]`
-	 * - Slides: `[data-carousel-slide]`
-	 * - Prev/Next: buttons `[data-carousel-prev]` / `[data-carousel-next]`
-	 * - Dots: buttons `[data-carousel-dot]` with `data-slide`
-	 *
-	 * @returns {void}
-	 */
 	function initCarousel() {
 		const root = q('[data-carousel]');
 		if (!root) return;
-
 		const slides = qa('[data-carousel-slide]', root);
-		if (!slides.length) return;
-
 		const prev = q('[data-carousel-prev]', root);
 		const next = q('[data-carousel-next]', root);
-		const dots = qa('[data-carousel-dot]', root);
+		const dotsWrap = q('[data-carousel-dots]', root);
+		let current = 0;
 
-		let idx = 0;
-
-		/** @param {number} nextIdx */
-		const show = (nextIdx) => {
-			idx = (nextIdx + slides.length) % slides.length;
-			slides.forEach((s, i) => {
-				const active = i === idx;
-				s.hidden = !active;
-				s.setAttribute('aria-hidden', active ? 'false' : 'true');
+		function show(index) {
+			current = (index + slides.length) % slides.length;
+			slides.forEach((slide, idx) => {
+				const active = idx === current;
+				slide.hidden = !active;
+				slide.setAttribute('aria-hidden', active ? 'false' : 'true');
 			});
-			dots.forEach((d) => {
-				const active = Number(d.dataset.slide || 0) === idx;
-				d.classList.toggle('is-active', active);
-				d.setAttribute('aria-pressed', active ? 'true' : 'false');
-			});
-		};
+			if (dotsWrap) {
+				qa('button', dotsWrap).forEach((dot, idx) => dot.classList.toggle('is-active', idx === current));
+			}
+		}
 
+		if (dotsWrap) {
+			slides.forEach((_slide, idx) => {
+				const dot = document.createElement('button');
+				dot.type = 'button';
+				dot.className = 'carousel__dot' + (idx === 0 ? ' is-active' : '');
+				dot.setAttribute('aria-label', `Slide ${idx + 1}`);
+				dot.addEventListener('click', () => show(idx));
+				dotsWrap.appendChild(dot);
+			});
+		}
+		if (prev) prev.addEventListener('click', () => show(current - 1));
+		if (next) next.addEventListener('click', () => show(current + 1));
 		show(0);
-
-		if (prev) prev.addEventListener('click', () => show(idx - 1));
-		if (next) next.addEventListener('click', () => show(idx + 1));
-		dots.forEach((d) => d.addEventListener('click', () => show(Number(d.dataset.slide || 0))));
 	}
 
-	/**
-	 * Before/After reveal (range slider).
-	 *
-	 * Markup contract:
-	 * - Root: `[data-before-after]` with a CSS variable `--ba` in percent.
-	 * - Input: `input[type="range"][data-before-after-range]`
-	 *
-	 * @returns {void}
-	 */
-	function initBeforeAfter() {
-		const root = q('[data-before-after]');
-		if (!root) return;
-		const range = q('input[type="range"][data-before-after-range]', root);
-		if (!range) return;
-
-		const apply = () => {
-			const val = Number(range.value || 50);
-			root.style.setProperty('--ba', `${val}%`);
-			range.setAttribute('aria-valuenow', String(val));
-		};
-
-		apply();
-		range.addEventListener('input', apply);
-	}
-
-	/**
-	 * Testimonials rotator.
-	 *
-	 * Markup contract:
-	 * - Root: `[data-testimonials]`
-	 * - Items: `[data-testimonial]`
-	 * - Buttons: `button[data-testimonial-btn]` with `data-slide`
-	 *
-	 * @returns {void}
-	 */
-	function initTestimonialsRotator() {
+	function initTestimonials() {
 		const root = q('[data-testimonials]');
 		if (!root) return;
-
-		const items = qa('[data-testimonial]', root);
-		const buttons = qa('button[data-testimonial-btn]', root);
-		if (!items.length || !buttons.length) return;
-
-		let idx = 0;
+		const panels = qa('[data-testimonial]', root);
+		const buttons = qa('[data-testimonial-nav]', root);
+		let current = 0;
 		let timer = null;
-		const allowAuto = !prefersReducedMotion();
 
-		/** @param {number} nextIdx */
-		const show = (nextIdx) => {
-			idx = (nextIdx + items.length) % items.length;
-			items.forEach((item, i) => {
-				const active = i === idx;
-				item.hidden = !active;
-				item.setAttribute('aria-hidden', active ? 'false' : 'true');
+		function show(index) {
+			current = (index + panels.length) % panels.length;
+			panels.forEach((panel, idx) => {
+				const active = idx === current;
+				panel.hidden = !active;
+				panel.setAttribute('aria-hidden', active ? 'false' : 'true');
+				panel.classList.toggle('is-active', active);
 			});
-			buttons.forEach((b) => {
-				const active = Number(b.dataset.slide || 0) === idx;
-				b.classList.toggle('is-active', active);
-				b.setAttribute('aria-pressed', active ? 'true' : 'false');
+			buttons.forEach((btn, idx) => btn.classList.toggle('is-active', idx === current));
+		}
+
+		function start() {
+			if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+			stop();
+			timer = window.setInterval(() => show(current + 1), 6500);
+		}
+
+		function stop() {
+			if (timer) {
+				window.clearInterval(timer);
+				timer = null;
+			}
+		}
+
+		buttons.forEach((btn, idx) => {
+			btn.addEventListener('click', () => {
+				show(idx);
+				start();
 			});
-		};
-
-		const stop = () => {
-			if (!timer) return;
-			window.clearInterval(timer);
-			timer = null;
-		};
-
-		const start = () => {
-			if (!allowAuto || timer) return;
-			timer = window.setInterval(() => show(idx + 1), 7000);
-		};
-
-		show(0);
-		start();
-
-		buttons.forEach((b) => b.addEventListener('click', () => show(Number(b.dataset.slide || 0))));
+		});
 		root.addEventListener('mouseenter', stop);
 		root.addEventListener('mouseleave', start);
 		root.addEventListener('focusin', stop);
 		root.addEventListener('focusout', start);
+		show(0);
+		start();
 	}
 
-	/**
-	 * Scroll reveal using IntersectionObserver.
-	 *
-	 * @returns {void}
-	 */
-	function initReveal() {
-		const els = qa('[data-reveal]');
-		if (!els.length) return;
-
-		if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
-			els.forEach((el) => el.classList.add('is-in'));
-			return;
-		}
-
-		const obs = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (!entry.isIntersecting) return;
-					entry.target.classList.add('is-in');
-					obs.unobserve(entry.target);
-				});
-			},
-			{ threshold: 0.12 }
-		);
-
-		els.forEach((el) => obs.observe(el));
-	}
-
-	/**
-	 * Optional stats count-up (disabled for reduced motion).
-	 *
-	 * Markup contract:
-	 * - Elements: `[data-countup]` with `data-to="number"`
-	 *
-	 * @returns {void}
-	 */
-	function initCountUp() {
-		if (prefersReducedMotion()) return;
-		const items = qa('[data-countup]');
-		if (!items.length) return;
-
-		const startFor = (el) => {
-			const to = Number(el.getAttribute('data-to') || 0);
-			if (!Number.isFinite(to) || to <= 0) return;
-
-			let current = 0;
-			const steps = 36;
-			const inc = Math.max(1, Math.round(to / steps));
-			const tick = () => {
-				current = Math.min(to, current + inc);
-				el.textContent = String(current);
-				if (current >= to) return;
-				window.requestAnimationFrame(tick);
-			};
-
-			window.requestAnimationFrame(tick);
-		};
-
-		if (!('IntersectionObserver' in window)) {
-			items.forEach(startFor);
-			return;
-		}
-
-		const obs = new IntersectionObserver(
-			(entries) => {
-				entries.forEach((entry) => {
-					if (!entry.isIntersecting) return;
-					startFor(entry.target);
-					obs.unobserve(entry.target);
-				});
-			},
-			{ threshold: 0.35 }
-		);
-		items.forEach((el) => obs.observe(el));
-	}
-
-	/**
-	 * Run initializers when the document is ready.
-	 *
-	 * @param {() => void} fn
-	 * @returns {void}
-	 */
-	function ready(fn) {
-		if (document.readyState !== 'loading') fn();
-		else document.addEventListener('DOMContentLoaded', fn);
-	}
-
-	ready(() => {
-		initHeaderScrolledState();
-		const desktop = initMegaMenu();
-		const mobile = initMobileMenu(desktop.closeAll);
-
-		window.addEventListener('resize', () => {
-			mobile.close();
-			desktop.closeAll();
-		});
-
-		initWorkFilter();
-		initCarousel();
-		initBeforeAfter();
-		initTestimonialsRotator();
+	document.addEventListener('DOMContentLoaded', () => {
 		initReveal();
-		initCountUp();
+		initDesktopPanels();
+		initMobileMenu();
+		initFilters();
+		initCarousel();
+		initTestimonials();
 	});
-})();
-
+}());

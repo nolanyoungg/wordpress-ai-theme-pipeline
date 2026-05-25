@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Hanging plant">
+  <rect width="800" height="600" rx="42" fill="#fffaf3"/>
+  <path d="M400 64c0 0 0 32-34 66" stroke="#d2c1a4" stroke-width="8" stroke-linecap="round"/>
+  <path d="M400 64c0 0 0 32 34 66" stroke="#d2c1a4" stroke-width="8" stroke-linecap="round"/>
+  <path d="M300 150h200l-18 86H318l-18-86Z" fill="#d7b07e"/>
+  <rect x="290" y="140" width="220" height="22" rx="11" fill="#e8d5b7"/>
+  <circle cx="400" cy="120" r="95" fill="#e4edd8"/>
+  <path d="M400 118c32 22 48 54 50 96-36 2-63-16-72-55-3-14 0-28 22-41Z" fill="#7f9c65"/>
+  <path d="M400 118c-32 22-48 54-50 96 36 2 63-16 72-55 3-14 0-28-22-41Z" fill="#5e7849"/>
+  <path d="M400 214v120" stroke="#506847" stroke-width="10" stroke-linecap="round"/>
+  <path d="M400 286c-48 5-89 25-122 60" stroke="#506847" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <path d="M400 286c48 5 89 25 122 60" stroke="#506847" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <ellipse cx="400" cy="420" rx="150" ry="36" fill="#d1dfc0"/>
+</svg>

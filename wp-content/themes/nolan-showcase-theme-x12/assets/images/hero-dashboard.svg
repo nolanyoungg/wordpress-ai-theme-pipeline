@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" role="img" aria-label="Website performance dashboard">
+  <rect width="720" height="520" rx="28" fill="#f8fbff"/>
+  <rect x="36" y="38" width="648" height="444" rx="18" fill="#17253f"/>
+  <rect x="66" y="72" width="220" height="376" rx="14" fill="#223454"/>
+  <rect x="318" y="72" width="336" height="118" rx="14" fill="#fff"/>
+  <rect x="318" y="218" width="158" height="230" rx="14" fill="#fff"/>
+  <rect x="496" y="218" width="158" height="230" rx="14" fill="#fff"/>
+  <path d="M92 354c32-62 70-34 104-92 18-31 38-38 64-20" fill="none" stroke="#0ea5e9" stroke-width="12" stroke-linecap="round"/>
+  <rect x="342" y="100" width="178" height="16" rx="8" fill="#17253f"/>
+  <rect x="342" y="132" width="262" height="14" rx="7" fill="#dbeafe"/>
+  <rect x="342" y="246" width="94" height="94" rx="14" fill="#dcfce7"/>
+  <rect x="520" y="246" width="94" height="94" rx="14" fill="#dbeafe"/>
+  <path d="M356 386h84M534 386h84" stroke="#2563eb" stroke-width="14" stroke-linecap="round"/>
+</svg>

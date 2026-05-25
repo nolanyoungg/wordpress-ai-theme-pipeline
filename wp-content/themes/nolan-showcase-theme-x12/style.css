@@ -1,0 +1,21 @@
+/*
+Theme Name: Nolan Showcase Theme X12
+Theme URI: https://github.com/nolany/wordpress-ai-theme-pipeline
+Author: Nolan Young
+Author URI: https://github.com/nolany
+Description: Premium classic WordPress theme for a website design, maintenance, AI integration, WooCommerce, SEO, analytics, and digital services company.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: nolan-showcase-theme-x12
+Tags: custom-logo, custom-menu, featured-images, blog, portfolio, accessibility-ready
+*/
+
+/*
+ * This file provides the required WordPress theme header for Nolan Showcase
+ * Theme X12. Runtime styles are loaded from assets/css/theme.css by
+ * functions.php so cache busting can use filemtime().
+ */

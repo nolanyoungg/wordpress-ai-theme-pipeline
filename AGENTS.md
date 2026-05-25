@@ -7,11 +7,11 @@ This repository builds, reviews, validates, packages, and publishes **versioned 
 ## Repository layout
 
 - WordPress themes belong in `wp-content/themes/` and must be versioned folders:
-  - `wp-content/themes/nolan-showcase-theme-x4/`
-  - `wp-content/themes/nolan-showcase-theme-x5/`
-  - `wp-content/themes/nolan-showcase-theme-x6/`
-  - `wp-content/themes/nolan-showcase-theme-x9/`
-  - `wp-content/themes/nolan-showcase-theme-x11/`
+  - `wp-content/themes/nolan-showcase-theme-01/`
+  - `wp-content/themes/nolan-showcase-theme-02/`
+  - `wp-content/themes/nolan-showcase-theme-03/`
+  - `wp-content/themes/nolan-showcase-theme-04/`
+  - `wp-content/themes/nolan-showcase-theme-05/`
 - Never overwrite an older theme version.
 - Static GitHub Pages previews belong in `docs/`:
   - Gallery: `docs/index.html`

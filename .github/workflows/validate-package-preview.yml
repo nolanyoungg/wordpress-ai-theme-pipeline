@@ -83,9 +83,9 @@ jobs:
           set -euo pipefail
           shopt -s nullglob
 
-          themes=(wp-content/themes/nolan-showcase-theme-x*)
+          themes=(wp-content/themes/nolan-showcase-theme-[0-9][0-9])
           if [ "${#themes[@]}" -eq 0 ]; then
-            echo "::error::No theme folders found matching wp-content/themes/nolan-showcase-theme-x*"
+            echo "::error::No theme folders found matching wp-content/themes/nolan-showcase-theme-[0-9][0-9]"
             exit 1
           fi
 
@@ -122,7 +122,7 @@ jobs:
           # for theme source changes, and require zips to exist for any detected theme folder.
           printf '%s\n' "$changed_paths" > .changed-paths.txt
 
-          awk -F/ '/^wp-content\/themes\/nolan-showcase-theme-x[0-9]+\// {print $3}' .changed-paths.txt | sort -u > .changed-themes.txt
+          awk -F/ '/^wp-content\/themes\/nolan-showcase-theme-[0-9][0-9]\// {print $3}' .changed-paths.txt | sort -u > .changed-themes.txt
           echo "changed_count=$(wc -l < .changed-themes.txt | tr -d ' ')" >> "$GITHUB_OUTPUT"
 
       - name: Validate theme files and PHP syntax

@@ -38,11 +38,11 @@ get_template_part(
 <section class="section section--statement">
 	<div class="container">
 		<div class="statement" data-reveal>
-			<h2 class="statement__title"><?php esc_html_e( 'Photography that feels editorial — and still completely you.', 'nolan-showcase-theme-x10' ); ?></h2>
-			<p class="statement__copy"><?php echo wp_kses_post( __( 'MNY Photo blends documentary observation with refined portrait direction. We plan around light, movement, and story — then keep the session day simple so you can be present.', 'nolan-showcase-theme-x10' ) ); ?></p>
+			<h2 class="statement__title"><?php esc_html_e( 'Photography that feels cinematic, intimate, and deliberate.', 'nolan-showcase-theme-x10' ); ?></h2>
+			<p class="statement__copy"><?php echo wp_kses_post( __( 'MNY Photo blends documentary observation with refined portrait direction. We plan around contrast, movement, and story — then keep the session day simple so you can be present.', 'nolan-showcase-theme-x10' ) ); ?></p>
 			<div class="statement__meta">
 				<div class="pill"><?php esc_html_e( 'People-first pacing', 'nolan-showcase-theme-x10' ); ?></div>
-				<div class="pill"><?php esc_html_e( 'Bright, warm edit', 'nolan-showcase-theme-x10' ); ?></div>
+				<div class="pill"><?php esc_html_e( 'Moody, warm edit', 'nolan-showcase-theme-x10' ); ?></div>
 				<div class="pill"><?php esc_html_e( 'Designed for web + print', 'nolan-showcase-theme-x10' ); ?></div>
 			</div>
 		</div>
@@ -54,7 +54,7 @@ get_template_part(
 		<header class="section-head" data-reveal>
 			<div>
 				<h2 class="section-title"><?php esc_html_e( 'Featured work', 'nolan-showcase-theme-x10' ); ?></h2>
-				<p class="section-subtitle"><?php esc_html_e( 'A curated set of story-driven galleries — filter by session type.', 'nolan-showcase-theme-x10' ); ?></p>
+				<p class="section-subtitle"><?php esc_html_e( 'A curated set of story-driven galleries — filter by session type and tone.', 'nolan-showcase-theme-x10' ); ?></p>
 			</div>
 			<div class="section-actions">
 				<a class="btn btn-secondary btn-smball" href="<?php echo $work_url; ?>"><?php esc_html_e( 'View Full Portfolio', 'nolan-showcase-theme-x10' ); ?></a>
@@ -107,7 +107,7 @@ get_template_part(
 		<header class="section-head" data-reveal>
 			<div>
 				<h2 class="section-title"><?php esc_html_e( 'How it works', 'nolan-showcase-theme-x10' ); ?></h2>
-				<p class="section-subtitle"><?php esc_html_e( 'A simple, calm process that protects the feeling — and the timeline.', 'nolan-showcase-theme-x10' ); ?></p>
+				<p class="section-subtitle"><?php esc_html_e( 'A simple, calm process that protects the feeling, the contrast, and the timeline.', 'nolan-showcase-theme-x10' ); ?></p>
 			</div>
 			<div class="section-actions">
 				<a class="btn btn-secondary btn-smball" href="<?php echo $contact_url; ?>"><?php esc_html_e( 'Request Dates', 'nolan-showcase-theme-x10' ); ?></a>
@@ -144,7 +144,7 @@ get_template_part(
 		<div class="pillars" data-reveal>
 			<div class="pillars__copy">
 				<h2 class="section-title"><?php esc_html_e( 'Signature style pillars', 'nolan-showcase-theme-x10' ); ?></h2>
-				<p class="section-subtitle"><?php esc_html_e( 'A consistent look that stays timeless — with room for your personality.', 'nolan-showcase-theme-x10' ); ?></p>
+				<p class="section-subtitle"><?php esc_html_e( 'A consistent look that stays timeless — with room for shadow, color, and personality.', 'nolan-showcase-theme-x10' ); ?></p>
 				<ul class="pillars__list">
 					<li><?php esc_html_e( 'Cinematic light', 'nolan-showcase-theme-x10' ); ?></li>
 					<li><?php esc_html_e( 'Calm, specific direction', 'nolan-showcase-theme-x10' ); ?></li>
@@ -168,7 +168,7 @@ get_template_part(
 			</div>
 			<div class="about-preview__copy">
 				<h2 class="section-title"><?php esc_html_e( 'A small studio built for calm, confident sessions.', 'nolan-showcase-theme-x10' ); ?></h2>
-				<p class="section-subtitle"><?php esc_html_e( 'We keep sets light and direction clear — so your images feel natural, elevated, and deeply personal.', 'nolan-showcase-theme-x10' ); ?></p>
+				<p class="section-subtitle"><?php esc_html_e( 'We keep sets intimate and direction clear — so your images feel natural, elevated, and deeply personal.', 'nolan-showcase-theme-x10' ); ?></p>
 				<ul class="checklist">
 					<li><?php esc_html_e( 'Pre-session planning with mood + shot flow', 'nolan-showcase-theme-x10' ); ?></li>
 					<li><?php esc_html_e( 'Location + wardrobe guidance that actually helps', 'nolan-showcase-theme-x10' ); ?></li>
@@ -452,4 +452,3 @@ get_template_part(
 
 <?php
 get_footer();
-

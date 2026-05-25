@@ -1,80 +1,29 @@
 <?php
 /**
- * Footer template.
- *
- * Purpose:
- * - Closes the main content wrapper and renders the global footer.
- * - Includes a small footer widget/content area via template-part.
+ * File purpose: Site footer with service links, contact CTA, and WordPress footer hooks.
+ * References: functions.php footer menu registration.
+ * Behavior: Closes main content and prints footer navigation and contact details.
+ * Return values: Outputs markup.
  *
  * @package Nolan_Showcase_Theme_X11
  */
 ?>
 </main>
-
-<footer class="site-footer">
-	<?php get_template_part( 'template-parts/content', 'footer-widgets' ); ?>
-
-	<div class="container footer-grid">
-		<div class="footer-brand">
-			<p class="footer-brand__name"><?php echo esc_html( nolan_showcase_theme_x11_get_brand_name() ); ?></p>
-			<p class="footer-brand__tagline"><?php echo esc_html__( 'Premium, bright editorial photography — made to be printed, shared, and remembered.', 'nolan-showcase-theme-x11' ); ?></p>
-			<div class="footer-brand__meta">
-				<span><?php echo esc_html__( 'NYC + travel', 'nolan-showcase-theme-x11' ); ?></span>
-				<span aria-hidden="true">•</span>
-				<a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php echo esc_html__( 'Start an inquiry', 'nolan-showcase-theme-x11' ); ?></a>
-			</div>
+<footer class="site-footer" role="contentinfo">
+	<div class="footer-shell">
+		<section class="footer-cta" aria-labelledby="footer-cta-title">
+			<div><p class="eyebrow"><?php esc_html_e( 'Ready for a better web platform?', 'nolan-showcase-theme-x11' ); ?></p><h2 id="footer-cta-title"><?php esc_html_e( 'Let us map the cleanest path from site friction to measurable growth.', 'nolan-showcase-theme-x11' ); ?></h2></div>
+			<a class="button button-light" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Request a Quote', 'nolan-showcase-theme-x11' ); ?></a>
+		</section>
+		<div class="footer-grid">
+			<div><a class="brand-mark footer-brand" href="<?php echo esc_url( home_url( '/' ) ); ?>"><span class="brand-symbol" aria-hidden="true">N</span><span><span class="brand-name"><?php bloginfo( 'name' ); ?></span><span class="brand-tagline"><?php esc_html_e( 'Design, development, support, and automation.', 'nolan-showcase-theme-x11' ); ?></span></span></a><p><?php esc_html_e( 'Nolan Showcase builds modern WordPress and WooCommerce experiences for service businesses, ecommerce teams, and growth-focused organizations.', 'nolan-showcase-theme-x11' ); ?></p></div>
+			<nav aria-label="<?php esc_attr_e( 'Footer navigation', 'nolan-showcase-theme-x11' ); ?>"><h2><?php esc_html_e( 'Explore', 'nolan-showcase-theme-x11' ); ?></h2><?php wp_nav_menu( array( 'theme_location' => 'footer', 'menu_class' => 'footer-menu', 'container' => false, 'fallback_cb' => 'nolan_showcase_x11_primary_menu_fallback', 'depth' => 1 ) ); ?></nav>
+			<div><h2><?php esc_html_e( 'Services', 'nolan-showcase-theme-x11' ); ?></h2><ul class="footer-menu"><li><a href="<?php echo esc_url( home_url( '/what-we-do/' ) ); ?>"><?php esc_html_e( 'Website Design and Development', 'nolan-showcase-theme-x11' ); ?></a></li><li><a href="<?php echo esc_url( home_url( '/what-we-do/' ) ); ?>"><?php esc_html_e( 'Website Maintenance', 'nolan-showcase-theme-x11' ); ?></a></li><li><a href="<?php echo esc_url( home_url( '/what-we-do/' ) ); ?>"><?php esc_html_e( 'WooCommerce Services', 'nolan-showcase-theme-x11' ); ?></a></li><li><a href="<?php echo esc_url( home_url( '/what-we-do/' ) ); ?>"><?php esc_html_e( 'AI Website Automation', 'nolan-showcase-theme-x11' ); ?></a></li></ul></div>
+			<div><h2><?php esc_html_e( 'Contact', 'nolan-showcase-theme-x11' ); ?></h2><p><a href="mailto:hello@example.com"><?php esc_html_e( 'hello@example.com', 'nolan-showcase-theme-x11' ); ?></a></p><p><a href="tel:+15550198420"><?php esc_html_e( '(555) 019-8420', 'nolan-showcase-theme-x11' ); ?></a></p><p><?php esc_html_e( 'Remote delivery across the United States.', 'nolan-showcase-theme-x11' ); ?></p></div>
 		</div>
-
-		<nav class="footer-nav" aria-label="<?php echo esc_attr_x( 'Footer', 'aria label', 'nolan-showcase-theme-x11' ); ?>">
-			<?php
-			if ( has_nav_menu( 'footer' ) ) {
-				wp_nav_menu(
-					array(
-						'theme_location' => 'footer',
-						'menu_class'     => 'footer-nav__list',
-						'container'      => false,
-						'depth'          => 1,
-					)
-				);
-			} else {
-				?>
-				<ul class="footer-nav__list">
-					<li><a href="<?php echo esc_url( home_url( '/what-we-do/' ) ); ?>"><?php esc_html_e( 'What We Do', 'nolan-showcase-theme-x11' ); ?></a></li>
-					<li><a href="<?php echo esc_url( home_url( '/who-we-are/' ) ); ?>"><?php esc_html_e( 'Who We Are', 'nolan-showcase-theme-x11' ); ?></a></li>
-					<li><a href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><?php esc_html_e( 'Work', 'nolan-showcase-theme-x11' ); ?></a></li>
-					<li><a href="<?php echo esc_url( home_url( '/resources/' ) ); ?>"><?php esc_html_e( 'Resources', 'nolan-showcase-theme-x11' ); ?></a></li>
-					<li><a href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact', 'nolan-showcase-theme-x11' ); ?></a></li>
-				</ul>
-				<?php
-			}
-			?>
-		</nav>
-
-		<div class="footer-contact">
-			<p class="footer-contact__title"><?php esc_html_e( 'Contact', 'nolan-showcase-theme-x11' ); ?></p>
-			<ul class="footer-contact__list">
-				<li><?php echo esc_html__( 'Email: hello@mnyphoto.example', 'nolan-showcase-theme-x11' ); ?></li>
-				<li><?php echo esc_html__( 'Studio: Manhattan, New York', 'nolan-showcase-theme-x11' ); ?></li>
-				<li><?php echo esc_html__( 'Hours: Mon–Fri, sessions by appointment', 'nolan-showcase-theme-x11' ); ?></li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="container footer-bottom">
-		<p class="footer-bottom__copy">
-			<?php
-			echo esc_html(
-				sprintf(
-					/* translators: %s is year. */
-					__( '© %s MNY Photo. All rights reserved.', 'nolan-showcase-theme-x11' ),
-					gmdate( 'Y' )
-				)
-			);
-			?>
-		</p>
+		<div class="footer-bottom"><p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'All rights reserved.', 'nolan-showcase-theme-x11' ); ?></p><a href="<?php echo esc_url( home_url( '/resources/' ) ); ?>"><?php esc_html_e( 'Resources', 'nolan-showcase-theme-x11' ); ?></a></div>
 	</div>
 </footer>
-
 <?php wp_footer(); ?>
 </body>
 </html>

@@ -1,0 +1,7 @@
+<!--
+File purpose: Local about-page image for Nolan Showcase Theme X11.
+References: static preview pages and optional WordPress content.
+Behavior: Renders a modern studio planning scene without remote assets.
+Return values: Not applicable.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" role="img" aria-labelledby="title desc"><title id="title">Agency planning studio</title><desc id="desc">Team workspace with boards, wireframes, and project screens.</desc><rect width="760" height="520" fill="#edf7f7"/><rect x="58" y="64" width="644" height="360" rx="24" fill="#fff"/><rect x="98" y="104" width="220" height="250" rx="18" fill="#071018"/><rect x="354" y="104" width="270" height="82" rx="16" fill="#0f8f8c"/><rect x="354" y="220" width="120" height="134" rx="16" fill="#ffb454"/><rect x="504" y="220" width="120" height="134" rx="16" fill="#f5f8fb" stroke="#d9e2ea"/><circle cx="172" cy="404" r="36" fill="#0f8f8c"/><circle cx="260" cy="404" r="36" fill="#ffb454"/></svg>

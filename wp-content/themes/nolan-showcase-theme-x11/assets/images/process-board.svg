@@ -1,0 +1,18 @@
+<!--
+File purpose: Local process illustration for Nolan Showcase Theme X11.
+References: front-page.php and static preview pages.
+Behavior: Renders a delivery roadmap board without remote assets.
+Return values: Not applicable.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" role="img" aria-labelledby="title desc">
+<title id="title">Project process board</title><desc id="desc">Milestones for audit, design, development, QA, launch, and support.</desc>
+<rect width="760" height="520" rx="22" fill="#f5f8fb"/>
+<rect x="48" y="46" width="664" height="428" rx="20" fill="#fff" stroke="#d9e2ea"/>
+<rect x="84" y="86" width="132" height="300" rx="14" fill="#edf7f7"/>
+<rect x="236" y="86" width="132" height="300" rx="14" fill="#fff7eb"/>
+<rect x="388" y="86" width="132" height="300" rx="14" fill="#edf7f7"/>
+<rect x="540" y="86" width="132" height="300" rx="14" fill="#f7fbfd"/>
+<g fill="#121826"><rect x="104" y="116" width="76" height="12" rx="6"/><rect x="256" y="116" width="82" height="12" rx="6"/><rect x="408" y="116" width="76" height="12" rx="6"/><rect x="560" y="116" width="82" height="12" rx="6"/></g>
+<g fill="#0f8f8c"><rect x="104" y="166" width="92" height="48" rx="8"/><rect x="256" y="226" width="92" height="48" rx="8"/><rect x="408" y="176" width="92" height="48" rx="8"/><rect x="560" y="246" width="92" height="48" rx="8"/></g>
+<g fill="#ffb454"><circle cx="150" cy="336" r="20"/><circle cx="302" cy="180" r="20"/><circle cx="454" cy="330" r="20"/><circle cx="606" cy="176" r="20"/></g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="680" viewBox="0 0 920 680" role="img" aria-labelledby="title desc">
+  <title id="title">WordPress agency dashboard illustration</title>
+  <desc id="desc">Layered panels representing design, development, support, analytics, and AI automation services.</desc>
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#4f7cff"/><stop offset="1" stop-color="#18c8a8"/></linearGradient><filter id="s"><feDropShadow dx="0" dy="24" stdDeviation="24" flood-color="#10223f" flood-opacity=".22"/></filter></defs>
+  <rect width="920" height="680" rx="46" fill="#f5f8ff"/>
+  <circle cx="780" cy="92" r="88" fill="#dff7ef"/>
+  <circle cx="134" cy="586" r="108" fill="#e7edff"/>
+  <rect x="86" y="72" width="748" height="536" rx="34" fill="#fff" filter="url(#s)"/>
+  <rect x="126" y="116" width="668" height="72" rx="22" fill="#10182f"/>
+  <circle cx="166" cy="152" r="13" fill="#18c8a8"/><circle cx="204" cy="152" r="13" fill="#ffcf5a"/><circle cx="242" cy="152" r="13" fill="#ff7a7a"/>
+  <rect x="126" y="226" width="204" height="272" rx="24" fill="#eef4ff"/>
+  <rect x="362" y="226" width="196" height="126" rx="24" fill="url(#g)"/>
+  <rect x="590" y="226" width="204" height="126" rx="24" fill="#edf9f5"/>
+  <rect x="362" y="386" width="432" height="112" rx="24" fill="#10182f"/>
+  <path d="M164 436c58-112 112-118 128-48 21 94-80 94-128 48Z" fill="#fff"/>
+  <rect x="404" y="266" width="102" height="14" rx="7" fill="#fff" opacity=".92"/><rect x="404" y="300" width="118" height="14" rx="7" fill="#fff" opacity=".55"/>
+  <rect x="630" y="266" width="122" height="14" rx="7" fill="#123"/><rect x="630" y="300" width="92" height="14" rx="7" fill="#18c8a8"/>
+  <rect x="404" y="428" width="268" height="14" rx="7" fill="#fff" opacity=".86"/><rect x="404" y="462" width="180" height="14" rx="7" fill="#18c8a8"/>
+</svg>

@@ -1,24 +1,239 @@
 <?php
 /**
- * File purpose: Static-first homepage template for the web services agency experience.
+ * File purpose: Static-first homepage template for the Fernline Nursery storefront.
  * References: header.php, footer.php, local assets/images, assets/css/theme.css.
- * Behavior: Outputs polished homepage sections for services, process, work, testimonials, FAQ, and quote form.
+ * Behavior: Outputs a shop-style homepage with collections, filters, carousel, testimonials, and care resources.
  * Return values: Outputs markup.
  *
  * @package Nolan_Showcase_Theme_X11
  */
 
 get_header();
+
+$products = array(
+	array( 'cat' => 'indoor', 'title' => __( 'Monstera Deliciosa', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Medium / easy-care', 'nolan-showcase-theme-x11' ), 'price' => '$38', 'img' => 'product-monstera.svg' ),
+	array( 'cat' => 'indoor', 'title' => __( 'Snake Plant', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Low-light / hardy', 'nolan-showcase-theme-x11' ), 'price' => '$24', 'img' => 'product-pot.svg' ),
+	array( 'cat' => 'indoor', 'title' => __( 'Trailing Pothos', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Hanging / fast growth', 'nolan-showcase-theme-x11' ), 'price' => '$26', 'img' => 'product-hanging.svg' ),
+	array( 'cat' => 'outdoor', 'title' => __( 'Citrus Patio Pot', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Seasonal / bright light', 'nolan-showcase-theme-x11' ), 'price' => '$48', 'img' => 'product-pot.svg' ),
+	array( 'cat' => 'bundles', 'title' => __( 'Gift Bundle', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Ready to gift', 'nolan-showcase-theme-x11' ), 'price' => '$62', 'img' => 'bundle-box.svg' ),
+	array( 'cat' => 'tools', 'title' => __( 'Potting Soil Kit', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Soil + tools', 'nolan-showcase-theme-x11' ), 'price' => '$18', 'img' => 'care-guide.svg' ),
+	array( 'cat' => 'indoor', 'title' => __( 'Hanging Fern', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Bright room / trailing', 'nolan-showcase-theme-x11' ), 'price' => '$34', 'img' => 'product-hanging.svg' ),
+	array( 'cat' => 'pots', 'title' => __( 'Statement Planter', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Decor / neutral finish', 'nolan-showcase-theme-x11' ), 'price' => '$44', 'img' => 'product-pot.svg' ),
+	array( 'cat' => 'outdoor', 'title' => __( 'Garden Combo', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Outdoor / giftable', 'nolan-showcase-theme-x11' ), 'price' => '$56', 'img' => 'product-monstera.svg' ),
+	array( 'cat' => 'subs', 'title' => __( 'Monthly Refresh', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Recurring care', 'nolan-showcase-theme-x11' ), 'price' => '$49/mo', 'img' => 'bundle-box.svg' ),
+	array( 'cat' => 'tools', 'title' => __( 'Repotting Guide', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Starter kit', 'nolan-showcase-theme-x11' ), 'price' => '$12', 'img' => 'care-guide.svg' ),
+	array( 'cat' => 'bundles', 'title' => __( 'Welcome Bundle', 'nolan-showcase-theme-x11' ), 'meta' => __( 'Housewarming set', 'nolan-showcase-theme-x11' ), 'price' => '$58', 'img' => 'bundle-box.svg' ),
+);
+
+$reviews = array(
+	array( __( '“The shop feels calm and easy to browse, and the plants arrived in excellent shape.”', 'nolan-showcase-theme-x11' ), __( 'Hannah W. · apartment refresh', 'nolan-showcase-theme-x11' ) ),
+	array( __( '“Great advice on light and watering. The note cards made gifting painless.”', 'nolan-showcase-theme-x11' ), __( 'Jordan P. · host gift order', 'nolan-showcase-theme-x11' ) ),
+	array( __( '“I came for one plant and left with a full setup for my apartment.”', 'nolan-showcase-theme-x11' ), __( 'Mina S. · starter collection', 'nolan-showcase-theme-x11' ) ),
+);
 ?>
-<section class="hero section-pad"><div class="container hero-grid"><div class="hero-copy"><p class="eyebrow"><?php esc_html_e( 'Modern web design and website services', 'nolan-showcase-theme-x11' ); ?></p><h1><?php esc_html_e( 'Websites engineered to look premium, load fast, and support real business workflows.', 'nolan-showcase-theme-x11' ); ?></h1><p class="hero-lede"><?php esc_html_e( 'Nolan Showcase plans, designs, builds, repairs, and maintains WordPress and WooCommerce websites for teams that need dependable execution without bloated platforms.', 'nolan-showcase-theme-x11' ); ?></p><div class="hero-actions"><a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a Project', 'nolan-showcase-theme-x11' ); ?></a><a class="button button-secondary" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><?php esc_html_e( 'View Our Work', 'nolan-showcase-theme-x11' ); ?></a></div><ul class="hero-proof"><li><strong>42%</strong><?php esc_html_e( 'average speed lift after optimization', 'nolan-showcase-theme-x11' ); ?></li><li><strong>18</strong><?php esc_html_e( 'launch checkpoints before handoff', 'nolan-showcase-theme-x11' ); ?></li><li><strong>30 days</strong><?php esc_html_e( 'post-launch monitoring included', 'nolan-showcase-theme-x11' ); ?></li></ul></div><div class="hero-visual"><img src="<?php echo nolan_showcase_x11_image_uri( 'hero-dashboard.svg' ); ?>" alt="<?php esc_attr_e( 'Layered website dashboard mockup showing analytics, service cards, and conversion data.', 'nolan-showcase-theme-x11' ); ?>"></div></div></section>
-<section class="section-pad section-light"><div class="container"><div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( 'What we do', 'nolan-showcase-theme-x11' ); ?></p><h2><?php esc_html_e( 'A full website partner for launches, fixes, growth, and automation.', 'nolan-showcase-theme-x11' ); ?></h2></div><p><?php esc_html_e( 'Choose focused support for a single problem or a complete website engagement from strategy through maintenance.', 'nolan-showcase-theme-x11' ); ?></p></div><div class="card-grid services-grid">
-<?php foreach ( array( array( 'Website Design and Development', 'Custom WordPress builds with clean information architecture, conversion-focused layouts, and maintainable templates.' ), array( 'Website Maintenance', 'Updates, backups, monitoring, content support, and a practical care plan for busy teams.' ), array( 'Website Problem Fixes', 'Bug triage, broken layouts, plugin conflicts, performance regressions, and urgent production issues.' ), array( 'AI Chatbot Integration', 'Guided chatbot planning, implementation, and content workflows for support, lead capture, and internal handoff.' ), array( 'WooCommerce Services', 'Store setup, checkout improvements, product structure, analytics, and performance tuning.' ), array( 'SEO and Analytics', 'Technical SEO foundations, schema-ready content structure, analytics events, and conversion tracking.' ) ) as $service ) : ?>
-<article class="service-card"><span class="card-icon" aria-hidden="true"></span><h3><?php echo esc_html( $service[0] ); ?></h3><p><?php echo esc_html( $service[1] ); ?></p></article>
-<?php endforeach; ?>
-</div></div></section>
-<section class="section-pad"><div class="container split-layout"><div><p class="eyebrow"><?php esc_html_e( 'Process', 'nolan-showcase-theme-x11' ); ?></p><h2><?php esc_html_e( 'A calm delivery system for complex website work.', 'nolan-showcase-theme-x11' ); ?></h2><p><?php esc_html_e( 'Every engagement is organized around clear decisions, visible milestones, and practical handoff documentation.', 'nolan-showcase-theme-x11' ); ?></p><img class="section-image" src="<?php echo nolan_showcase_x11_image_uri( 'process-board.svg' ); ?>" alt="<?php esc_attr_e( 'Project planning board with launch, QA, analytics, and support milestones.', 'nolan-showcase-theme-x11' ); ?>"></div><ol class="process-list"><li><span>01</span><strong><?php esc_html_e( 'Audit and roadmap', 'nolan-showcase-theme-x11' ); ?></strong><?php esc_html_e( 'We review goals, content, platform constraints, analytics, and the exact decisions needed before build work begins.', 'nolan-showcase-theme-x11' ); ?></li><li><span>02</span><strong><?php esc_html_e( 'Design system and prototype', 'nolan-showcase-theme-x11' ); ?></strong><?php esc_html_e( 'We shape the visual hierarchy, reusable components, responsive states, and content patterns.', 'nolan-showcase-theme-x11' ); ?></li><li><span>03</span><strong><?php esc_html_e( 'Development and QA', 'nolan-showcase-theme-x11' ); ?></strong><?php esc_html_e( 'We build accessible templates, test device behavior, tune performance, and validate launch requirements.', 'nolan-showcase-theme-x11' ); ?></li><li><span>04</span><strong><?php esc_html_e( 'Launch and support', 'nolan-showcase-theme-x11' ); ?></strong><?php esc_html_e( 'We coordinate release, monitor the site, train your team, and provide ongoing maintenance options.', 'nolan-showcase-theme-x11' ); ?></li></ol></div></section>
-<section class="section-pad section-dark"><div class="container"><div class="section-heading"><div><p class="eyebrow"><?php esc_html_e( 'Selected work', 'nolan-showcase-theme-x11' ); ?></p><h2><?php esc_html_e( 'Built for clearer positioning, faster decisions, and easier operations.', 'nolan-showcase-theme-x11' ); ?></h2></div></div><div class="portfolio-grid"><article class="project-card"><img src="<?php echo nolan_showcase_x11_image_uri( 'project-commerce.svg' ); ?>" alt="<?php esc_attr_e( 'Commerce website interface with product and checkout panels.', 'nolan-showcase-theme-x11' ); ?>"><div><p class="eyebrow"><?php esc_html_e( 'WooCommerce', 'nolan-showcase-theme-x11' ); ?></p><h3><?php esc_html_e( 'Specialty retailer checkout redesign', 'nolan-showcase-theme-x11' ); ?></h3><p><?php esc_html_e( 'Reduced checkout friction with simplified product paths, speed improvements, and clearer analytics events.', 'nolan-showcase-theme-x11' ); ?></p></div></article><article class="project-card"><img src="<?php echo nolan_showcase_x11_image_uri( 'project-saas.svg' ); ?>" alt="<?php esc_attr_e( 'SaaS marketing site with service sections and analytics charts.', 'nolan-showcase-theme-x11' ); ?>"><div><p class="eyebrow"><?php esc_html_e( 'B2B services', 'nolan-showcase-theme-x11' ); ?></p><h3><?php esc_html_e( 'Technical services website rebuild', 'nolan-showcase-theme-x11' ); ?></h3><p><?php esc_html_e( 'Translated a complex offer into scannable service pages, trust signals, resource content, and quote flows.', 'nolan-showcase-theme-x11' ); ?></p></div></article><article class="project-card"><img src="<?php echo nolan_showcase_x11_image_uri( 'project-automation.svg' ); ?>" alt="<?php esc_attr_e( 'Website automation dashboard with forms, chatbot, and CRM routing.', 'nolan-showcase-theme-x11' ); ?>"><div><p class="eyebrow"><?php esc_html_e( 'Automation', 'nolan-showcase-theme-x11' ); ?></p><h3><?php esc_html_e( 'Lead routing and support workflow', 'nolan-showcase-theme-x11' ); ?></h3><p><?php esc_html_e( 'Connected forms, chatbot prompts, support categories, and internal notifications without adding heavy front-end dependencies.', 'nolan-showcase-theme-x11' ); ?></p></div></article></div></div></section>
-<section class="section-pad section-light"><div class="container testimonial-grid"><blockquote><p><?php esc_html_e( 'The redesign finally gave our sales team pages they could send with confidence. The site is faster, easier to edit, and clearer for prospects.', 'nolan-showcase-theme-x11' ); ?></p><cite><?php esc_html_e( 'Maya Chen, Operations Director', 'nolan-showcase-theme-x11' ); ?></cite></blockquote><blockquote><p><?php esc_html_e( 'They found the plugin conflict, cleaned up our checkout, and gave us a maintenance plan that does not require constant emergency work.', 'nolan-showcase-theme-x11' ); ?></p><cite><?php esc_html_e( 'Andre Lewis, Ecommerce Founder', 'nolan-showcase-theme-x11' ); ?></cite></blockquote><blockquote><p><?php esc_html_e( 'The chatbot and form routing work feels practical. It captures the right details and hands leads to the right person without adding clutter.', 'nolan-showcase-theme-x11' ); ?></p><cite><?php esc_html_e( 'Priya Shah, Client Success Lead', 'nolan-showcase-theme-x11' ); ?></cite></blockquote></div></section>
-<section class="section-pad"><div class="container faq-layout"><div><p class="eyebrow"><?php esc_html_e( 'FAQ', 'nolan-showcase-theme-x11' ); ?></p><h2><?php esc_html_e( 'Straight answers before we scope the work.', 'nolan-showcase-theme-x11' ); ?></h2></div><div class="faq-list"><details open><summary><?php esc_html_e( 'Can you work with an existing WordPress site?', 'nolan-showcase-theme-x11' ); ?></summary><p><?php esc_html_e( 'Yes. We can audit, repair, redesign, or maintain an existing site without forcing a full rebuild when a focused fix is the better choice.', 'nolan-showcase-theme-x11' ); ?></p></details><details><summary><?php esc_html_e( 'Do chatbot services require a custom API build?', 'nolan-showcase-theme-x11' ); ?></summary><p><?php esc_html_e( 'Not by default. We plan chatbot content, placement, escalation flows, and integration requirements around the tools your business already approves.', 'nolan-showcase-theme-x11' ); ?></p></details><details><summary><?php esc_html_e( 'Do you provide maintenance after launch?', 'nolan-showcase-theme-x11' ); ?></summary><p><?php esc_html_e( 'Yes. Maintenance can include updates, monitoring, backups, content help, analytics review, and continuous improvement work.', 'nolan-showcase-theme-x11' ); ?></p></details></div></div></section>
-<section class="section-pad quote-section"><div class="container quote-grid"><div><p class="eyebrow"><?php esc_html_e( 'Request a quote', 'nolan-showcase-theme-x11' ); ?></p><h2><?php esc_html_e( 'Tell us what needs to change on your website.', 'nolan-showcase-theme-x11' ); ?></h2><p><?php esc_html_e( 'This form is markup-ready for Gravity Forms, WPForms, or Contact Form 7. Backend submission is intentionally not implemented in the theme.', 'nolan-showcase-theme-x11' ); ?></p></div><form class="quote-form" action="#" method="post"><div class="form-grid"><p><label for="quote-name"><?php esc_html_e( 'Name', 'nolan-showcase-theme-x11' ); ?></label><input id="quote-name" name="name" type="text" autocomplete="name"></p><p><label for="quote-email"><?php esc_html_e( 'Email', 'nolan-showcase-theme-x11' ); ?></label><input id="quote-email" name="email" type="email" autocomplete="email"></p><p><label for="quote-phone"><?php esc_html_e( 'Phone', 'nolan-showcase-theme-x11' ); ?></label><input id="quote-phone" name="phone" type="tel" autocomplete="tel"></p><p><label for="quote-company"><?php esc_html_e( 'Company', 'nolan-showcase-theme-x11' ); ?></label><input id="quote-company" name="company" type="text" autocomplete="organization"></p><p><label for="quote-url"><?php esc_html_e( 'Website URL', 'nolan-showcase-theme-x11' ); ?></label><input id="quote-url" name="website" type="url" autocomplete="url"></p><p><label for="quote-service"><?php esc_html_e( 'Service needed', 'nolan-showcase-theme-x11' ); ?></label><select id="quote-service" name="service"><option><?php esc_html_e( 'Website design and development', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( 'Website maintenance', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( 'Website problem fixes', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( 'AI chatbot integration', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( 'WooCommerce services', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( 'SEO and analytics', 'nolan-showcase-theme-x11' ); ?></option></select></p><p><label for="quote-budget"><?php esc_html_e( 'Project budget', 'nolan-showcase-theme-x11' ); ?></label><select id="quote-budget" name="budget"><option><?php esc_html_e( 'Under $5,000', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( '$5,000 - $10,000', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( '$10,000 - $25,000', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( '$25,000+', 'nolan-showcase-theme-x11' ); ?></option></select></p><p><label for="quote-timeline"><?php esc_html_e( 'Timeline', 'nolan-showcase-theme-x11' ); ?></label><select id="quote-timeline" name="timeline"><option><?php esc_html_e( 'As soon as possible', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( 'This quarter', 'nolan-showcase-theme-x11' ); ?></option><option><?php esc_html_e( 'Flexible', 'nolan-showcase-theme-x11' ); ?></option></select></p></div><p><label for="quote-message"><?php esc_html_e( 'Message', 'nolan-showcase-theme-x11' ); ?></label><textarea id="quote-message" name="message" rows="5"></textarea></p><button class="button" type="submit"><?php esc_html_e( 'Prepare My Quote', 'nolan-showcase-theme-x11' ); ?></button></form></div></section>
-<?php get_footer();
+
+<section class="hero">
+	<div class="container hero__grid">
+		<div class="hero__copy" data-reveal>
+			<p class="hero__kicker"><?php esc_html_e( 'Plants for rooms, patios, and better routines', 'nolan-showcase-theme-x11' ); ?></p>
+			<h1 class="hero__title"><?php esc_html_e( 'Plants and care essentials for spaces that feel alive.', 'nolan-showcase-theme-x11' ); ?></h1>
+			<p class="hero__subtitle"><?php esc_html_e( 'Fernline Nursery curates houseplants, outdoor plants, planters, soil, and gifting bundles with a clean retail feel and practical plant care guidance.', 'nolan-showcase-theme-x11' ); ?></p>
+			<div class="hero__actions">
+				<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Shop Plants', 'nolan-showcase-theme-x11' ); ?></a>
+				<a class="button button-secondary" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><?php esc_html_e( 'Browse Collections', 'nolan-showcase-theme-x11' ); ?></a>
+			</div>
+			<ul class="hero__trust" aria-label="<?php echo esc_attr_x( 'Proof tags', 'aria label', 'nolan-showcase-theme-x11' ); ?>">
+				<li><?php esc_html_e( 'Curated by category', 'nolan-showcase-theme-x11' ); ?></li>
+				<li><?php esc_html_e( 'Pickup + shipping support', 'nolan-showcase-theme-x11' ); ?></li>
+				<li><?php esc_html_e( 'Plant care made practical', 'nolan-showcase-theme-x11' ); ?></li>
+				<li><?php esc_html_e( 'Bundles for gifting', 'nolan-showcase-theme-x11' ); ?></li>
+			</ul>
+		</div>
+		<div class="hero__media" data-reveal>
+			<div class="hero__image-stack" aria-hidden="true">
+				<img class="hero__img hero__img--primary" src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'hero-nursery.svg' ) ); ?>" width="1200" height="800" alt="">
+				<img class="hero__img hero__img--secondary" src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'product-monstera.svg' ) ); ?>" width="1200" height="800" alt="">
+				<img class="hero__img hero__img--tertiary" src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'bundle-box.svg' ) ); ?>" width="1200" height="800" alt="">
+				<div class="hero__badge"><span><?php esc_html_e( 'new arrivals', 'nolan-showcase-theme-x11' ); ?></span><strong>24</strong></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section">
+	<div class="container">
+		<div class="section-head" data-reveal>
+			<div>
+				<p class="eyebrow"><?php esc_html_e( 'Shop with clarity', 'nolan-showcase-theme-x11' ); ?></p>
+				<h2 class="section-title"><?php esc_html_e( 'A clean nursery experience for people who want the right plant, not just any plant.', 'nolan-showcase-theme-x11' ); ?></h2>
+			</div>
+			<p class="section-subtitle"><?php esc_html_e( 'Categories stay easy to scan, product cards show the essentials, and every order includes practical care guidance.', 'nolan-showcase-theme-x11' ); ?></p>
+		</div>
+		<div class="grid grid--services">
+			<?php
+			$collections = array(
+				array( 'title' => __( 'Houseplants', 'nolan-showcase-theme-x11' ), 'copy' => __( 'Low-light to bright-light varieties that fit home and office routines.', 'nolan-showcase-theme-x11' ), 'img' => 'product-monstera.svg' ),
+				array( 'title' => __( 'Outdoor Plants', 'nolan-showcase-theme-x11' ), 'copy' => __( 'Seasonal greens and flowering options for patios, porches, and entryways.', 'nolan-showcase-theme-x11' ), 'img' => 'product-pot.svg' ),
+				array( 'title' => __( 'Pots &amp; Planters', 'nolan-showcase-theme-x11' ), 'copy' => __( 'Clean ceramic, fiber, and lightweight planters that work in real rooms.', 'nolan-showcase-theme-x11' ), 'img' => 'product-pot.svg' ),
+				array( 'title' => __( 'Gift Bundles', 'nolan-showcase-theme-x11' ), 'copy' => __( 'Easy plant gifts paired with notes, add-ons, and retail-ready packaging.', 'nolan-showcase-theme-x11' ), 'img' => 'bundle-box.svg' ),
+				array( 'title' => __( 'Soil &amp; Tools', 'nolan-showcase-theme-x11' ), 'copy' => __( 'Practical care essentials to keep the shelf-life of your plants strong.', 'nolan-showcase-theme-x11' ), 'img' => 'care-guide.svg' ),
+				array( 'title' => __( 'Subscriptions', 'nolan-showcase-theme-x11' ), 'copy' => __( 'Monthly or seasonal refreshes for homes, offices, and hospitality spaces.', 'nolan-showcase-theme-x11' ), 'img' => 'product-hanging.svg' ),
+			);
+			foreach ( $collections as $collection ) :
+				?>
+				<article class="card" data-reveal>
+					<div class="card__media" aria-hidden="true"><img src="<?php echo esc_url( nolan_showcase_x11_image_uri( $collection['img'] ) ); ?>" width="800" height="600" alt=""></div>
+					<div class="card__body">
+						<h3 class="card__title"><?php echo wp_kses_post( $collection['title'] ); ?></h3>
+						<p class="card__copy"><?php echo esc_html( $collection['copy'] ); ?></p>
+					</div>
+				</article>
+				<?php
+			endforeach;
+			?>
+		</div>
+	</div>
+</section>
+
+<section class="section section--soft">
+	<div class="container">
+		<div class="section-head" data-reveal>
+			<div>
+				<p class="eyebrow"><?php esc_html_e( 'Featured products', 'nolan-showcase-theme-x11' ); ?></p>
+				<h2 class="section-title"><?php esc_html_e( 'Filter by collection to browse a tidy retail grid.', 'nolan-showcase-theme-x11' ); ?></h2>
+			</div>
+			<div class="section-actions"><a class="button button-secondary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Shop all', 'nolan-showcase-theme-x11' ); ?></a></div>
+		</div>
+		<nav class="filter-nav" aria-label="<?php echo esc_attr_x( 'Product categories', 'aria label', 'nolan-showcase-theme-x11' ); ?>" data-work-filters data-reveal>
+			<button class="filter-nav__btn is-active" type="button" data-filter="all" aria-pressed="true"><?php esc_html_e( 'All', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="filter-nav__btn" type="button" data-filter="indoor" aria-pressed="false"><?php esc_html_e( 'Houseplants', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="filter-nav__btn" type="button" data-filter="outdoor" aria-pressed="false"><?php esc_html_e( 'Outdoor Plants', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="filter-nav__btn" type="button" data-filter="pots" aria-pressed="false"><?php esc_html_e( 'Pots', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="filter-nav__btn" type="button" data-filter="bundles" aria-pressed="false"><?php esc_html_e( 'Bundles', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="filter-nav__btn" type="button" data-filter="tools" aria-pressed="false"><?php esc_html_e( 'Tools', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="filter-nav__btn" type="button" data-filter="subs" aria-pressed="false"><?php esc_html_e( 'Subscriptions', 'nolan-showcase-theme-x11' ); ?></button>
+		</nav>
+		<div class="grid grid--gallery" aria-label="<?php echo esc_attr_x( 'Featured products', 'aria label', 'nolan-showcase-theme-x11' ); ?>">
+			<?php foreach ( $products as $product ) : ?>
+				<article class="gallery-card gallery-card--product" data-work-card data-cat="<?php echo esc_attr( $product['cat'] ); ?>" data-hidden="false" data-reveal>
+					<img class="gallery-card__img" src="<?php echo esc_url( nolan_showcase_x11_image_uri( $product['img'] ) ); ?>" width="960" height="640" alt="" loading="lazy" decoding="async">
+					<div class="gallery-card__meta">
+						<p class="gallery-card__cat"><?php echo esc_html( $product['meta'] ); ?></p>
+						<h3 class="gallery-card__title"><?php echo esc_html( $product['title'] ); ?></h3>
+						<p class="gallery-card__price"><?php echo esc_html( $product['price'] ); ?></p>
+					</div>
+				</article>
+			<?php endforeach; ?>
+		</div>
+	</div>
+</section>
+
+<section class="section section--soft">
+	<div class="container">
+		<div class="section-head" data-reveal>
+			<div>
+				<p class="eyebrow"><?php esc_html_e( 'Why shop here', 'nolan-showcase-theme-x11' ); ?></p>
+				<h2 class="section-title"><?php esc_html_e( 'Practical plant care and retail clarity from checkout to the first watering.', 'nolan-showcase-theme-x11' ); ?></h2>
+			</div>
+		</div>
+		<div class="grid grid--topic">
+			<article class="reason-card" data-reveal><h3><?php esc_html_e( 'Curated stock', 'nolan-showcase-theme-x11' ); ?></h3><p><?php esc_html_e( 'Healthy, shelf-ready plants selected for structure and care.', 'nolan-showcase-theme-x11' ); ?></p></article>
+			<article class="reason-card" data-reveal><h3><?php esc_html_e( 'Pickup + shipping', 'nolan-showcase-theme-x11' ); ?></h3><p><?php esc_html_e( 'Simple fulfillment options for local shoppers and shipped orders.', 'nolan-showcase-theme-x11' ); ?></p></article>
+			<article class="reason-card" data-reveal><h3><?php esc_html_e( 'Plant care support', 'nolan-showcase-theme-x11' ); ?></h3><p><?php esc_html_e( 'Practical watering and placement notes with every order.', 'nolan-showcase-theme-x11' ); ?></p></article>
+		</div>
+	</div>
+</section>
+
+<section class="section section--soft">
+	<div class="container">
+		<div class="section-head" data-reveal>
+			<div>
+				<p class="eyebrow"><?php esc_html_e( 'Featured collections', 'nolan-showcase-theme-x11' ); ?></p>
+				<h2 class="section-title"><?php esc_html_e( 'Three stories that show how the nursery experience feels on the shelf and in the home.', 'nolan-showcase-theme-x11' ); ?></h2>
+			</div>
+		</div>
+		<div class="carousel" data-carousel aria-label="<?php echo esc_attr_x( 'Nursery carousel', 'aria label', 'nolan-showcase-theme-x11' ); ?>">
+			<div class="carousel__viewport">
+				<article class="carousel__slide" data-carousel-slide>
+					<div class="carousel__media"><img src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'product-monstera.svg' ) ); ?>" alt=""></div>
+					<div><p class="carousel__kicker"><?php esc_html_e( 'Featured collection', 'nolan-showcase-theme-x11' ); ?></p><h3 class="carousel__title"><?php esc_html_e( 'Statement houseplants for bright, livable rooms', 'nolan-showcase-theme-x11' ); ?></h3><p class="carousel__copy"><?php esc_html_e( 'A quick way to browse the most-loved indoor plants without digging through a crowded shelf.', 'nolan-showcase-theme-x11' ); ?></p><a class="btn btn-text" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><?php esc_html_e( 'Browse indoor plants', 'nolan-showcase-theme-x11' ); ?></a></div>
+				</article>
+				<article class="carousel__slide" data-carousel-slide hidden aria-hidden="true">
+					<div class="carousel__media"><img src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'product-hanging.svg' ) ); ?>" alt=""></div>
+					<div><p class="carousel__kicker"><?php esc_html_e( 'Featured collection', 'nolan-showcase-theme-x11' ); ?></p><h3 class="carousel__title"><?php esc_html_e( 'Hanging plants that soften walls and shelves', 'nolan-showcase-theme-x11' ); ?></h3><p class="carousel__copy"><?php esc_html_e( 'Perfect for small-space setups where movement, drape, and easy care matter.', 'nolan-showcase-theme-x11' ); ?></p><a class="btn btn-text" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><?php esc_html_e( 'Browse hanging plants', 'nolan-showcase-theme-x11' ); ?></a></div>
+				</article>
+				<article class="carousel__slide" data-carousel-slide hidden aria-hidden="true">
+					<div class="carousel__media"><img src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'bundle-box.svg' ) ); ?>" alt=""></div>
+					<div><p class="carousel__kicker"><?php esc_html_e( 'Featured collection', 'nolan-showcase-theme-x11' ); ?></p><h3 class="carousel__title"><?php esc_html_e( 'Gift bundles with notes, add-ons, and simple pickup', 'nolan-showcase-theme-x11' ); ?></h3><p class="carousel__copy"><?php esc_html_e( 'Bundle options make checkout quick for gifts and housewarming orders.', 'nolan-showcase-theme-x11' ); ?></p><a class="btn btn-text" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Ask about bundles', 'nolan-showcase-theme-x11' ); ?></a></div>
+				</article>
+			</div>
+			<div class="carousel__controls">
+				<div class="carousel__nav">
+					<button class="button button-secondary" type="button" data-carousel-prev><?php esc_html_e( 'Previous', 'nolan-showcase-theme-x11' ); ?></button>
+					<button class="button button-secondary" type="button" data-carousel-next><?php esc_html_e( 'Next', 'nolan-showcase-theme-x11' ); ?></button>
+				</div>
+				<div class="carousel__dots" data-carousel-dots aria-label="<?php echo esc_attr_x( 'Carousel slides', 'aria label', 'nolan-showcase-theme-x11' ); ?>"></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<section class="section section--band">
+	<div class="container">
+		<div class="stats" data-reveal aria-label="<?php echo esc_attr_x( 'Proof band', 'aria label', 'nolan-showcase-theme-x11' ); ?>">
+			<div class="stat"><p class="stat__num"><span data-countup data-to="36">36</span>+</p><p class="stat__label"><?php esc_html_e( 'plant and product options', 'nolan-showcase-theme-x11' ); ?></p></div>
+			<div class="stat"><p class="stat__num">2</p><p class="stat__label"><?php esc_html_e( 'pickup and shipping paths', 'nolan-showcase-theme-x11' ); ?></p></div>
+			<div class="stat"><p class="stat__num">1</p><p class="stat__label"><?php esc_html_e( 'care note with every order', 'nolan-showcase-theme-x11' ); ?></p></div>
+			<div class="stat"><p class="stat__num">Gift</p><p class="stat__label"><?php esc_html_e( 'ready bundles', 'nolan-showcase-theme-x11' ); ?></p></div>
+		</div>
+	</div>
+</section>
+
+<section class="section">
+	<div class="container">
+		<div class="section-head" data-reveal><div><p class="eyebrow"><?php esc_html_e( 'Client notes', 'nolan-showcase-theme-x11' ); ?></p><h2 class="section-title"><?php esc_html_e( 'The shop feels calm and easy to browse, and the plants arrive in excellent shape.', 'nolan-showcase-theme-x11' ); ?></h2></div></div>
+		<div class="testimonial-grid" data-testimonials>
+			<?php foreach ( $reviews as $index => $review ) : ?>
+				<article class="testimonial" data-testimonial<?php echo 0 === $index ? '' : ' hidden aria-hidden="true"'; ?>>
+					<p class="testimonial__quote"><?php echo esc_html( $review[0] ); ?></p>
+					<p class="testimonial__meta"><?php echo esc_html( $review[1] ); ?></p>
+				</article>
+			<?php endforeach; ?>
+		</div>
+		<div class="carousel__nav" style="margin-top:14px" aria-label="<?php echo esc_attr_x( 'Testimonials', 'aria label', 'nolan-showcase-theme-x11' ); ?>">
+			<button class="button button-secondary" type="button" data-testimonial-nav><?php esc_html_e( 'One', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="button button-secondary" type="button" data-testimonial-nav><?php esc_html_e( 'Two', 'nolan-showcase-theme-x11' ); ?></button>
+			<button class="button button-secondary" type="button" data-testimonial-nav><?php esc_html_e( 'Three', 'nolan-showcase-theme-x11' ); ?></button>
+		</div>
+	</div>
+</section>
+
+<section class="section section--soft">
+	<div class="container">
+		<div class="section-head" data-reveal><div><p class="eyebrow"><?php esc_html_e( 'Care resources', 'nolan-showcase-theme-x11' ); ?></p><h2 class="section-title"><?php esc_html_e( 'Short guides that make plant care less guessy.', 'nolan-showcase-theme-x11' ); ?></h2></div></div>
+		<div class="grid grid--topic">
+			<article class="resource-card" data-reveal><img class="resource-card__img" src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'care-guide.svg' ) ); ?>" alt=""><div class="resource-card__body"><p class="resource-card__tag"><?php esc_html_e( 'Watering', 'nolan-showcase-theme-x11' ); ?></p><h3 class="resource-card__title"><?php esc_html_e( 'How often should I water?', 'nolan-showcase-theme-x11' ); ?></h3><p class="resource-card__copy"><?php esc_html_e( 'A quick guide to watering rhythms for common houseplants and outdoor stock.', 'nolan-showcase-theme-x11' ); ?></p><a class="btn btn-text" href="<?php echo esc_url( home_url( '/resources/' ) ); ?>"><?php esc_html_e( 'Read more', 'nolan-showcase-theme-x11' ); ?></a></div></article>
+			<article class="resource-card" data-reveal><img class="resource-card__img" src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'care-guide.svg' ) ); ?>" alt=""><div class="resource-card__body"><p class="resource-card__tag"><?php esc_html_e( 'Light', 'nolan-showcase-theme-x11' ); ?></p><h3 class="resource-card__title"><?php esc_html_e( 'Where should this plant go?', 'nolan-showcase-theme-x11' ); ?></h3><p class="resource-card__copy"><?php esc_html_e( 'A practical light guide for windows, shelves, and low-light corners.', 'nolan-showcase-theme-x11' ); ?></p><a class="btn btn-text" href="<?php echo esc_url( home_url( '/resources/' ) ); ?>"><?php esc_html_e( 'Read more', 'nolan-showcase-theme-x11' ); ?></a></div></article>
+			<article class="resource-card" data-reveal><img class="resource-card__img" src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'care-guide.svg' ) ); ?>" alt=""><div class="resource-card__body"><p class="resource-card__tag"><?php esc_html_e( 'Repotting', 'nolan-showcase-theme-x11' ); ?></p><h3 class="resource-card__title"><?php esc_html_e( 'When should I repot?', 'nolan-showcase-theme-x11' ); ?></h3><p class="resource-card__copy"><?php esc_html_e( 'Sizing, drainage, and the signs it’s time to move up a pot.', 'nolan-showcase-theme-x11' ); ?></p><a class="btn btn-text" href="<?php echo esc_url( home_url( '/resources/' ) ); ?>"><?php esc_html_e( 'Read more', 'nolan-showcase-theme-x11' ); ?></a></div></article>
+		</div>
+	</div>
+</section>
+
+<section class="section">
+	<div class="container">
+		<div class="feature-story" data-reveal>
+			<div class="feature-story__media"><img src="<?php echo esc_url( nolan_showcase_x11_image_uri( 'hero-nursery.svg' ) ); ?>" alt=""></div>
+			<div class="feature-story__body">
+				<p class="eyebrow"><?php esc_html_e( 'Start here', 'nolan-showcase-theme-x11' ); ?></p>
+				<h2 class="section-title"><?php esc_html_e( 'Need a quick recommendation?', 'nolan-showcase-theme-x11' ); ?></h2>
+				<p class="section-subtitle"><?php esc_html_e( 'Tell us the room, the light, and the kind of maintenance you can actually keep up with.', 'nolan-showcase-theme-x11' ); ?></p>
+				<div class="hero__actions">
+					<a class="button" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Contact Us', 'nolan-showcase-theme-x11' ); ?></a>
+					<a class="button button-secondary" href="<?php echo esc_url( home_url( '/work/' ) ); ?>"><?php esc_html_e( 'View Collections', 'nolan-showcase-theme-x11' ); ?></a>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<?php get_footer(); ?>

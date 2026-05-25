@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Care guide card">
+  <rect width="800" height="600" rx="42" fill="#fffaf3"/>
+  <rect x="190" y="110" width="420" height="380" rx="30" fill="#fff" stroke="#d9c8ab" stroke-width="6"/>
+  <rect x="240" y="155" width="320" height="20" rx="10" fill="#d9e4cf"/>
+  <rect x="240" y="205" width="250" height="16" rx="8" fill="#eadfce"/>
+  <rect x="240" y="245" width="290" height="16" rx="8" fill="#eadfce"/>
+  <rect x="240" y="285" width="210" height="16" rx="8" fill="#eadfce"/>
+  <rect x="240" y="338" width="320" height="110" rx="22" fill="#f7f1e7"/>
+  <path d="M275 395c42-68 92-68 150 0 34-38 60-52 90-52" fill="none" stroke="#7a8f67" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="520" cy="395" r="26" fill="#b99558"/>
+  <path d="M520 377v36" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+  <path d="M502 395h36" stroke="#fff" stroke-width="8" stroke-linecap="round"/>
+</svg>

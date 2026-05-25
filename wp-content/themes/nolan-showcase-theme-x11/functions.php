@@ -90,18 +90,18 @@ add_action( 'wp_enqueue_scripts', 'nolan_showcase_x11_enqueue_assets' );
 function nolan_showcase_x11_primary_menu_fallback() {
 	echo '<ul class="primary-menu">';
 	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/' ) ), esc_html__( 'Home', 'nolan-showcase-theme-x11' ) );
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/who-we-are/' ) ), esc_html__( 'Who We Are', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/who-we-are/' ) ), esc_html__( 'About', 'nolan-showcase-theme-x11' ) );
 	echo '<li class="menu-item-has-children">';
-	printf( '<a href="%1$s">%2$s</a>', esc_url( home_url( '/what-we-do/' ) ), esc_html__( 'What We Do', 'nolan-showcase-theme-x11' ) );
+	printf( '<a href="%1$s">%2$s</a>', esc_url( home_url( '/what-we-do/' ) ), esc_html__( 'Shop', 'nolan-showcase-theme-x11' ) );
 	echo '<ul class="sub-menu">';
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/#design' ) ), esc_html__( 'Website Design and Development', 'nolan-showcase-theme-x11' ) );
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/#maintenance' ) ), esc_html__( 'Website Maintenance', 'nolan-showcase-theme-x11' ) );
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/#automation' ) ), esc_html__( 'AI Website Automation', 'nolan-showcase-theme-x11' ) );
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/#commerce' ) ), esc_html__( 'WooCommerce Services', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/' ) ), esc_html__( 'Houseplants', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/' ) ), esc_html__( 'Outdoor Plants', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/' ) ), esc_html__( 'Pots &amp; Planters', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/what-we-do/' ) ), esc_html__( 'Gift Bundles', 'nolan-showcase-theme-x11' ) );
 	echo '</ul></li>';
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/work/' ) ), esc_html__( 'Work', 'nolan-showcase-theme-x11' ) );
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/resources/' ) ), esc_html__( 'Resources', 'nolan-showcase-theme-x11' ) );
-	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/contact/' ) ), esc_html__( 'Contact', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/work/' ) ), esc_html__( 'Collections', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/resources/' ) ), esc_html__( 'Care', 'nolan-showcase-theme-x11' ) );
+	printf( '<li><a href="%1$s">%2$s</a></li>', esc_url( home_url( '/contact/' ) ), esc_html__( 'Contact Us', 'nolan-showcase-theme-x11' ) );
 	echo '</ul>';
 }
 

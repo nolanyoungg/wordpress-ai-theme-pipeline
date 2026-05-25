@@ -1,7 +1,0 @@
-<!--
-File purpose: Local portfolio image for an automation project.
-References: front-page.php and static preview pages.
-Behavior: Renders form, chatbot, and workflow panels without remote assets.
-Return values: Not applicable.
--->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-labelledby="title desc"><title id="title">Automation project mockup</title><desc id="desc">Chatbot, form routing, and CRM workflow cards.</desc><rect width="720" height="540" fill="#f5f8fb"/><rect x="62" y="66" width="236" height="360" rx="20" fill="#fff" stroke="#d9e2ea"/><rect x="334" y="66" width="324" height="118" rx="20" fill="#0f8f8c"/><rect x="334" y="216" width="324" height="94" rx="20" fill="#121826"/><rect x="334" y="342" width="324" height="84" rx="20" fill="#ffb454"/><circle cx="142" cy="144" r="34" fill="#0f8f8c"/><rect x="112" y="220" width="138" height="14" rx="7" fill="#121826"/><rect x="112" y="260" width="106" height="14" rx="7" fill="#718292"/><rect x="112" y="300" width="126" height="14" rx="7" fill="#718292"/><path d="M298 246h36M298 364h36" stroke="#0f8f8c" stroke-width="10" stroke-linecap="round"/></svg>

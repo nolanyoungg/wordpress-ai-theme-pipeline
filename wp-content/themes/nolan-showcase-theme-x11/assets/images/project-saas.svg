@@ -1,7 +1,0 @@
-<!--
-File purpose: Local portfolio image for a B2B services project.
-References: front-page.php and static preview pages.
-Behavior: Renders a marketing website mockup without remote assets.
-Return values: Not applicable.
--->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-labelledby="title desc"><title id="title">B2B website project mockup</title><desc id="desc">Marketing site panels and analytics chart.</desc><rect width="720" height="540" fill="#071018"/><rect x="54" y="60" width="612" height="420" rx="24" fill="#f7fbfd"/><rect x="90" y="100" width="540" height="74" rx="14" fill="#121826"/><rect x="90" y="214" width="156" height="180" rx="16" fill="#edf7f7"/><rect x="282" y="214" width="156" height="180" rx="16" fill="#0f8f8c"/><rect x="474" y="214" width="156" height="180" rx="16" fill="#fff7eb"/><path d="M116 352c52-78 88-20 130-86s72 32 122-34 92-20 126-64" fill="none" stroke="#ffb454" stroke-width="12" stroke-linecap="round"/></svg>

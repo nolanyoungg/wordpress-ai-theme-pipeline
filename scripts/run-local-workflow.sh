@@ -25,16 +25,18 @@ fi
 BASE_THEME_SLUG="nolan-showcase-theme"
 THEME_VERSION=1
 while IFS= read -r THEME_BASE; do
-  if [[ "$THEME_BASE" =~ ^${BASE_THEME_SLUG}-x([0-9]+)$ ]]; then
+  if [[ "$THEME_BASE" =~ ^${BASE_THEME_SLUG}-([0-9][0-9])$ ]]; then
     CURRENT_VERSION="${BASH_REMATCH[1]}"
+    CURRENT_VERSION=$((10#$CURRENT_VERSION))
     if [ "$CURRENT_VERSION" -ge "$THEME_VERSION" ]; then
       THEME_VERSION=$((CURRENT_VERSION + 1))
     fi
   fi
-done < <(find "$ROOT_DIR/wp-content/themes" -maxdepth 1 -type d -name "${BASE_THEME_SLUG}-x*" -print0 | xargs -0 -n 1 basename)
+done < <(find "$ROOT_DIR/wp-content/themes" -maxdepth 1 -type d -name "${BASE_THEME_SLUG}-[0-9][0-9]" -print0 | xargs -0 -n 1 basename)
 
-THEME_SLUG="${BASE_THEME_SLUG}-x${THEME_VERSION}"
-THEME_DISPLAY_NAME="Nolan Showcase Theme X${THEME_VERSION}"
+THEME_VERSION_PADDED="$(printf '%02d' "$THEME_VERSION")"
+THEME_SLUG="${BASE_THEME_SLUG}-${THEME_VERSION_PADDED}"
+THEME_DISPLAY_NAME="Nolan Showcase Theme ${THEME_VERSION_PADDED}"
 
 THEME_DIR="wp-content/themes/${THEME_SLUG}"
 THEME_ZIP="zippedTheme/${THEME_SLUG}.zip"

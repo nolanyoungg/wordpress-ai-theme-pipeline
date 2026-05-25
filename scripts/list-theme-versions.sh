@@ -9,10 +9,10 @@ if [ ! -d "$THEMES_DIR" ]; then
   exit 1
 fi
 
-find "$THEMES_DIR" -maxdepth 1 -type d -name 'nolan-showcase-theme-x*' -print0 \
+find "$THEMES_DIR" -maxdepth 1 -type d -name 'nolan-showcase-theme-[0-9][0-9]' -print0 \
   | while IFS= read -r -d '' theme_path; do
       theme_slug="$(basename "$theme_path")"
-      version="${theme_slug##*-x}"
+      version="${theme_slug##*-}"
       if [[ "$version" =~ ^[0-9]+$ ]]; then
         printf '%06d %s\n' "$version" "$theme_slug"
       fi

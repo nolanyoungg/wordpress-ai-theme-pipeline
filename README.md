@@ -15,7 +15,7 @@ Codex is used **manually/local** (via a normal ChatGPT Pro subscription) to gene
 
 ## Repo structure
 
-- WordPress themes: `wp-content/themes/nolan-showcase-theme-x1/`, `...-x2/`, `...-x3/`, etc.
+- WordPress themes: `wp-content/themes/nolan-showcase-theme-xN/`
 - Generated theme zip output folder: `zippedTheme/` (generated packages; committed so you can download directly from the repo)
 - GitHub Pages gallery and previews: `docs/`
   - Gallery: `docs/index.html`
@@ -28,11 +28,17 @@ Codex is used **manually/local** (via a normal ChatGPT Pro subscription) to gene
 
 ## Theme versioning
 
-Themes must always be created as a new folder:
+Current keeper themes:
 
-- `wp-content/themes/nolan-showcase-theme-x1`
-- `wp-content/themes/nolan-showcase-theme-x2`
-- `wp-content/themes/nolan-showcase-theme-x3`
+- `wp-content/themes/nolan-showcase-theme-x4`
+- `wp-content/themes/nolan-showcase-theme-x5`
+- `wp-content/themes/nolan-showcase-theme-x6`
+- `wp-content/themes/nolan-showcase-theme-x9`
+- `wp-content/themes/nolan-showcase-theme-x11`
+
+New themes must always be created as a new folder:
+
+- `wp-content/themes/nolan-showcase-theme-xN`
 
 Never overwrite older versions.
 

@@ -218,3 +218,88 @@ git commit -m "Add Nolan Showcase Theme NN"
 git push -u origin HEAD
 gh pr create --base main --head "$(git branch --show-current)" --title "Add Nolan Showcase Theme NN" --body "Adds a new versioned theme folder, matching docs preview, and includes a regenerated committed zip in zippedTheme/. CI will verify the committed zip matches the theme source."
 ```
+
+## Fresh Machine Example: Theme 06 PR
+
+This is what creating the next `06` theme should look like from a fresh command prompt on any machine that already has GitHub CLI, Codex, PHP, Node/npm, and zip installed and authenticated.
+
+```bash
+git clone https://github.com/nolanyoungg/wordpress-ai-theme-pipeline.git
+cd wordpress-ai-theme-pipeline
+git checkout main
+git pull origin main
+git checkout -b feature/nolan-showcase-theme-06
+npm install
+```
+
+Run the local Codex workflow. The script will detect the existing `01` through `05` folders and target `nolan-showcase-theme-06`.
+
+```bash
+CODEX_RUN_MODEL="gpt-5.2" CODEX_RUN_REASONING_EFFORT="high" bash scripts/run-local-workflow.sh "Create Nolan Showcase Theme 06 as a new production-quality classic WordPress theme.
+
+Use the next versioned folder: wp-content/themes/nolan-showcase-theme-06.
+Create the matching static GitHub Pages preview under docs/themes/nolan-showcase-theme-06.
+Update docs/index.html so the newest theme appears first.
+Regenerate zippedTheme/nolan-showcase-theme-06.zip.
+
+Do not overwrite themes 01 through 05.
+Do not require OPENAI_API_KEY.
+Do not use remote CDNs.
+Use local assets, safe WordPress escaping, proper enqueueing, accessible navigation, and a polished responsive design."
+```
+
+Validate, commit, push, and open the PR:
+
+```bash
+bash scripts/validate-themes.sh
+git status
+git add -A
+git commit -m "Add Nolan Showcase Theme 06"
+git push -u origin HEAD
+gh pr create --base main --head "$(git branch --show-current)" --title "Add Nolan Showcase Theme 06" --body "Adds Nolan Showcase Theme 06, its static preview, gallery entry, and regenerated committed ZIP. Verification: bash scripts/validate-themes.sh"
+```
+
+After the PR checks pass, review the preview files and ZIP artifact, then merge the PR into `main`.
+
+## Explain It Like I Am 5
+
+Think of this repo like a shelf with five finished toy houses on it: Theme `01`, `02`, `03`, `04`, and `05`.
+
+When you want a new toy house, you do not paint over an old one. You build a brand-new one and call it Theme `06`.
+
+The WordPress theme is the real toy house. It lives here:
+
+```text
+wp-content/themes/nolan-showcase-theme-06/
+```
+
+The GitHub Pages preview is the picture of the toy house that people can see in a browser. It lives here:
+
+```text
+docs/themes/nolan-showcase-theme-06/
+```
+
+The ZIP file is the box you can hand to WordPress so WordPress can install the toy house. It lives here:
+
+```text
+zippedTheme/nolan-showcase-theme-06.zip
+```
+
+The gallery page is the front shelf label. It tells people which theme previews they can open:
+
+```text
+docs/index.html
+```
+
+The safe order is:
+
+1. Start from the latest `main`.
+2. Make a new branch.
+3. Ask Codex to build the next numbered theme.
+4. Run `bash scripts/validate-themes.sh`.
+5. Commit everything.
+6. Push the branch.
+7. Open a pull request.
+8. Merge only after GitHub says the checks passed.
+
+If the checks fail, do not guess. Read the error, fix the exact missing or stale file, run validation again, commit the fix, and push again.

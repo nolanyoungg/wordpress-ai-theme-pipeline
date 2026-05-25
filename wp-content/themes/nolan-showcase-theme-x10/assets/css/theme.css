@@ -1062,3 +1062,178 @@ button{font:inherit}
 	.grid--gallery{grid-template-columns: 1fr}
 	.grid--testimonials{grid-template-columns: 1fr}
 }
+
+/*
+ * X10 variant: noir editorial treatment.
+ */
+:root{
+	--paper:#0f0c0a;
+	--sand:#17120f;
+	--white:#17130f;
+	--champagne:#221a15;
+	--oat:#49392d;
+	--gold:#d5a55d;
+	--wood:#f0bf7a;
+	--clay:#f0a178;
+	--ink:#f6efe7;
+	--ink2:#fffaf2;
+	--shadow:0 26px 62px rgba(0,0,0,.42);
+	--shadow-soft:0 18px 44px rgba(0,0,0,.34);
+	--line:rgba(255,255,255,.08);
+	--line-2:rgba(255,255,255,.14);
+	--focus:3px solid rgba(213,165,93,.56);
+}
+
+body{
+	background:
+		radial-gradient(1100px 700px at 8% -12%, rgba(213,165,93,.20), transparent 58%),
+		radial-gradient(900px 680px at 92% 2%, rgba(240,161,120,.11), transparent 58%),
+		linear-gradient(180deg, #080605, #120f0d 48%, #0f0c0a 100%);
+	color:var(--ink);
+}
+
+.nolan-header{
+	background:rgba(9,8,7,.88);
+	border-bottom-color:rgba(255,255,255,.08);
+	backdrop-filter:saturate(130%) blur(14px);
+}
+.nolan-header.is-scrolled{
+	box-shadow:0 20px 48px rgba(0,0,0,.30);
+	border-bottom-color:rgba(255,255,255,.12);
+}
+.nolan-menu__brand,
+.nolan-menu__nav,
+.btn-secondary{
+	background:rgba(20,16,13,.88);
+	border-color:rgba(255,255,255,.10);
+	color:var(--ink);
+}
+.nolan-menu__trigger,
+.nolan-menu__link{
+	color:var(--ink);
+}
+.nolan-menu__trigger:hover,
+.nolan-menu__link:hover,
+.nolan-menu__trigger.is-active{
+	background:rgba(213,165,93,.12);
+	color:var(--ink2);
+}
+.nolan-menu__panel{
+	background:linear-gradient(180deg, rgba(16,13,11,.98), rgba(25,19,16,.98));
+	border-color:rgba(255,255,255,.10);
+	box-shadow:0 40px 80px rgba(0,0,0,.36);
+}
+.nolan-menu__rail{
+	background:rgba(255,255,255,.03);
+	border-color:rgba(255,255,255,.06);
+}
+.nolan-menu__rail-button{
+	color:rgba(246,239,231,.82);
+}
+.nolan-menu__rail-button.is-active,
+.nolan-menu__rail-button:hover,
+.nolan-menu__rail-button:focus-visible{
+	background:rgba(213,165,93,.16);
+	color:var(--ink2);
+}
+.hero{
+	padding: clamp(42px, 6vw, 88px) 0 28px;
+}
+.hero__grid{
+	align-items:end;
+	gap:32px;
+}
+.hero__copy{
+	padding: clamp(24px, 3.5vw, 38px);
+	border-radius: 30px;
+	border:1px solid rgba(255,255,255,.10);
+	background:linear-gradient(180deg, rgba(24,19,16,.94), rgba(12,10,9,.90));
+	box-shadow:0 30px 80px rgba(0,0,0,.32);
+}
+.hero__kicker,
+.hero__subtitle,
+.hero__trust{
+	color:rgba(246,239,231,.82);
+}
+.hero__trust li{
+	background:rgba(255,255,255,.04);
+	border-color:rgba(255,255,255,.08);
+}
+.hero__media{position:relative}
+.hero__media::before{
+	content:"";
+	position:absolute;
+	inset:-18px -12px 18px 18px;
+	border-radius:36px;
+	background:linear-gradient(180deg, rgba(213,165,93,.12), rgba(0,0,0,0));
+	filter:blur(2px);
+}
+.hero__image-stack{min-height:740px}
+.hero__img{
+	border:1px solid rgba(255,255,255,.12);
+	box-shadow:0 24px 60px rgba(0,0,0,.32);
+	filter:saturate(1.02) contrast(1.02);
+}
+.hero__img--primary{right:10%; top:0; width:min(58%, 490px)}
+.hero__img--secondary{left:0; bottom:9%; width:min(52%, 420px)}
+.hero__img--tertiary{right:0; bottom:0; width:min(48%, 380px)}
+.statement,
+.service-card,
+.gallery-card,
+.step,
+.pillars,
+.about-preview,
+.carousel__slide,
+.testimonial,
+.checklist,
+.stats,
+.stat,
+.resource-card{
+	background:rgba(17,14,12,.88);
+	border-color:rgba(255,255,255,.10);
+	color:var(--ink);
+	box-shadow:var(--shadow-soft);
+}
+.section--soft,
+.section--statement,
+.section--band{background:transparent}
+.section-subtitle,
+.gallery-card__cat,
+.step__desc,
+.carousel__meta,
+.testimonial__role,
+.resource-card__excerpt{
+	color:rgba(246,239,231,.76);
+}
+.filter-nav__btn{
+	background:rgba(255,255,255,.03);
+	border-color:rgba(255,255,255,.08);
+	color:rgba(246,239,231,.82);
+}
+.filter-nav__btn.is-active{
+	background:rgba(213,165,93,.18);
+	color:var(--ink2);
+	border-color:rgba(213,165,93,.30);
+}
+.carousel__controls .btn,
+.about-preview__actions .btn,
+.feature-story__actions .btn,
+.section-actions .btn{
+	background:rgba(255,255,255,.04);
+	border-color:rgba(255,255,255,.10);
+	color:var(--ink);
+}
+.btn-primary{
+	background:linear-gradient(135deg, rgba(213,165,93,.96), rgba(240,161,120,.74));
+	border-color:rgba(213,165,93,.60);
+	color:#100d0b;
+}
+.btn-secondary{
+	background:rgba(255,255,255,.04);
+}
+.btn-text{
+	color:rgba(246,239,231,.90);
+}
+.footer{
+	color:rgba(246,239,231,.66);
+}

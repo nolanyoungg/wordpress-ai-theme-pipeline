@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" role="img" aria-labelledby="title desc">
+  <title id="title">Platform service map</title>
+  <desc id="desc">A connected map of WordPress, WooCommerce, Shopify, AI, analytics, and maintenance services.</desc>
+  <rect width="720" height="520" rx="20" fill="#FFFDF6"/>
+  <g fill="none" stroke="#1F2937" stroke-width="3" opacity=".28">
+    <path d="M166 148h388M166 260h388M166 372h388M248 88v344M472 88v344"/>
+  </g>
+  <g font-family="system-ui, Segoe UI, sans-serif" font-weight="800" font-size="22" text-anchor="middle">
+    <rect x="66" y="82" width="200" height="92" rx="10" fill="#111827"/>
+    <text x="166" y="138" fill="#F5F1E8">WordPress</text>
+    <rect x="454" y="82" width="200" height="92" rx="10" fill="#0F766E"/>
+    <text x="554" y="138" fill="#FFFDF6">Shopify</text>
+    <rect x="66" y="326" width="200" height="92" rx="10" fill="#B75C2A"/>
+    <text x="166" y="382" fill="#FFFDF6">WooCommerce</text>
+    <rect x="454" y="326" width="200" height="92" rx="10" fill="#111827"/>
+    <text x="554" y="382" fill="#F5F1E8">Maintenance</text>
+    <rect x="260" y="204" width="200" height="92" rx="10" fill="#C7D66D"/>
+    <text x="360" y="260" fill="#111827">AI + Analytics</text>
+  </g>
+  <circle cx="360" cy="250" r="132" fill="none" stroke="#B75C2A" stroke-width="10" stroke-dasharray="18 16"/>
+</svg>

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="620" viewBox="0 0 760 620" role="img" aria-labelledby="title desc">
+  <title id="title">Website operations dashboard</title>
+  <desc id="desc">Layered panels showing site health, revenue events, rescue tasks, and performance metrics.</desc>
+  <rect width="760" height="620" rx="22" fill="#F5F1E8"/>
+  <rect x="34" y="34" width="692" height="552" rx="18" fill="#111827"/>
+  <rect x="64" y="72" width="264" height="142" rx="10" fill="#FFFDF6"/>
+  <rect x="362" y="72" width="334" height="142" rx="10" fill="#1F2937" stroke="#F5F1E8" stroke-opacity=".18"/>
+  <rect x="64" y="246" width="304" height="270" rx="10" fill="#1F2937" stroke="#F5F1E8" stroke-opacity=".18"/>
+  <rect x="400" y="246" width="296" height="270" rx="10" fill="#FFFDF6"/>
+  <path d="M93 167c37-54 70-25 106-59 27-26 52-8 92-21" fill="none" stroke="#0F766E" stroke-width="10" stroke-linecap="round"/>
+  <circle cx="93" cy="167" r="10" fill="#B75C2A"/>
+  <circle cx="291" cy="87" r="10" fill="#C7D66D"/>
+  <g fill="#F5F1E8">
+    <rect x="390" y="104" width="132" height="12" rx="6"/>
+    <rect x="390" y="132" width="226" height="12" rx="6" opacity=".72"/>
+    <rect x="390" y="160" width="184" height="12" rx="6" opacity=".5"/>
+  </g>
+  <g fill="#F5F1E8">
+    <rect x="92" y="282" width="112" height="16" rx="8"/>
+    <rect x="92" y="324" width="228" height="10" rx="5" opacity=".72"/>
+    <rect x="92" y="352" width="194" height="10" rx="5" opacity=".52"/>
+    <rect x="92" y="380" width="246" height="10" rx="5" opacity=".38"/>
+  </g>
+  <g fill="#111827">
+    <rect x="432" y="282" width="118" height="16" rx="8"/>
+    <rect x="432" y="326" width="220" height="12" rx="6" opacity=".75"/>
+    <rect x="432" y="360" width="172" height="12" rx="6" opacity=".55"/>
+  </g>
+  <rect x="432" y="426" width="210" height="46" rx="8" fill="#B75C2A"/>
+  <rect x="92" y="430" width="116" height="42" rx="8" fill="#C7D66D"/>
+</svg>

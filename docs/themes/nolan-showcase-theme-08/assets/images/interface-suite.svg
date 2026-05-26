@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="620" viewBox="0 0 820 620" role="img" aria-labelledby="title desc">
+  <title id="title">Website operations dashboard</title>
+  <desc id="desc">A layered dashboard mockup showing conversion events, website health, support workload, and launch tasks.</desc>
+  <rect width="820" height="620" rx="20" fill="#171d29"/>
+  <rect x="34" y="34" width="752" height="552" rx="16" fill="#f6f2ea"/>
+  <rect x="64" y="70" width="205" height="480" rx="12" fill="#10131d"/>
+  <rect x="294" y="70" width="462" height="126" rx="12" fill="#146c68"/>
+  <rect x="294" y="220" width="218" height="150" rx="12" fill="#fffaf1" stroke="#d8c8aa"/>
+  <rect x="538" y="220" width="218" height="150" rx="12" fill="#fffaf1" stroke="#d8c8aa"/>
+  <rect x="294" y="394" width="462" height="156" rx="12" fill="#10131d"/>
+  <g font-family="Arial, sans-serif">
+    <text x="90" y="115" font-size="20" font-weight="700" fill="#fffaf1">Northstar OS</text>
+    <text x="90" y="156" font-size="13" fill="#a8d5c2">Launch queue</text>
+    <rect x="90" y="180" width="132" height="10" rx="5" fill="#d4a84f"/>
+    <rect x="90" y="212" width="108" height="10" rx="5" fill="#a8d5c2"/>
+    <rect x="90" y="244" width="148" height="10" rx="5" fill="#b76135"/>
+    <text x="330" y="124" font-size="22" font-weight="700" fill="#fffaf1">Revenue website health</text>
+    <text x="330" y="160" font-size="14" fill="#d7f2e7">Forms verified · Checkout stable · Events clean</text>
+    <text x="322" y="270" font-size="15" font-weight="700" fill="#10131d">Conversion events</text>
+    <text x="322" y="316" font-size="44" font-weight="700" fill="#146c68">96%</text>
+    <text x="566" y="270" font-size="15" font-weight="700" fill="#10131d">Support deflection</text>
+    <text x="566" y="316" font-size="44" font-weight="700" fill="#b76135">31%</text>
+    <text x="330" y="442" font-size="18" font-weight="700" fill="#fffaf1">Stabilization checklist</text>
+    <text x="330" y="484" font-size="14" fill="#fffaf1">Speed baseline, GA4 validation, content handoff, rollback notes</text>
+  </g>
+</svg>

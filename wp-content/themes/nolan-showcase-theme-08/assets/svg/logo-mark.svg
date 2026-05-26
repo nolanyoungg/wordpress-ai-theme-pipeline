@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="84" height="84" viewBox="0 0 84 84" role="img" aria-labelledby="title desc">
+  <title id="title">Northstar Web Bureau mark</title>
+  <desc id="desc">Geometric compass star in copper, teal, and gold.</desc>
+  <rect width="84" height="84" rx="8" fill="#10131d"/>
+  <path d="M42 8l7.8 25.7L76 42l-26.2 8.3L42 76l-7.8-25.7L8 42l26.2-8.3L42 8z" fill="#d4a84f"/>
+  <path d="M42 20l4.3 17.7L64 42l-17.7 4.3L42 64l-4.3-17.7L20 42l17.7-4.3L42 20z" fill="#146c68"/>
+  <circle cx="42" cy="42" r="6" fill="#f6f2ea"/>
+</svg>

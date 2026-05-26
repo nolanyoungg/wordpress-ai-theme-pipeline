@@ -1,0 +1,2 @@
+.hero { padding: 96px 0 72px; }
+.hero__grid, .about-preview, .pricing, .pillars { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }

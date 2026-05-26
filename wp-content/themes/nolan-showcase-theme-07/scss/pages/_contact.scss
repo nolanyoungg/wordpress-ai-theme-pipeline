@@ -1,0 +1,2 @@
+.contact-layout { display: grid; grid-template-columns: 1fr .8fr; gap: 32px; align-items: start; }
+.session-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }

@@ -1,0 +1,4 @@
+.nolan-header { position: sticky; top: 0; z-index: 1200; background: rgba(255, 250, 243, .92); }
+.nolan-menu__panel { position: absolute; left: 24px; right: 24px; top: calc(100% + 8px); background: #fffaf3; border: 1px solid rgba(31, 28, 24, .12); box-shadow: 0 22px 55px rgba(17, 16, 13, .12); }
+.nolan-menu__backdrop { position: fixed; inset: 0; z-index: 1190; background: rgba(17, 16, 13, .28); }
+.nolan-menu-mobile { position: fixed; inset: 0 0 0 auto; z-index: 1300; background: #fffaf3; }

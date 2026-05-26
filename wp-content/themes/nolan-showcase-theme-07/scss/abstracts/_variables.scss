@@ -1,0 +1,26 @@
+$paper: #fffaf3;
+$sand: #f7f1e7;
+$white: #ffffff;
+$champagne: #eadfce;
+$oat: #d8c4a4;
+$gold: #b99558;
+$wood: #8f7a61;
+$clay: #b66f4f;
+$ink: #1f1c18;
+$soft-black: #11100d;
+$line: rgba(31, 28, 24, .12);
+$shadow: 0 22px 55px rgba(17, 16, 13, .12);
+$radius-sm: 12px;
+$radius: 18px;
+$radius-lg: 26px;
+$container: 1160px;
+$container-narrow: 880px;
+$breakpoints: (
+  sm: 560px,
+  md: 760px,
+  lg: 980px,
+  xl: 1160px
+);
+$z-header: 1200;
+$z-backdrop: 1190;
+$z-drawer: 1300;

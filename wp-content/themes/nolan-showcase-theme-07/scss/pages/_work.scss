@@ -1,0 +1,2 @@
+.gallery-card:nth-child(3n + 1) { grid-row: span 2; }
+.feature-story { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: center; }

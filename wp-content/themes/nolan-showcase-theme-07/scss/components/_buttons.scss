@@ -1,0 +1,7 @@
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; border-radius: 999px; border: 1px solid rgba(31, 28, 24, .18); padding: 14px 18px; font-weight: 700; }
+.btn-primary { background: linear-gradient(135deg, #b99558, #b66f4f); color: #fff; }
+.btn-secondary { background: #11100d; color: #fff; }
+.btn-header-cta { box-shadow: 0 14px 30px rgba(182, 111, 79, .18); }
+.btn-small { padding: 10px 14px; font-size: 14px; }
+.btn-full { width: 100%; }
+.btn-text { padding: 0; border: 0; background: transparent; color: #b66f4f; }

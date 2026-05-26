@@ -1,0 +1,3 @@
+.filter-nav { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0 0 24px; }
+.filter-nav__btn { border: 1px solid rgba(31, 28, 24, .16); border-radius: 999px; background: #fff; padding: 10px 14px; }
+.filter-nav__btn.is-active { background: #11100d; color: #fff; }

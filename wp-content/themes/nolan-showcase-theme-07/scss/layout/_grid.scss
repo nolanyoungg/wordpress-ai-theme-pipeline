@@ -1,0 +1,3 @@
+.grid { display: grid; gap: 20px; }
+.grid--portfolio, .grid--gallery { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid--services, .grid--resources { grid-template-columns: repeat(3, minmax(0, 1fr)); }

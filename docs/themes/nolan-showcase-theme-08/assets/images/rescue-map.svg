@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" aria-labelledby="title desc">
+  <title id="title">Rescue diagnostics map</title>
+  <desc id="desc">A diagnostic map showing site rescue checks for hosting, DNS, plugins, forms, checkout, and analytics.</desc>
+  <rect width="720" height="420" rx="18" fill="#fffaf1"/>
+  <path d="M90 206h540" stroke="#d8c8aa" stroke-width="4"/>
+  <g font-family="Arial" font-size="16" font-weight="700">
+    <circle cx="112" cy="206" r="48" fill="#146c68"/><text x="112" y="212" text-anchor="middle" fill="#fff">DNS</text>
+    <circle cx="232" cy="206" r="48" fill="#b76135"/><text x="232" y="212" text-anchor="middle" fill="#fff">Host</text>
+    <circle cx="352" cy="206" r="48" fill="#10131d"/><text x="352" y="212" text-anchor="middle" fill="#fff">Plugins</text>
+    <circle cx="472" cy="206" r="48" fill="#d4a84f"/><text x="472" y="212" text-anchor="middle" fill="#10131d">Forms</text>
+    <circle cx="592" cy="206" r="48" fill="#273043"/><text x="592" y="212" text-anchor="middle" fill="#fff">Data</text>
+  </g>
+</svg>

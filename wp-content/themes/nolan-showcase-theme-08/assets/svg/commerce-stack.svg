@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="520" viewBox="0 0 720 520" role="img" aria-labelledby="title desc">
+  <title id="title">Connected commerce and website systems</title>
+  <desc id="desc">Layered systems diagram showing WordPress, Shopify, analytics, automation, and support connected through a central operations hub.</desc>
+  <rect width="720" height="520" rx="18" fill="#10131d"/>
+  <g fill="none" stroke="#a8d5c2" stroke-width="3" opacity=".75">
+    <path d="M360 250L170 122M360 250l220-96M360 250l208 168M360 250L150 395"/>
+  </g>
+  <rect x="268" y="178" width="184" height="144" rx="14" fill="#f6f2ea"/>
+  <text x="360" y="237" text-anchor="middle" font-family="Arial" font-size="20" font-weight="700" fill="#10131d">Operations Hub</text>
+  <text x="360" y="267" text-anchor="middle" font-family="Arial" font-size="13" fill="#637083">QA + reporting + roadmap</text>
+  <g font-family="Arial" font-weight="700" font-size="18">
+    <rect x="70" y="70" width="200" height="94" rx="12" fill="#146c68"/><text x="170" y="124" text-anchor="middle" fill="#fffaf1">WordPress</text>
+    <rect x="480" y="96" width="170" height="94" rx="12" fill="#b76135"/><text x="565" y="150" text-anchor="middle" fill="#fffaf1">Shopify</text>
+    <rect x="458" y="356" width="220" height="94" rx="12" fill="#d4a84f"/><text x="568" y="410" text-anchor="middle" fill="#10131d">Analytics</text>
+    <rect x="52" y="342" width="196" height="94" rx="12" fill="#273043"/><text x="150" y="396" text-anchor="middle" fill="#fffaf1">AI Workflows</text>
+  </g>
+  <g fill="#fffaf1" opacity=".65">
+    <circle cx="170" cy="178" r="5"/><circle cx="565" cy="204" r="5"/><circle cx="568" cy="342" r="5"/><circle cx="150" cy="328" r="5"/>
+  </g>
+</svg>
